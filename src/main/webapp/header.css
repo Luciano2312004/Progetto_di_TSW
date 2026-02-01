@@ -1,0 +1,209 @@
+/* =============== HEADER DEDICATO =============== */
+.header {
+    background-color: #ffffff; /* MODIFICA: bianco solido */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: var(--z-fixed, 100);
+    transition: background-color .4s, box-shadow .4s;
+    height: 3.5rem;
+    border-bottom: 1px solid #e5e7eb; /* MODIFICA: bordo inferiore per definire la forma quadrata */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* MODIFICA: leggera ombra per definire i bordi */
+}
+
+/* MODIFICA: Rimuovi la classe .scrolled se non serve più */
+.header.scrolled {
+    background-color: #ffffff; /* Mantieni bianco */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav {
+    position: relative;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.nav__logo {
+    color: var(--black-color, #000000);
+    font-weight: var(--font-bold, 700);
+    font-size: 1.1rem;
+}
+
+/* Navigation for mobile devices */
+@media screen and (max-width: 1150px) {
+    .nav__menu {
+        position: fixed;
+        top: -120%;
+        left: 0;
+        background-color: #ffffff; /* MODIFICA: bianco solido */
+        width: 100%;
+        padding-block: 4rem;
+        box-shadow: 0 4px 16px hsla(0, 0%, 0%, .1);
+        transition: top .4s;
+        border-top: 1px solid #e5e7eb; /* MODIFICA: bordo superiore */
+    }
+}
+
+.nav__list {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.5rem;
+}
+
+.nav__link {
+    position: relative;
+    color: var(--black-color, #000000);
+    font-weight: var(--font-semi-bold, 600);
+}
+
+.nav__link::after {
+    content: '';
+    width: 0;
+    height: 2px;
+    background-color: var(--black-color, #000000);
+    position: absolute;
+    left: 0;
+    bottom: -.5rem;
+    transition: width .4s;
+}
+
+.nav__link:hover::after {
+    width: 60%;
+}
+
+.nav__close {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+}
+
+/* Show menu */
+.show-menu {
+    top: 0;
+}
+
+.nav__actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Icone utente + carrello */
+.nav__icons {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.nav__icon-link {
+    color: var(--black-color, #000000);
+    font-size: 1.3rem;
+    transition: color .3s, transform .3s;
+}
+
+.nav__icon-link:hover {
+    color: var(--first-color, #ffd700);
+    transform: scale(1.1);
+}
+
+.nav__user-container {
+    position: relative;
+    display: inline-block;
+}
+
+.nav__user-icon {
+    color: var(--black-color, #000000);
+    font-size: 1.3rem;
+    transition: color .3s, transform .3s;
+}
+
+.nav__user-icon:hover {
+    color: var(--first-color, #ffd700);
+    transform: scale(1.1);
+}
+
+.nav__user-dropdown {
+    display: none;
+    position: absolute;
+    top: 120%;
+    right: 0;
+    background-color: white;
+    min-width: 200px;
+    border: 1px solid #ccc; /* MODIFICA: bordo definito */
+    border-radius: 0; /* MODIFICA: angoli quadrati */
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.nav__user-dropdown p {
+    margin: 0 0 10px 0;
+    font-weight: bold;
+    color: #333;
+}
+
+.nav__user-dropdown a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    padding: 5px 0;
+}
+
+.nav__user-dropdown a:hover {
+    color: var(--first-color, #ffd700);
+}
+
+/* Per dispositivi grandi */
+@media screen and (min-width: 1150px) {
+    .nav__toggle,
+    .nav__close {
+        display: none;
+    }
+    
+    .nav__list {
+        flex-direction: row;
+        column-gap: 4rem;
+    }
+    
+    .nav__menu {
+        position: static;
+        background-color: transparent;
+        box-shadow: none;
+        padding-block: 0;
+    }
+}
+
+/* =============== CARRELLO STYLES =============== */
+.nav__cart-container {
+    position: relative;
+    display: inline-block;
+}
+
+.nav__cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: var(--first-color, #ffd700);
+    color: var(--black-color, #000000);
+    font-size: 0.75rem;
+    font-weight: bold;
+    border-radius: 0; /* MODIFICA: quadrato invece che rotondo */
+    min-width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+/* Nascondi elementi */
+.hidden {
+    display: none !important;
+}

@@ -1,0 +1,831 @@
+/* === CSS ORIGINALE MANTENUTO === */
+.btn-selected {
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  padding: 8px;
+  transition: transform 0.3s;
+}
+
+.btn-selected:hover {
+  transform: scale(1) !important;
+}
+
+#logo{
+	margin-left: 30px;
+	transform: scale(1.6);
+}
+
+#top-bar {
+  transition: transform 0.5s ease-in-out;
+}
+
+.visible-bar {
+  transform: translateY(0);
+}
+
+.hidden-bar {
+  transform: translateY(-100%);
+}
+
+.slide-enter {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.slide-enter-active {
+  transform: translateX(0%);
+  opacity: 1;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.slide-exit {
+  transform: translateX(0%);
+  opacity: 1;
+}
+
+.slide-exit-active {
+  transform: translateX(-100%);
+  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+/* === MIGLIORAMENTI BOTTONI COLORE === */
+#exterior-buttons button, #interior-buttons button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+#exterior-buttons button:hover, #interior-buttons button:hover {
+  transform: scale(1.1) translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+#exterior-buttons button:active, #interior-buttons button:active {
+  transform: scale(1.05) translateY(-1px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Effetto ripple sui bottoni colore */
+#exterior-buttons button::before, #interior-buttons button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease;
+  pointer-events: none;
+}
+
+#exterior-buttons button:active::before, #interior-buttons button:active::before {
+  width: 100%;
+  height: 100%;
+}
+
+/* Miglioramento btn-selected */
+.btn-selected {
+  border: 3px solid #3B82F6 !important;
+  box-shadow: 0 8px 50px rgba(59, 130, 246, 0.3);
+  transform: scale(1.05);
+}
+
+.btn-selected:hover {
+  transform: scale(1.05) !important;
+  box-shadow: 0 200px 200px rgba(59, 130, 246, 0.4);
+}
+
+
+
+/* === FRECCE MIGLIORATE === */
+#prev-image, #next-image {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#prev-image:hover, #next-image:hover {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 9px 25px rgba(0, 0, 0, 0.15);
+}
+
+#prev-image:active, #next-image:active {
+  transform: scale(0.3);
+  background: rgba(255, 255, 255, 1);
+}
+
+/* === MINIATURE MIGLIORATE === */
+.thumbnail {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+
+.thumbnail::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(59, 130, 246, 0.1);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.thumbnail:hover {
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.thumbnail:hover::before {
+  opacity: 1;
+}
+
+.thumbnail:active {
+  transform: translateY(-1px) scale(1.02);
+}
+
+.thumbnail.border-gray-400::before {
+  background: rgba(59, 130, 246, 0.2);
+  opacity: 1;
+}
+
+/* === BOTTONI GENERICI MIGLIORATI === */
+button {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+#wheel-buttons .wheel-option {
+  display: inline-block;
+  cursor: pointer;
+  margin: 0 6px;
+  padding: 6px;
+  transform: scale(1.05);
+}
+
+
+
+/* Applica SOLO i tuoi stili personalizzati per le immagini ruota */
+#wheel-buttons .wheel-option img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Hover con rotazione a 80Â° */
+#wheel-buttons .wheel-option:hover img {
+  animation: wheel-hover-rotate 0.4s forwards;
+}
+
+/* Quando il mouse esce -> torna indietro */
+#wheel-buttons .wheel-option:not(:hover) img {
+  animation: wheel-hover-reset 0.4s forwards;
+}
+
+/* Override specifico per wheel buttons - RIMUOVI BORDO BLU */
+#wheel-buttons .wheel-option.btn-selected {
+  /* Annulla il bordo blu dei bottoni normali */
+  border: none !important;
+  box-shadow: none !important;
+  
+  /* Mantieni solo le tue animazioni personalizzate */
+  transform: scale(1.05);
+  outline: none !important;
+  outline-style: none !important;
+  outline-width: 0 !important;
+}
+
+/* Focus states senza bordo */
+#wheel-buttons .wheel-option.btn-selected:focus,
+#wheel-buttons .wheel-option.btn-selected:hover {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Effetto elegante per ruota selezionata CON animazione */
+#wheel-buttons .wheel-option.btn-selected img {
+  outline: none !important;
+  
+  /* Doppio bordo elegante */
+  border: 3px solid #ffffff !important;
+  box-shadow: 
+    0 0 0 2px #3B82F6,              /* Bordo blu esterno */
+    0 0 20px rgba(59, 130, 246, 0.6), /* Glow blu */
+    0 4px 15px rgba(0, 0, 0, 0.2)  /* Ombra sotto */
+    !important;
+  
+  /* SOLO animazione, NO transform fisso */
+  animation: wheel-spin-with-border 0.6s ease !important;
+  transition: box-shadow 0.3s ease !important;
+}
+
+/* Nuova animazione che mantiene il bordo */
+@keyframes wheel-spin-with-border {
+  from {
+    transform: rotate(0deg) scale(1);
+  }
+  to {
+    transform: rotate(720deg) scale(1);
+  }
+}
+#wheel-buttons .wheel-option.btn-selected img {
+  animation: wheel-spin-with-border 0.6s ease !important;
+}
+
+
+/* Rimuovi qualsiasi ereditÃ  di stile dai bottoni generali */
+#wheel-buttons .wheel-option {
+  /* Annulla completamente gli stili btn-selected generali */
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 6px !important;
+  box-shadow: none !important;
+  outline: none !important;
+  outline-style: none !important;
+  outline-width: 0 !important;
+  outline-color: transparent !important;
+  background: transparent !important;
+  
+  /* Mantieni solo quello che serve */
+  display: inline-block;
+  cursor: pointer;
+  margin: 0 6px;
+  transform: scale(1.05);
+  
+  /* Anti-outline aggressivo */
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-focus-ring-color: transparent !important;
+  -moz-outline: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+}
+
+/* Stati focus/active senza outline per wheel buttons */
+#wheel-buttons .wheel-option:focus,
+#wheel-buttons .wheel-option:active,
+#wheel-buttons .wheel-option:focus-visible,
+#wheel-buttons .wheel-option:focus-within {
+  outline: none !important;
+  outline-style: none !important;
+  outline-width: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* === Animazione Hover Wheel === */
+@keyframes wheel-hover-rotate {
+  from { transform: rotate(0deg) scale(1); }
+  to { transform: rotate(80deg) scale(1); }
+}
+
+@keyframes wheel-hover-reset {
+  from { transform: rotate(80deg) scale(1); }
+  to { transform: rotate(0deg) scale(1); }
+}
+
+/* Bottone performance */
+#performance-btn {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+  border: 1px solid #d1d5db;
+}
+
+#performance-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+  transition: left 0.6s ease;
+}
+
+#performance-btn:hover::before {
+  left: 100%;
+}
+
+#performance-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  border-color: #3B82F6;
+}
+
+#performance-btn.bg-gray-700 {
+  background: linear-gradient(135deg, #374151, #1f2937);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.package-option {
+  cursor: pointer;
+  padding: 12px;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Importante per contenere l'espansione */
+}
+
+.package-option:hover {
+  border-color: #3B82F6;
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
+  transform: translateY(-2px);
+}
+
+.package-option.selected {
+  border-color: #3B82F6;
+  background: #eff6ff;
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.25);
+  transform: translateY(-1px);
+}
+
+/* Immagine con animazione espansione verticale */
+.package-option img {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 8px;
+  height: 5rem; /* h-20 = 5rem, altezza base */
+  width: 100%;
+  object-fit: cover;
+}
+
+/* Hover: espandi immagine verso il basso */
+.package-option:hover img {
+  height: 7rem; /* espande di 1.5rem */
+  filter: brightness(1.1);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Selezione: espansione permanente + effetti */
+.package-option.selected img {
+  height: 8rem; /* espande di 1rem */
+  box-shadow: 0 3px 15px rgba(59, 130, 246, 0.3);
+  filter: brightness(1.05);
+}
+
+/* Doppio effetto: selezionato + hover */
+.package-option.selected:hover img {
+  height: 8rem; /* espansione massima */
+  filter: brightness(1.15);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+}
+
+/* Contenitore testo non si muove durante animazione */
+.package-option h4,
+.package-option p {
+  transition: all 0.2s ease;
+}
+
+/* Leggero fade del testo durante hover per focus sull'immagine */
+.package-option:hover h4,
+.package-option:hover p {
+  opacity: 0.9;
+  transform: translateY(1px);
+}
+
+/* === ADVANCED OPTIONS DROPDOWN === */
+.advanced-dropdown {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.advanced-dropdown.open {
+  max-height: 1800px; /* Altezza maggiore per 4 bottoni grandi */
+}
+
+#advanced-toggle:hover #advanced-chevron {
+  color: #3B82F6;
+  transform: scale(1.1);
+}
+
+.advanced-dropdown.open #advanced-chevron {
+  transform: rotate(180deg);
+}
+
+.advanced-option {
+  cursor: pointer;
+  padding: 16px;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: fadeInUp 0.5s ease forwards;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.advanced-option.disabled {
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  opacity: 0;
+  overflow: hidden;
+}
+
+/* Animazione reveal per opzioni 3 e 4 */
+.advanced-option.revealing {
+  display: flex !important;
+  animation: revealSlideDown 0.2s ease forwards;
+  opacity: 0;
+  transform: translateY(-30px) scale(0.9);
+}
+
+@keyframes revealSlideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.9);
+    max-height: 0;
+    margin: 0;
+    padding: 0;
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(-10px) scale(0.95);
+    max-height: 200px;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    max-height: none;
+    margin: inherit;
+    padding: 16px;
+  }
+}
+
+
+
+
+/* Effetto pulse per evidenziare le nuove opzioni */
+.advanced-option.highlight {
+  animation: highlightPulse 1.5s ease-in-out;
+}
+
+@keyframes highlightPulse {
+  0%, 100% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+    transform: translateY(-3px);
+  }
+}
+
+.advanced-option:nth-child(1) { animation-delay: 0.1s; }
+.advanced-option:nth-child(2) { animation-delay: 0.2s; }
+.advanced-option:nth-child(3) { animation-delay: 0.3s; }
+.advanced-option:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.advanced-option:hover {
+  border-color: #3B82F6;
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
+  transform: translateY(-2px);
+}
+
+.advanced-option.selected {
+  border-color: #3B82F6;
+  background: #eff6ff;
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.25);
+}
+
+/* GIF Animation al hover */
+.advanced-gif {
+  transition: all 0.3s ease;
+  
+}
+
+.advanced-option:hover .advanced-gif {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.advanced-option.selected .advanced-gif {
+  filter: grayscale(0%);
+  box-shadow: 0 3px 12px rgba(59, 130, 246, 0.3);
+}
+
+.advanced-option img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  max-width: 1000px; /* Limita larghezza su schermi grandi */
+}
+
+/* Contenitore delle opzioni avanzate nascosto di default */
+#advanced-options-container {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+  opacity: 0;
+}
+
+/* Quando attivo */
+#advanced-options-container.active {
+  max-height: 1000px; /* abbastanza grande da contenere tutte le opzioni */
+  opacity: 1;
+}
+
+/* === ANIMAZIONI PERFORMANCE === */
+
+#exterior-image, .thumbnail, #prev-image, #next-image {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  transform: scale(1);
+}
+
+/* Eliminazione flickering */
+.thumbnail, #exterior-image {
+  will-change: transform, filter;
+}
+
+/* === PERFORMANCE STATS SECTION === */
+#range-counter, #speed-counter, #acceleration-counter {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 700;
+  color: #1f2937;
+  transition: all 0.3s ease;
+  display: inline-block;
+  min-width: 40px;
+  text-align: center;
+}
+
+/* Animazione contatori */
+.counter-animating {
+  color: #3B82F6;
+  transform: scale(1.3);
+}
+
+/* Separatori sottili tra le statistiche */
+.flex.justify-between.items-center.py-4 > div:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: 20%;
+  height: 60%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, #e5e7eb, transparent);
+}
+
+.flex.justify-between.items-center.py-4 > div {
+  position: relative;
+  flex: 1;
+}
+
+
+/* === ENHANCED ACCESSORIES SECTION === */
+.accessory-dropdown {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accessory-dropdown.open {
+  max-height: 500px;
+}
+
+.accessory-category-toggle:hover .accessory-chevron {
+  color: #3B82F6;
+  transform: scale(1.1);
+}
+
+.accessory-dropdown.open .accessory-chevron {
+  transform: rotate(180deg);
+}
+
+.accessory-item {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.accessory-item:hover {
+  border-color: #3B82F6;
+  background-color: #f8fafc;
+  transform: translateY(-1px);
+}
+
+/* Container flessibile per l'animazione */
+.accessory-item .flex.items-center.space-x-4 {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 2;
+}
+
+/* Immagine che si espande */
+.accessory-item img {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid #e5e7eb;
+  width: 64px; /* w-16 */
+  height: 48px; /* h-12 */
+  object-fit: cover;
+  border-radius: 6px;
+  margin-left: -8px;
+}
+
+/* Hover: espansione laterale dell'immagine */
+.accessory-item:hover img {
+  width: 200px; /* Espande verso destra */
+  height: 60px; /* Leggero aumento altezza */
+  border-color: #3B82F6;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  transform: translateX(16px); /* Spinge leggermente a destra */
+  margin-left: -24px;
+}
+
+/* Testo che si sposta durante l'hover */
+.accessory-item:hover .flex.items-center.space-x-4 > div:last-child {
+  transform: translateX(20px);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Animazione del contenuto durante hover */
+.accessory-item:hover .flex.items-center.space-x-4 {
+  padding-left: 8px;
+}
+
+
+
+/* Checkbox personalizzato */
+.accessory-form-checkbox {
+  transition: all 0.3s ease;
+  z-index: 4;
+  position: relative;
+}
+
+.accessory-form-checkbox:checked {
+  background-color: #3B82F6;
+  border-color: #3B82F6;
+  transform: scale(1.1);
+}
+
+/* Overlay sottile durante hover */
+.accessory-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.02), rgba(59, 130, 246, 0.05));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.accessory-item:hover::before {
+  opacity: 1;
+}
+
+/* Effetto glow sui testi durante hover */
+.accessory-item:hover span.font-medium {
+  color: #1f2937;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.accessory-item:hover p.text-sm {
+  color: #4b5563;
+  transition: all 0.3s ease;
+}
+
+/* Animazione prezzo durante hover */
+.accessory-item:hover .font-semibold.text-blue-600 {
+  color: #2563eb;
+  transform: scale(1.05);
+  font-weight: 700;
+}
+
+/* Animazione apertura dropdown */
+.accessory-item {
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: accessoryFadeIn 0.4s ease forwards;
+}
+
+.accessory-item:nth-child(1) { animation-delay: 0.1s; }
+.accessory-item:nth-child(2) { animation-delay: 0.2s; }
+.accessory-item:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes accessoryFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .fixed {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    margin-bottom: 2rem;
+  }
+  
+  main {
+    justify-content: flex-start !important;
+  }
+  
+  aside {
+    max-width: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .fixed {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+  }
+  
+  aside {
+    margin-left: 0 !important;
+  }
+}
+
+/* Responsive: ridimensiona su mobile */
+@media (max-width: 768px) {
+  .accessory-item:hover img {
+    width: 100px;
+    height: 55px;
+  }
+  
+  .accessory-item:hover .flex.items-center.space-x-4 > div:last-child {
+    transform: translateX(15px);
+  }
+  
+  .accessory-item:hover .flex.items-center.space-x-3 {
+    transform: translateX(5px);
+  }
+}
+
+
+@media (max-width: 1024px) {
+  .sticky {
+    position: relative !important;
+    top: auto !important;
+    height: auto !important;
+  }
+  
+  section {
+    margin-bottom: 2rem;
+  }
+  
+  aside {
+    margin-top: 0 !important;
+  }
+}
+/* Responsive migliorato */
+@media (max-width: 1024px) {
+  #exterior-buttons button, #interior-buttons button {
+    transform: none;
+  }
+  
+  #exterior-buttons button:hover, #interior-buttons button:hover {
+    transform: scale(1.05);
+  }
+  
+  .advanced-option.btn-selected:hover {
+  transform: none;
+  cursor: default;
+  border-color: #3B82F6;
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.25);
+}
+  
+  .thumbnail:hover {
+    transform: scale(1.02);
+  }
+}
