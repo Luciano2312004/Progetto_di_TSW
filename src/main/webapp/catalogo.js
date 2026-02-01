@@ -1,6 +1,8 @@
 /* =========================
    DEBUG (attiva con ?debug=1)
 ========================= */
+
+
 const DEBUG = new URLSearchParams(window.location.search).get('Debug') === '1';
 const __debugLog = [];
 let __debugPanelEl = null;
@@ -157,6 +159,9 @@ function showConfigPopup(payload) {
    Overlay iniziale
 ========================= */
 // Forza schermata bianca per ~1 secondo
+/* =========================
+   Overlay iniziale
+========================= */
 document.addEventListener('DOMContentLoaded', function () {
   const overlay = document.createElement('div');
   overlay.style.cssText = `
@@ -168,9 +173,15 @@ document.addEventListener('DOMContentLoaded', function () {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: opacity 0.3s ease;
   `;
   document.body.appendChild(overlay);
-  setTimeout(() => overlay.remove(), 1000);
+  
+  // Rimuovi l'overlay con fade out
+  setTimeout(() => {
+    overlay.style.opacity = '0';
+    setTimeout(() => overlay.remove(), 300);
+  }, 800);
 });
 /* =========================
    Init principale
@@ -249,11 +260,25 @@ function renderCatalogo(lista) {
   let skipped = 0;
 
   for (const a of lista) {
-    if (!a || a.disponibile === false || (a.quantitaStock ?? 0) <= 0) { skipped++; continue; }
-    frag.appendChild(creaCardAuto(a));
+    if (!a || a.disponibile === false || (a.quantitaStock ?? 0) <= 0) { 
+      skipped++; 
+      continue; 
+    }
+    const card = creaCardAuto(a);
+    frag.appendChild(card);
     created++;
   }
+  
   catalogoEl.appendChild(frag);
+  
+  // Trigger animazione dopo un breve delay
+  requestAnimationFrame(() => {
+    const cards = catalogoEl.querySelectorAll('.auto');
+    cards.forEach((card) => {
+      card.classList.add('auto-visible');
+    });
+  });
+  
   dlog('info', 'Render catalogo', { created, skipped });
 
   // Re-inizializza componenti dinamici sulle nuove card
@@ -342,6 +367,7 @@ function creaCardAuto(a) {
   const baseImg = modelloToFilenameBase(modello);
   const wrapper = document.createElement('div');
   wrapper.className = 'auto';
+  
   wrapper.innerHTML = `
     <div class="galleria-container${coloreKey}">
       <div class="galleria">
@@ -656,6 +682,7 @@ function initFiltri() {
       if (marcaCorrente !== 'tutte' && testiBrand[marcaCorrente] && autoVisibili > 0) {
         testoBrand.textContent = testiBrand[marcaCorrente];
         scrittaCatalogo.style.display = 'block';
+		auto.classList.add('card-fade-in');
       } else {
         scrittaCatalogo.style.display = 'none';
       }

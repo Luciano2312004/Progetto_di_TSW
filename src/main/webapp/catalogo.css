@@ -712,6 +712,55 @@ h1 {
 	}
 }
 
+
+/* Animazione fade-in per le card */
+@keyframes fadeInCard {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.auto {
+  background: white;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid #f0f0f0;
+  
+  /* Stato iniziale nascosto */
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* Classe che triggera l'animazione */
+.auto.auto-visible {
+  animation: fadeInCard 0.5s ease forwards;
+}
+
+/* Ritardo progressivo per effetto a cascata */
+.auto.auto-visible:nth-child(1) { animation-delay: 0.1s; }
+.auto.auto-visible:nth-child(2) { animation-delay: 0.16s; }
+.auto.auto-visible:nth-child(3) { animation-delay: 0.22s; }
+.auto.auto-visible:nth-child(4) { animation-delay: 0.28s; }
+.auto.auto-visible:nth-child(5) { animation-delay: 0.33s; }
+.auto.auto-visible:nth-child(6) { animation-delay: 0.38s; }
+.auto.auto-visible:nth-child(7) { animation-delay: 0.42s; }
+.auto.auto-visible:nth-child(8) { animation-delay: 0.47s; }
+.auto.auto-visible:nth-child(9) { animation-delay: 0.52s; }
+.auto.auto-visible:nth-child(10) { animation-delay: 0.58s; }
+.auto.auto-visible:nth-child(11) { animation-delay: 0.63s; }
+.auto.auto-visible:nth-child(12) { animation-delay: 0.69s; }
+.auto.auto-visible:nth-child(n+13) { animation-delay: 0.78s; }
+
 @media (max-width: 600px) {
 	.catalogo {
 		grid-template-columns: 1fr;
