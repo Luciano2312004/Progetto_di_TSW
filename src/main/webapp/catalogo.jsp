@@ -37,6 +37,11 @@
           </div>
         </div>
 
+        <!-- Search Bar -->
+        <div class="search-container">
+          <input type="text" id="catalogo-search" placeholder="Cerca il tuo modello..." autocomplete="off">
+        </div>
+
         <div class="filtro-tendina">
           <button class="filtro-btn">Filtra per Marca &#9660;</button>
           <div class="filtro-contenuto">
