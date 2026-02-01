@@ -219,7 +219,7 @@
                     </button>
                 </div>
 
-                <h1>📄 Fattura</h1>
+                <h1>Fattura</h1>
 
                 <c:if test="${not empty error}">
                     <div class="error">${error}</div>
