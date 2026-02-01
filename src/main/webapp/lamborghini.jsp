@@ -51,21 +51,21 @@
 				  <div class="info__data">
 				  <div class="info__group">
 				  <h3>POTENZA (KW)</h3>
-				  <p>750CV (552KW) <br>8.250 giri/min </p>
+				  <p><span class="info__num" data-target="750">0</span>CV (552KW) <br>8.250 giri/min </p>
 				  
 				  
 				  </div>
 				  
 				   <div class="info__group">
 				  <h3>MAX. VELOCITÀ</h3>
-				  <p>355 km/h</p>
+				  <p><span class="info__num" data-target="355">0</span> km/h</p>
 				  
 				  
 				  </div>
 				  
 				   <div class="info__group">
 				  <h3>0-100 KM/H</h3>
-				  <p>2.8 - 2.9s</p>
+				  <p><span class="info__num" data-target="2.8">0</span> - 2.9s</p>
 				  
 				  
 				  </div>
