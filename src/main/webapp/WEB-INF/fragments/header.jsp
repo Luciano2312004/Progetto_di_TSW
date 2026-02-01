@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-        <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
         <script src="https://cdn.tailwindcss.com"></script>
 
         <link rel="stylesheet" href="header.css">
@@ -190,4 +190,44 @@
 
                 refreshCartDisplay();
             });
+            /*=============== SHOW MENU ===============*/
+            const navMenu = document.getElementById('nav-menu'),
+                  navToggle = document.getElementById('nav-toggle'),
+                  navClose = document.getElementById('nav-close')
+
+            /* Menu show */
+            if(navToggle){
+                navToggle.addEventListener('click', () =>{
+                    navMenu.classList.add('show-menu')
+                })
+            }
+
+            /* Menu hidden */
+            if(navClose){
+                navClose.addEventListener('click', () =>{
+                    navMenu.classList.remove('show-menu')
+                })
+            }
+            const userIcon = document.getElementById('userIcon');
+            const userDropdown = document.getElementById('userDropdown');
+
+            if (userIcon && userDropdown) {
+                userIcon.addEventListener('click', () => {
+                    userDropdown.style.display = userDropdown.style.display === 'block' ? 'none' : 'block';
+                });
+
+                // Chiudi cliccando fuori
+                document.addEventListener('click', (e) => {
+                    if (!userIcon.contains(e.target) && !userDropdown.contains(e.target)) {
+                        userDropdown.style.display = 'none';
+                    }
+                });
+            }
+            const bgHeader = () =>{
+                const header = document.getElementById('header')
+                // Add a class if the bottom offset is greater than 50 of the viewport
+                this.scrollY >= 50 ? header.classList.add('bg-header') 
+                                   : header.classList.remove('bg-header')
+            }
+            window.addEventListener('scroll', bgHeader)
         </script>

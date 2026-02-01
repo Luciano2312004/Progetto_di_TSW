@@ -149,61 +149,7 @@ video {
   overflow: hidden;
 }
 
-/*=============== HEADER & NAV ===============*/
-.header{
-	
-	position:fixed;
-	width:100%;
-	top:0;
-	left:0;
-	background-color:var(--white-color);
-	z-index: var(--z-fixed);
-	transition: background-color .4s, box-shadow .4s;
-	
-}
 
-.nav{
-	position:relative;
-	height: var(--header-height);
-	display:flex;
-	justify-content: space-between;
-	align-items:center;
-	
-	
-}
-
-.nav__logo{
-	color: var(--black-color);
-	font-weight: var(--font-bold);
-	
-	
-}
-
-.nav__toggle,
-.nav__close{
-	
-	display:inline-flex;
-	font-size:1.5rem;
-	cursor:pointer;
-	
-}
-
-
-/* Navigation for mobile devices */
-@media screen and (max-width: 1150px){
-	
-	.nav__menu{
-	position: fixed;
-	top:-120%;
-	left:0;
-	background-color: var(--body-color);
-	width:100%;
-	padding-block:4rem;
-	box-shadow:0 4px 16px hsla(0, 0%, 0%, .1 );
-	transition: top .4s;
-	}
-	
-}
 
 .nav__list{
 	text-align:center;
