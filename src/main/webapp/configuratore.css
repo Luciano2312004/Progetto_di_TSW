@@ -554,6 +554,24 @@ button {
   opacity: 1;
 }
 
+/* === FIX OVERFLOW AUTOPILOT === */
+/* Disabilita l'effetto hover quando l'opzione Ã¨ giÃ  selezionata */
+
+.advanced-option.selected:hover,
+.advanced-option.btn-selected:hover {
+  transform: none !important; /* Blocca lo spostamento verso l'alto */
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.25) !important; /* Mantiene l'ombra fissa blu */
+  border-color: #3B82F6 !important;
+   /* Cambia il cursore per far capire che Ã¨ giÃ  attivo */
+}
+
+/* Blocca specificamente lo zoom della GIF interna quando selezionato */
+.advanced-option.selected:hover .advanced-gif,
+.advanced-option.btn-selected:hover .advanced-gif {
+  transform: scale(1) !important; /* Forza la scala a 1 (normale), annullando l'1.05 */
+  box-shadow: 0 3px 12px rgba(59, 130, 246, 0.3) !important; /* Mantiene l'ombra standard */
+}
+
 /* === ANIMAZIONI PERFORMANCE === */
 
 #exterior-image, .thumbnail, #prev-image, #next-image {
@@ -567,6 +585,8 @@ button {
 .thumbnail, #exterior-image {
   will-change: transform, filter;
 }
+
+
 
 /* === PERFORMANCE STATS SECTION === */
 #range-counter, #speed-counter, #acceleration-counter {
@@ -738,6 +758,8 @@ button {
 .accessory-item:nth-child(2) { animation-delay: 0.2s; }
 .accessory-item:nth-child(3) { animation-delay: 0.3s; }
 
+
+
 @keyframes accessoryFadeIn {
   to {
     opacity: 1;
@@ -819,10 +841,10 @@ button {
   }
   
   .advanced-option.btn-selected:hover {
-  transform: none;
-  cursor: default;
-  border-color: #3B82F6;
-  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.25);
+ï¿½ transform: none;
+ï¿½ cursor: default;
+ï¿½ border-color: #3B82F6;
+ï¿½ box-shadow: 0 4px 20px rgba(59, 130, 246, 0.25);
 }
   
   .thumbnail:hover {
