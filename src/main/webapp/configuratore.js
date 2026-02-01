@@ -429,45 +429,60 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Handler per bottoni a selezione singola (colori, ruote, autopilot)
     // Handler per bottoni a selezione singola (colori, ruote)
+// Handler per bottoni a selezione singola (colori, ruote)
 const handleButtonSelection = (container, selector, priceType) => {
-	    if (!container) return;
-	    container.addEventListener('click', (e) => {
-	        const selectedButton = e.target.closest(selector);
-	        // Se non è un bottone valido, o è già selezionato, o è disabilitato -> esci
-	        if (!selectedButton || selectedButton.classList.contains('btn-selected') || selectedButton.classList.contains('disabled')) {
-	            return;
-	        }
+    if (!container) return;
+    container.addEventListener('click', (e) => {
+        const selectedButton = e.target.closest(selector);
+        
+        // Se non è un bottone valido, o è già selezionato, o è disabilitato -> esci
+        if (!selectedButton || selectedButton.classList.contains('btn-selected') || selectedButton.classList.contains('disabled')) {
+            return;
+        }
 
-	        // Deseleziona tutti gli altri
-	        container.querySelectorAll(selector).forEach(btn => btn.classList.remove('btn-selected'));
-	        // Seleziona questo
-	      	 selectedButton.classList.add('btn-selected');
-	        
-	      	 let price = parseFloat(selectedButton.dataset.price) || 0;
+        // 1. Deseleziono tutti gli altri (Rimuovo classe E aggiorno aria-pressed)
+        container.querySelectorAll(selector).forEach(btn => {
+            btn.classList.remove('btn-selected');
+            btn.setAttribute('aria-pressed', 'false'); // <--- FIX: Aggiorna l'HTML per il carrello
+        });
 
-	      	 if (priceType === 'wheel') {
-	    	 	 	 optionsPrices.wheel = price;
-				selectedWheelType = selectedButton.dataset.wheel;
-	      	 } 
-	      	 
-	      	 if (priceType === 'color') {
-	    	 	 	 selectedColor = selectedButton.querySelector('img').alt;
-	      	 }
-	      	 if (priceType === 'intColor') {
-	    	 	 	 selectedInteriorColor = selectedButton.querySelector('img').alt;
-	      	 }
+        // 2. Seleziono questo (Aggiungo classe E aggiorno aria-pressed)
+        selectedButton.classList.add('btn-selected');
+        selectedButton.setAttribute('aria-pressed', 'true'); // <--- FIX: Aggiorna l'HTML per il carrello
+        
+        // 3. Calcolo il prezzo
+        let price = parseFloat(selectedButton.dataset.price) || 0;
 
-	      	 updatePrice();
-	      	 
-	      	 // Aggiorna la galleria se cambiano ruote o colori
-	      	 if (priceType === 'wheel' || priceType === 'color' || priceType === 'intColor') {
-	  	 	 	 	 const currentView = document.querySelectorAll('#exterior-gallery .thumbnail')[currentGalleryIndex]?.dataset.view || 'front';
-	  	 	 	 	 const extColorCode = document.querySelector("#exterior-buttons .btn-selected img")?.dataset.code || window.autoCorrente.colore.toLowerCase();
-	  	 	 	 	 const intColorCode = document.querySelector("#interior-buttons .btn-selected")?.dataset.interiorCode || selectedInteriorColor.toLowerCase();
-	  	 	 	 	 updateGallery(currentView, extColorCode, intColorCode);
-	  	 	 	 }
-	    });
-	};
+        if (priceType === 'wheel') {
+             const wheelName = selectedButton.dataset.wheel; // es. "Performance"
+             selectedWheelType = wheelName;
+             
+             // FIX PREZZO: Se nell'HTML manca data-price="2500", lo recuperiamo dalla variabile globale pricing
+             if (price === 0 && pricing[wheelName]) {
+                 price = pricing[wheelName];
+             }
+             optionsPrices.wheel = price;
+        } 
+        
+        if (priceType === 'color') {
+             selectedColor = selectedButton.querySelector('img').alt;
+        }
+        if (priceType === 'intColor') {
+             selectedInteriorColor = selectedButton.querySelector('img').alt;
+        }
+
+        updatePrice();
+        
+        // Aggiorna la galleria se cambiano ruote o colori
+        if (priceType === 'wheel' || priceType === 'color' || priceType === 'intColor') {
+             const currentView = document.querySelectorAll('#exterior-gallery .thumbnail')[currentGalleryIndex]?.dataset.view || 'front';
+             const extColorCode = document.querySelector("#exterior-buttons .btn-selected img")?.dataset.code || window.autoCorrente.colore.toLowerCase();
+             const intColorCode = document.querySelector("#interior-buttons .btn-selected")?.dataset.interiorCode || selectedInteriorColor.toLowerCase();
+             
+             updateGallery(currentView, extColorCode, intColorCode);
+        }
+    });
+};
 
     // Handler per pacchetti (selezione multipla)
     // Handler per pacchetti (selezione multipla)
@@ -593,7 +608,7 @@ const handlePackageSelection = (container, selector, priceType) => {
 	    				summon.classList.remove('disabled');
 
 	    				// 4. Scroll per mostrare le nuove opzioni
-	    				autopark.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+	    				summon.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 	  	 	 		}
 	  	 	 	} else if (isChildOption) {
 	  	 	 		// È un'opzione figlia, faccio solo il toggle

@@ -364,7 +364,7 @@
             <!-- BOTTONE AGGIUNGI AL CARRELLO (id compatibile con main.js) -->
             <button id="add-to-cart-btn"
               class="w-full mt-4 bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-300">
-              Aggiungi al carrello 🛒
+              Aggiungi al carrello
             </button>
           </div>
           <!-- Payment Breakdown -->
