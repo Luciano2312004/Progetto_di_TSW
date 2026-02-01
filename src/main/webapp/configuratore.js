@@ -684,7 +684,7 @@ const handlePackageSelection = (container, selector, priceType) => {
 		});
 	}
 
-	// Logica Dropdown dai
+	// Logica Dropdown daidai
 	const advancedToggle = document.getElementById('advanced-toggle');
 	const advancedContent = document.getElementById('advanced-content');
 	const advancedChevron = document.getElementById('advanced-chevron');
