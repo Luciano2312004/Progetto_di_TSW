@@ -684,7 +684,7 @@ const handlePackageSelection = (container, selector, priceType) => {
 		});
 	}
 
-	// Logica Dropdown
+	// Logica Dropdown dai
 	const advancedToggle = document.getElementById('advanced-toggle');
 	const advancedContent = document.getElementById('advanced-content');
 	const advancedChevron = document.getElementById('advanced-chevron');
@@ -693,7 +693,7 @@ const handlePackageSelection = (container, selector, priceType) => {
 		advancedContent.classList.toggle('open');
  		advancedChevron.classList.toggle('rotate-180');
 	});
-
+	
 	document.querySelectorAll('.accessory-category-toggle').forEach(toggle => {
  		toggle.addEventListener('click', function() {
  			const dropdown = this.nextElementSibling;
@@ -702,5 +702,4 @@ const handlePackageSelection = (container, selector, priceType) => {
  			if(chevron) chevron.classList.toggle('rotate-180');
  		});
 	});
-
 });
