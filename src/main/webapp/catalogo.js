@@ -187,6 +187,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     // 3) Filtri e ordinamenti
     initFiltri();
     initOrdinamenti();
+    initSearch(); // Init Search Bar
     // 4) Filtro da URL
     applicaFiltroDaURL();
     // 5) Debug: verifica reale immagini (404 / nome errato)
@@ -198,6 +199,68 @@ document.addEventListener('DOMContentLoaded', async function () {
     dlog('error', 'Errore inizializzazione catalogo', { error: String(e) });
   }
 });
+
+let fullCatalogData = [];
+
+/* =========================
+   Ricerca (Search Bar)
+   ========================= */
+function initSearch() {
+  const searchInput = document.getElementById('catalogo-search');
+  if (!searchInput) return;
+
+  let debounceTimer;
+
+  searchInput.addEventListener('input', (e) => {
+    const term = e.target.value.trim();
+
+    // Cancella il timer precedente
+    clearTimeout(debounceTimer);
+
+    // Imposta un nuovo timer per evitare troppe chiamate (debounce 300ms)
+    debounceTimer = setTimeout(async () => {
+      try {
+        const base = window.location.pathname.split('/')[1] || '';
+        const param = term ? `&q=${encodeURIComponent(term)}` : '';
+        const url = `/${base}/api/catalogo?action=getCatalogo${param}`;
+
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Network response was not ok');
+
+        const lista = await res.json();
+        renderCatalogo(lista);
+      } catch (err) {
+        dlog('error', 'Errore ricerca AJAX', { err });
+      }
+    }, 300);
+  });
+}
+
+/* =========================
+   Render Catalogo
+   ========================= */
+function renderCatalogo(lista) {
+  const catalogoEl = document.querySelector('.catalogo');
+  if (!catalogoEl) return;
+
+  catalogoEl.innerHTML = '';
+  const frag = document.createDocumentFragment();
+  let created = 0;
+  let skipped = 0;
+
+  for (const a of lista) {
+    if (!a || a.disponibile === false || (a.quantitaStock ?? 0) <= 0) { skipped++; continue; }
+    frag.appendChild(creaCardAuto(a));
+    created++;
+  }
+  catalogoEl.appendChild(frag);
+  dlog('info', 'Render catalogo', { created, skipped });
+
+  // Re-inizializza componenti dinamici sulle nuove card
+  initGallerie();
+  initHoverAutoscroll();
+  initConfiguraButtons();
+}
 /* =========================
    Gallerie
 ========================= */
@@ -246,17 +309,9 @@ async function caricaCatalogoDaJSON() {
   if (!res.ok) throw new Error(`HTTP ${res.status} su ${url}`);
   const lista = await res.json();
   dlog('info', 'Catalogo JSON ricevuto', { items: Array.isArray(lista) ? lista.length : 'NON-ARRAY' });
-  catalogoEl.innerHTML = '';
-  const frag = document.createDocumentFragment();
-  let created = 0;
-  let skipped = 0;
-  for (const a of lista) {
-    if (!a || a.disponibile === false || (a.quantitaStock ?? 0) <= 0) { skipped++; continue; }
-    frag.appendChild(creaCardAuto(a));
-    created++;
-  }
-  catalogoEl.appendChild(frag);
-  dlog('info', 'Card create', { created, skipped });
+
+  fullCatalogData = lista; // Salva dati globalmente
+  renderCatalogo(fullCatalogData); // Renderizza
 }
 function creaCardAuto(a) {
   const marcaLabel = (a.marca || '').trim();

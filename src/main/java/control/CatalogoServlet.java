@@ -13,10 +13,10 @@ import java.io.PrintWriter;
 import java.util.*;
 
 /**
- * Servlet Controller per gestire il catalogo delle auto
- * VERSIONE SENZA GSON - Crea JSON manualmente
+ * Servlet Controller per la gestione del catalogo prodotti.
+ * Fornisce dati sia per la visualizzazione tramite JSP che tramite API JSON.
  */
-@WebServlet(name="CatalogoServlet", urlPatterns={"/api/catalogo", "/home", "/catalogo"})
+@WebServlet(name = "CatalogoServlet", urlPatterns = { "/api/catalogo", "/home", "/catalogo" })
 public class CatalogoServlet extends HttpServlet {
 
     private AutoDAO autoDAO;
@@ -47,15 +47,18 @@ public class CatalogoServlet extends HttpServlet {
 
                 /**
                  * ✅ Nuovo JSON completo per generare le card
-                 * - JSON puro:   /api/catalogo?action=getCatalogo
-                 * - Debug HTML:  /api/catalogo?action=getCatalogo&debug=1
+                 * - JSON puro: /api/catalogo?action=getCatalogo
+                 * - Debug HTML: /api/catalogo?action=getCatalogo&debug=1
                  */
                 case "getCatalogo": {
                     getCatalogoJSON(request, response);
                     return;
                 }
 
-                // JSON vecchio: chiave -> boolean (compatibilità con JS attuale)
+                /*
+                 * Restituisce un mapping semplificato delle auto disponibili.
+                 * Utile per controlli rapidi di disponibilità lato client.
+                 */
                 case "getAutoDisponibili": {
                     getAutoDisponibiliJSON(request, response);
                     return;
@@ -79,7 +82,8 @@ public class CatalogoServlet extends HttpServlet {
                         response.getWriter().println("OK DB. Auto disponibili: " + (list == null ? -1 : list.size()));
                     } catch (Exception e) {
                         e.printStackTrace();
-                        response.getWriter().println("ERRORE DB: " + e.getClass().getSimpleName() + " - " + e.getMessage());
+                        response.getWriter()
+                                .println("ERRORE DB: " + e.getClass().getSimpleName() + " - " + e.getMessage());
                     }
                     return;
                 }
@@ -99,28 +103,28 @@ public class CatalogoServlet extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-            // 1) Prendi SOLO le auto disponibili (quantita_stock > 0)
+            // Carica la lista delle auto disponibili dallo stock
             List<Auto> autoDisponibili = autoDAO.getAutoDisponibili();
 
-            // 2) Mappa "modello_anno" -> Auto
+            // Crea una mappa per un accesso rapido alla disponibilità tramite chiave
+            // composta "modello_anno"
             Map<String, Auto> mappaDisponibilita = new HashMap<>();
             for (Auto auto : autoDisponibili) {
                 String chiave = auto.getModello() + "_" + auto.getAnno();
                 mappaDisponibilita.put(chiave, auto);
             }
 
-            // 3) Raggruppa per marca (opzionale)
+            // Raggruppa i prodotti per marca per facilitare il filtraggio nella
+            // visualizzazione
             Map<String, List<Auto>> autoPerMarca = autoDAO.getAutoPerMarca();
 
-            // 4) Attributi per la JSP
+            // Imposta gli attributi necessari per il rendering della pagina JSP
             request.setAttribute("autoDisponibili", autoDisponibili);
             request.setAttribute("mappaDisponibilita", mappaDisponibilita);
             request.setAttribute("autoPerMarca", autoPerMarca);
-
-            // compatibilità
             request.setAttribute("listaAuto", autoDisponibili);
 
-            // 5) Forward
+            // Inoltra la richiesta alla vista del catalogo
             request.getRequestDispatcher("/catalogo.jsp").forward(request, response);
 
         } catch (Exception e) {
@@ -132,25 +136,8 @@ public class CatalogoServlet extends HttpServlet {
     }
 
     /**
-     * ✅ Nuovo endpoint JSON completo:
-     * GET /api/catalogo?action=getCatalogo
-     *
-     * Output (array di oggetti):
-     * [
-     *   {
-     *     "marca":"Ferrari",
-     *     "modello":"SF90",
-     *     "anno":2019,
-     *     "motore":"Motore V8 biturbo",
-     *     "potenza":"1030 CV",
-     *     "prezzo":440000.00,
-     *     "quantitaStock":1,
-     *     "disponibile":true
-     *   }
-     * ]
-     *
-     * Debug:
-     * /api/catalogo?action=getCatalogo&debug=1  -> pagina HTML con <pre> contenente il JSON
+     * Genera e invia una risposta JSON contenente i dettagli completi del catalogo.
+     * Supporta una modalità di debug per visualizzare il JSON in formato HTML.
      */
     private void getCatalogoJSON(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
@@ -161,13 +148,28 @@ public class CatalogoServlet extends HttpServlet {
 
             List<Auto> tutte = autoDAO.getAll();
 
+            // FILTRAGGIO SERVER-SIDE PER RICERCA AJAX
+            String query = request.getParameter("q");
+            if (query != null && !query.trim().isEmpty()) {
+                String q = query.toLowerCase().trim();
+                List<Auto> filtrate = new ArrayList<>();
+                for (Auto a : tutte) {
+                    if (a.getMarca().toLowerCase().contains(q) ||
+                            a.getModello().toLowerCase().contains(q) ||
+                            String.valueOf(a.getAnno()).contains(q)) {
+                        filtrate.add(a);
+                    }
+                }
+                tutte = filtrate; // Usa la lista filtrata
+            }
+
             StringBuilder json = new StringBuilder();
             json.append("[");
 
             for (int i = 0; i < tutte.size(); i++) {
                 Auto a = tutte.get(i);
 
-                String[] mp = splitMotorePotenza(a.getSpecifiche()); // virgola come separatore
+                String[] mp = splitMotorePotenza(a.getSpecifiche());
                 String motore = mp[0];
                 String potenza = mp[1];
 
@@ -175,19 +177,19 @@ public class CatalogoServlet extends HttpServlet {
                 String coloreDefault = coloreDefaultPerModello(a.getModello());
 
                 json.append("{")
-                .append("\"marca\":\"").append(escapeJson(a.getMarca())).append("\",")
-                .append("\"modello\":\"").append(escapeJson(a.getModello())).append("\",")
-                .append("\"coloreDefault\":\"").append(escapeJson(coloreDefault)).append("\",")   // <--- AGGIUNTO
-                .append("\"anno\":").append(a.getAnno()).append(",")
-                .append("\"motore\":\"").append(escapeJson(motore)).append("\",")
-                .append("\"potenza\":\"").append(escapeJson(potenza)).append("\",")
-                .append("\"prezzo\":").append(a.getPrezzo()).append(",")
-                .append("\"quantitaStock\":").append(a.getQuantitaStock()).append(",")
-                .append("\"disponibile\":").append(disponibile)
-                .append("}");
+                        .append("\"marca\":\"").append(escapeJson(a.getMarca())).append("\",")
+                        .append("\"modello\":\"").append(escapeJson(a.getModello())).append("\",")
+                        .append("\"coloreDefault\":\"").append(escapeJson(coloreDefault)).append("\",")
+                        .append("\"anno\":").append(a.getAnno()).append(",")
+                        .append("\"motore\":\"").append(escapeJson(motore)).append("\",")
+                        .append("\"potenza\":\"").append(escapeJson(potenza)).append("\",")
+                        .append("\"prezzo\":").append(a.getPrezzo()).append(",")
+                        .append("\"quantitaStock\":").append(a.getQuantitaStock()).append(",")
+                        .append("\"disponibile\":").append(disponibile)
+                        .append("}");
 
-
-                if (i < tutte.size() - 1) json.append(",");
+                if (i < tutte.size() - 1)
+                    json.append(",");
             }
 
             json.append("]");
@@ -197,19 +199,20 @@ public class CatalogoServlet extends HttpServlet {
                     || "true".equalsIgnoreCase(request.getParameter("debug"));
 
             if (debug) {
-                // log su console Tomcat
+                // Stampa il JSON sulla console del server per scopi di diagnostica
                 System.out.println("=== DEBUG JSON getCatalogo ===");
                 System.out.println(jsonOut);
                 System.out.println("=== END DEBUG JSON getCatalogo ===");
 
-                // pagina HTML leggibile
+                // Restituisce una pagina HTML minimalista per una lettura agevole del JSON
                 response.setContentType("text/html;charset=UTF-8");
                 out.print("<!doctype html><html lang='it'><head><meta charset='UTF-8'>");
                 out.print("<title>DEBUG JSON - getCatalogo</title>");
-                out.print("<style>body{font-family:monospace;padding:16px;}pre{white-space:pre-wrap;word-break:break-word;background:#f5f5f5;padding:12px;border-radius:8px;}</style>");
+                out.print(
+                        "<style>body{font-family:monospace;padding:16px;}pre{white-space:pre-wrap;word-break:break-word;background:#f5f5f5;padding:12px;border-radius:8px;}</style>");
                 out.print("</head><body>");
                 out.print("<h3>DEBUG JSON - /api/catalogo?action=getCatalogo</h3>");
-                out.print("<p>Parametro debug attivo (debug=1). Copia il contenuto qui sotto:</p>");
+                out.print("<p>Parametro debug attivo (debug=1). Contenuto JSON generato:</p>");
                 out.print("<pre>");
                 out.print(escapeHtml(jsonOut));
                 out.print("</pre>");
@@ -217,7 +220,7 @@ public class CatalogoServlet extends HttpServlet {
                 return;
             }
 
-            // JSON puro
+            // Invia la risposta JSON pura con il relativo MIME type
             response.setContentType("application/json;charset=UTF-8");
             out.print(jsonOut);
 
@@ -229,8 +232,10 @@ public class CatalogoServlet extends HttpServlet {
     }
 
     /**
-     * Restituisce le auto disponibili in formato JSON (vecchio formato):
-     * { "ModelloSenzaSpazi_Anno": true/false, ... }
+     * Restituisce lo stato di disponibilità delle auto in un formato JSON
+     * contratto.
+     * La chiave è composta dal modello (senza spazi) e dall'anno (es.
+     * Modello_2023).
      */
     private void getAutoDisponibiliJSON(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
@@ -248,7 +253,8 @@ public class CatalogoServlet extends HttpServlet {
                 boolean disponibile = a.getQuantitaStock() > 0;
 
                 json.append("\"").append(escapeJson(chiave)).append("\":").append(disponibile);
-                if (i < tutte.size() - 1) json.append(",");
+                if (i < tutte.size() - 1)
+                    json.append(",");
             }
             json.append("}");
             out.print(json.toString());
@@ -308,60 +314,85 @@ public class CatalogoServlet extends HttpServlet {
      * Ritorna sempre un array di 2 elementi: [motore, potenza]
      */
     private String[] splitMotorePotenza(String specifiche) {
-        if (specifiche == null) return new String[]{"", ""};
+        if (specifiche == null)
+            return new String[] { "", "" };
         String[] parts = specifiche.split(",");
         String motore = parts.length >= 1 ? parts[0].trim() : "";
         String potenza = parts.length >= 2 ? parts[1].trim() : "";
-        return new String[]{motore, potenza};
+        return new String[] { motore, potenza };
     }
 
     /**
      * Escape dei caratteri speciali per JSON
      */
     private String escapeJson(String str) {
-        if (str == null) return "";
+        if (str == null)
+            return "";
         return str.replace("\\", "\\\\")
-                  .replace("\"", "\\\"")
-                  .replace("\n", "\\n")
-                  .replace("\r", "\\r")
-                  .replace("\t", "\\t");
+                .replace("\"", "\\\"")
+                .replace("\n", "\\n")
+                .replace("\r", "\\r")
+                .replace("\t", "\\t");
     }
 
     /**
-     * Escape HTML (per mostrare il JSON dentro <pre> quando debug=1)
+     * Escape HTML (per mostrare il JSON dentro
+     * 
+     * <pre>
+     * quando debug=1)
      */
     private String escapeHtml(String s) {
-        if (s == null) return "";
+        if (s == null)
+            return "";
         return s.replace("&", "&amp;")
                 .replace("<", "&lt;")
                 .replace(">", "&gt;")
                 .replace("\"", "&quot;")
                 .replace("'", "&#39;");
     }
+
     /**
-     * Colore standard per modello (usato dal catalogo -> configuratore).
-     * Se un modello non è mappato, ritorna un default sensato.
+     * Determina il colore predefinito per un dato modello.
+     * Questa informazione viene utilizzata come punto di partenza nel
+     * configuratore.
      */
     private String coloreDefaultPerModello(String modello) {
-        if (modello == null) return "Nero";
+        if (modello == null)
+            return "Nero";
         String m = modello.trim().toLowerCase().replaceAll("\\s+", " ");
 
-        if (m.equals("p1")) return "Giallo";
-        if (m.equals("la ferrari")) return "Rosso";
-        if (m.equals("sf90")) return "Nero";
-        if (m.equals("aventador")) return "Blu";
-        if (m.equals("lamborghini revuelto")) return "Bianco";
-        if (m.equals("lamborghini sian")) return "Giallo";
-        if (m.equals("chiron")) return "Nero";
-        if (m.equals("bugatti divo")) return "Blu";
-        if (m.equals("911")) return "Nero";
-        if (m.equals("918")) return "Rosso";
-        if (m.equals("agera")) return "Bianco";
-        if (m.equals("koenigsegg regera")) return "Rosso";
-        if (m.equals("812")) return "Nero";
-        if (m.equals("ferrari f8")) return "Rosso";
-        if (m.equals("ferrari enzo")) return "Rosso";  // FIX: minuscolo + colore coerente
-        if (m.equals("720")) return "Grigio";
+        if (m.equals("p1"))
+            return "Giallo";
+        if (m.equals("la ferrari"))
+            return "Rosso";
+        if (m.equals("sf90"))
+            return "Nero";
+        if (m.equals("aventador"))
+            return "Blu";
+        if (m.equals("lamborghini revuelto"))
+            return "Bianco";
+        if (m.equals("lamborghini sian"))
+            return "Giallo";
+        if (m.equals("chiron"))
+            return "Nero";
+        if (m.equals("bugatti divo"))
+            return "Blu";
+        if (m.equals("911"))
+            return "Nero";
+        if (m.equals("918"))
+            return "Rosso";
+        if (m.equals("agera"))
+            return "Bianco";
+        if (m.equals("koenigsegg regera"))
+            return "Rosso";
+        if (m.equals("812"))
+            return "Nero";
+        if (m.equals("ferrari f8"))
+            return "Rosso";
+        if (m.equals("ferrari enzo"))
+            return "Rosso";
+        if (m.equals("720"))
+            return "Grigio";
 
         return "Nero"; // default finale obbligatorio
     }

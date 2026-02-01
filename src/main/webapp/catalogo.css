@@ -105,6 +105,45 @@
 	background: #f8f8f8;
 	border-color: #1a1a1a;
 	transform: translateY(-1px);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Search Bar */
+.search-container {
+	flex-grow: 1;
+	display: flex;
+	justify-content: center;
+	padding: 0 20px;
+}
+
+#catalogo-search {
+	width: 100%;
+	max-width: 400px;
+	padding: 10px 16px;
+	background: #ffffff;
+	color: #1a1a1a;
+	border: 1px solid #e0e0e0;
+	border-radius: 2px;
+	font-size: 14px;
+	outline: none;
+	transition: all 0.2s ease;
+}
+
+#catalogo-search:focus {
+	border-color: #1a1a1a;
+	box-shadow: 0 0 0 1px rgba(26, 26, 26, 0.1);
+}
+
+.filters-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 20px;
+	margin-bottom: 24px;
+	position: relative;
+	z-index: 100;
+	gap: 20px;
+	/* Aggiunge spazio tra gli elementi */
 }
 
 .ordina-contenuto {
@@ -318,6 +357,21 @@
 }
 
 /* scheletro del codice*/
+
+.logo-container {
+	background: url('images/Backgroundcatalog.png') center/cover no-repeat;
+	display: block;
+	width: 100%;
+	max-width: 1200px;
+	height: 600px;
+	margin: 0 auto 30px auto;
+	padding-top: 10px;
+	/* Logo in alto */
+	border-radius: 12px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+	overflow: hidden;
+}
+
 header {
 	text-align: center;
 	margin-bottom: 40px;
@@ -338,19 +392,7 @@ header .subtitle {
 	text-shadow: none;
 }
 
-.logo-container {
-	background: url('images/Backgroundcatalog.png') center/cover no-repeat;
-	display: block;
-	width: 100%;
-	max-width: 1200px;
-	height: 600px;
-	margin: 0 auto 30px auto;
-	padding-top: 10px;
-	/* Sposta il logo verso l'alto */
-	border-radius: 12px;
-	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-	overflow: hidden;
-}
+
 
 body {
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
