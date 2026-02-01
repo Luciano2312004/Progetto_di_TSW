@@ -373,6 +373,8 @@ public class CatalogoServlet extends HttpServlet {
             return "Bianco";
         if (m.equals("lamborghini sian"))
             return "Giallo";
+        if (m.equals("lamborghini veneno"))
+            return "Grigio";
         if (m.equals("chiron"))
             return "Nero";
         if (m.equals("bugatti divo"))
