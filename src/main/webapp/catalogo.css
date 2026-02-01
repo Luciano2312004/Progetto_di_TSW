@@ -1,4 +1,3 @@
-
 * {
 	box-sizing: border-box;
 	margin: 0;
@@ -8,29 +7,32 @@
 /* Scritta del brand sopra il catalogo */
 #scritta-catalogo {
 	margin-bottom: 20px;
-	animation: apparizioneScritta 0.5s ease;
+	animation: apparizioneScritta 0.6s ease;
 }
 
 .scritta-brand-catalogo {
-	background: linear-gradient(45deg, #2c3e50, #3498db);
-	color: white;
-	padding: 15px 20px;
-	border-radius: 8px;
+	background: #1a1a1a;
+	color: #ffffff;
+	padding: 18px 24px;
+	border-radius: 2px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 #testo-brand {
-	font-weight: 600;
-	font-size: 18px;
+	font-weight: 500;
+	font-size: 17px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
 }
 
 @keyframes apparizioneScritta {
 	from {
 		opacity: 0;
-		transform: translateY(-10px);
+		transform: translateY(-8px);
 	}
 
 	to {
@@ -40,23 +42,33 @@
 }
 
 .Fast {
-	/*logo*/
 	display: block;
 	margin: 0 auto;
 	width: 500px;
 	height: 200px;
+	object-fit: contain;
+	/* Mantiene le proporzioni originali */
+	filter: grayscale(0.2);
+	transition: filter 0.3s ease;
+}
+
+.Fast:hover {
+	filter: grayscale(0);
 }
 
 /*posizione dei loghi*/
 .dati h2 .logo-img {
 	transition: all 0.3s ease;
-	margin-left: 15px;
-	width: 30px;
-	height: 30px;
+	margin-left: 12px;
+	width: 28px;
+	height: 28px;
+	opacity: 0.8;
 }
 
 .logo-img:hover {
-	transform: rotate(360deg) scale(1.2);
+	opacity: 1;
+	transform: scale(1.3) rotate(360deg);
+	transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* Container flex per i filtri */
@@ -65,193 +77,285 @@
 	justify-content: space-between;
 	align-items: center;
 	padding: 0 20px;
-	margin-bottom: 20px;
+	margin-bottom: 24px;
 	position: relative;
-	z-index: 100; /* Assicura che i menu a tendina stiano sopra */
+	z-index: 100;
 }
 
 /*ordinamento per prezzo*/
 .ordinamento-container {
-	/*box a sinistra*/
-	position: relative; /* Cambiato da absolute */
+	position: relative;
 	display: inline-block;
 }
 
 .ordina-btn {
-	/*pulsante*/
-	padding: 10px 20px;
-	background: #2c3e50;
-	color: white;
-	border: none;
-	border-radius: 5px;
+	padding: 10px 22px;
+	background: #ffffff;
+	color: #1a1a1a;
+	border: 1px solid #e0e0e0;
+	border-radius: 2px;
 	cursor: pointer;
-	font-weight: 600;
+	font-weight: 500;
+	font-size: 14px;
+	letter-spacing: 0.5px;
+	transition: all 0.2s ease;
+}
+
+.ordina-btn:hover {
+	background: #f8f8f8;
+	border-color: #1a1a1a;
+	transform: translateY(-1px);
 }
 
 .ordina-contenuto {
-	/*tendina*/
 	display: none;
 	position: absolute;
 	background: white;
-	min-width: 180px;
-	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+	min-width: 200px;
+	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 	z-index: 1000;
-	border-radius: 5px;
-	top: 100%; /* Posiziona sotto il bottone */
+	border-radius: 2px;
+	top: calc(100% + 4px);
 	left: 0;
+	border: 1px solid #e0e0e0;
+	overflow: hidden;
 }
 
 .ordina-contenuto div {
 	padding: 12px 16px;
 	cursor: pointer;
-	border-bottom: 1px solid #f1f1f1;
+	border-bottom: 1px solid #f5f5f5;
+	transition: all 0.15s ease;
+	font-size: 13px;
+	color: #444;
+}
+
+.ordina-contenuto div:last-child {
+	border-bottom: none;
 }
 
 .ordina-contenuto div:hover {
-	background: #f1f1f1;
+	background: #f8f8f8;
+	padding-left: 20px;
+	color: #1a1a1a;
 }
 
 .ordinamento-container:hover .ordina-contenuto {
 	display: block;
+	animation: fadeInDown 0.2s ease;
+}
+
+@keyframes fadeInDown {
+	from {
+		opacity: 0;
+		transform: translateY(-4px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 /*filtro per marca*/
-
 .filtro-contenuto .logo-img {
-	width: 20px;
-	height: 20px;
+	width: 18px;
+	height: 18px;
 	margin-left: 8px;
 	vertical-align: middle;
+	opacity: 0.7;
+	transition: opacity 0.2s ease;
+}
+
+.filtro-contenuto div:hover .logo-img {
+	opacity: 1;
 }
 
 .filtro-tendina {
-	/*pulsante a destra*/
-	position: relative; /* Cambiato da absolute */
+	position: relative;
 	display: inline-block;
 }
 
 .filtro-btn {
-	/*pulsante*/
-	padding: 10px 20px;
-	background: #2c3e50;
-	color: white;
-	border: none;
-	border-radius: 5px;
+	padding: 10px 22px;
+	background: #ffffff;
+	color: #1a1a1a;
+	border: 1px solid #e0e0e0;
+	border-radius: 2px;
 	cursor: pointer;
-	font-weight: 600;
+	font-weight: 500;
+	font-size: 14px;
+	letter-spacing: 0.5px;
+	transition: all 0.2s ease;
+}
+
+.filtro-btn:hover {
+	background: #f8f8f8;
+	border-color: #1a1a1a;
+	transform: translateY(-1px);
 }
 
 .filtro-contenuto {
-	/*tendina*/
 	display: none;
 	position: absolute;
 	background: white;
-	min-width: 160px;
-	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+	min-width: 180px;
+	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 	z-index: 1000;
-	border-radius: 5px;
+	border-radius: 2px;
+	border: 1px solid #e0e0e0;
+	overflow: hidden;
+	right: 0;
 }
 
 .filtro-contenuto div {
 	padding: 12px 16px;
 	cursor: pointer;
-	border-bottom: 1px solid #f1f1f1;
+	border-bottom: 1px solid #f5f5f5;
+	transition: all 0.15s ease;
+	font-size: 13px;
+	color: #444;
+}
+
+.filtro-contenuto div:last-child {
+	border-bottom: none;
 }
 
 .filtro-contenuto div:hover {
-	background: #f1f1f1;
+	background: #f8f8f8;
+	padding-left: 20px;
+	color: #1a1a1a;
 }
 
 .filtro-tendina:hover .filtro-contenuto {
 	display: block;
+	animation: fadeInDown 0.2s ease;
 }
 
 /* Filtro prezzo separato */
 .filtro-prezzo-separato {
 	text-align: center;
-	margin: 30px 0;
+	margin: 32px 0;
 	padding: 20px;
 }
 
 .filtro-prezzo-btn {
-	padding: 12px 24px;
-	background: #2c3e50;
-	color: white;
-	border: none;
-	border-radius: 5px;
+	padding: 10px 24px;
+	background: #ffffff;
+	color: #1a1a1a;
+	border: 1px solid #e0e0e0;
+	border-radius: 2px;
 	cursor: pointer;
-	font-weight: 600;
-	font-size: 16px;
-	transition: all 0.3s ease;
+	font-weight: 500;
+	font-size: 14px;
+	letter-spacing: 0.5px;
+	transition: all 0.2s ease;
 }
 
 .filtro-prezzo-btn:hover {
-	background: #1a252f;
-	transform: translateY(-2px);
+	background: #f8f8f8;
+	border-color: #1a1a1a;
+	transform: translateY(-1px);
 }
 
 .filtro-prezzo-box {
 	display: none;
-	margin-top: 15px;
-	padding: 20px;
-	background: #f8f9fa;
-	border-radius: 8px;
-	border: 1px solid #e9ecef;
+	margin-top: 16px;
+	padding: 24px;
+	background: #fafafa;
+	border-radius: 2px;
+	border: 1px solid #e0e0e0;
 }
 
 .filtro-prezzo-box input {
 	width: 200px;
-	padding: 10px;
-	margin: 0 10px 10px 0;
-	border: 1px solid #ddd;
-	border-radius: 4px;
+	padding: 10px 14px;
+	margin: 0 8px 12px 0;
+	border: 1px solid #e0e0e0;
+	border-radius: 2px;
 	font-size: 14px;
+	background: white;
+	transition: all 0.2s ease;
+}
+
+.filtro-prezzo-box input:focus {
+	outline: none;
+	border-color: #1a1a1a;
 }
 
 #applica-filtro-prezzo,
 #reset-filtro-prezzo {
 	padding: 10px 20px;
-	margin: 0 5px;
-	border: none;
-	border-radius: 4px;
+	margin: 0 4px;
+	border: 1px solid #e0e0e0;
+	border-radius: 2px;
 	cursor: pointer;
-	font-weight: 600;
+	font-weight: 500;
+	font-size: 13px;
+	transition: all 0.2s ease;
+	letter-spacing: 0.3px;
 }
 
 #applica-filtro-prezzo {
-	background: #27ae60;
+	background: #1a1a1a;
 	color: white;
+	border-color: #1a1a1a;
 }
 
 #applica-filtro-prezzo:hover {
-	background: #219a52;
+	background: #000000;
+	transform: translateY(-1px);
 }
 
 #reset-filtro-prezzo {
-	background: #e74c3c;
-	color: white;
+	background: white;
+	color: #1a1a1a;
 }
 
 #reset-filtro-prezzo:hover {
-	background: #c0392b;
+	background: #f5f5f5;
+	transform: translateY(-1px);
 }
 
 /* scheletro del codice*/
-
 header {
-	/*background di scritte e video*/
 	text-align: center;
 	margin-bottom: 40px;
-	padding: 20px;
-	background: #131313;
-	border-radius: 10px;
-	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+	padding: 24px;
+	background: #fafafa;
+	border-radius: 2px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+	border: 1px solid #f0f0f0;
+}
+
+header h1 {
+	color: #1a1a1a;
+	text-shadow: none;
+}
+
+header .subtitle {
+	color: #666;
+	text-shadow: none;
+}
+
+.logo-container {
+	background: url('images/Backgroundcatalog.png') center/cover no-repeat;
+	display: block;
+	width: 100%;
+	max-width: 1200px;
+	height: 600px;
+	margin: 0 auto 30px auto;
+	padding-top: 10px;
+	/* Sposta il logo verso l'alto */
+	border-radius: 12px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+	overflow: hidden;
 }
 
 body {
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	background: linear-gradient(45deg, #FFD700 0%, #000000 100%);
-	color: #2d3748;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+	background: #f5f5f5;
+	color: #2d2d2d;
 	line-height: 1.6;
 	padding: 20px;
 	min-height: 100vh;
@@ -260,205 +364,95 @@ body {
 	overflow-x: hidden;
 }
 
-body::before {
-	content: '';
-	position: fixed;
-	/* Usa fixed invece di absolute per coprire tutta la viewport */
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-image:
-		radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.15) 1px, transparent 1px),
-		radial-gradient(circle at 60% 70%, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
-		radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.10) 1px, transparent 1px),
-		radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.13) 1px, transparent 1px),
-		radial-gradient(circle at 10% 60%, rgba(255, 255, 255, 0.11) 1px, transparent 1px);
-	background-size: 300px 300px, 250px 250px, 400px 400px, 350px 350px, 200px 200px;
-	animation: sparkle 8s ease-in-out infinite;
-	pointer-events: none;
-	z-index: -1;
-}
-
-@keyframes sparkle {
-	0%,
-	100% {
-		opacity: 0.3;
-		transform: scale(1);
-	}
-
-	25% {
-		opacity: 0.5;
-		transform: scale(1.02);
-	}
-
-	50% {
-		opacity: 0.7;
-		transform: scale(1);
-	}
-
-	75% {
-		opacity: 0.4;
-		transform: scale(0.98);
-	}
-}
-
 .container {
 	position: relative;
-	max-width: 1200px;
+	max-width: 1400px;
 	margin: 40px auto;
-	background: rgba(255, 255, 255, 0.92);
-	backdrop-filter: blur(10px);
-	border-radius: 20px;
-	padding: 40px;
-	box-shadow:
-		0 15px 35px rgba(0, 0, 0, 0.1),
-		inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+	background: #ffffff;
+	border-radius: 2px;
+	padding: 48px;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
 
 /* Effetto di profondità per i card */
 .card {
 	background: white;
-	border-radius: 12px;
+	border-radius: 2px;
 	padding: 24px;
-	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-	transition: transform 0.3s ease, box-shadow 0.3s ease;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+	transition: all 0.3s ease;
+	border: 1px solid #f0f0f0;
 }
 
 .card:hover {
-	transform: translateY(-5px);
-	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+	transform: translateY(-2px);
 }
 
 h1 {
-	font-size: 2.5rem;
-	color: white;
-	margin-bottom: 10px;
+	font-size: 2.2rem;
+	color: #1a1a1a;
+	margin-bottom: 8px;
+	font-weight: 600;
+	letter-spacing: -0.5px;
 }
 
 .subtitle {
-	color: white;
-	font-size: 1.2rem;
+	color: #666;
+	font-size: 1.1rem;
+	font-weight: 400;
 }
 
 .catalogo {
-	/*griglia*/
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
-	gap: 25px;
-	margin-bottom: 30px;
+	gap: 24px;
+	margin-bottom: 32px;
 }
 
 .auto {
-	/*auto che appaiono nel catalogo*/
 	background: white;
-	border-radius: 12px;
-	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+	border-radius: 2px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 	overflow: hidden;
-	transition: transform 0.3s ease, box-shadow 0.3s ease;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	display: flex;
 	flex-direction: column;
 	height: 100%;
+	border: 1px solid #f0f0f0;
 }
 
 .auto:hover {
-	transform: scale(1.05);
-	background: linear-gradient(270deg, #f8f8f8, #dcefff, #c0c0c0);
-	background-size: 600% 600%;
-	animation: lightcycle 4s ease infinite;
-	box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+	transform: translateY(-4px);
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+	border-color: #e0e0e0;
 }
 
-@keyframes lightcycle {
-	0% {
-		background-position: 0% 50%;
-	}
-
-	50% {
-		background-position: 100% 50%;
-	}
-
-	100% {
-		background-position: 0% 50%;
-	}
+.auto:hover .auto-immagine {
+	transform: scale(1.03);
 }
 
-
-/* Galleria scorrevole */
-
-.galleria-containerB {
-	background: blue;
-	position: relative;
-	height: 180px;
-	overflow: hidden;
-}
-
-.galleria-containerS {
-	background: #fed600;
-	position: relative;
-	height: 180px;
-	overflow: hidden;
-}
-
-.galleria-containerO {
-	background: orange;
-	position: relative;
-	height: 180px;
-	overflow: hidden;
-}
-
-.galleria-containerP {
-	background: purple;
-	position: relative;
-	height: 180px;
-	overflow: hidden;
-}
-
-.galleria-containerR {
-	background: red;
-	position: relative;
-	height: 180px;
-	overflow: hidden;
-}
-
-.galleria-containerY {
-	background: yellow;
-	position: relative;
-	height: 180px;
-	overflow: hidden;
-}
-
-.galleria-containerG {
-	background: Green;
-	position: relative;
-	height: 180px;
-	overflow: hidden;
-}
-
-.galleria-containerBL {
-	background: black;
-	position: relative;
-	height: 180px;
-	overflow: hidden;
-}
-
-.galleria-containerW {
-	background: white;
-	position: relative;
-	height: 180px;
-	overflow: hidden;
-}
-
+/* Galleria scorrevole - colori minimal */
+.galleria-containerB,
+.galleria-containerS,
+.galleria-containerO,
+.galleria-containerP,
+.galleria-containerR,
+.galleria-containerY,
+.galleria-containerG,
+.galleria-containerBL,
+.galleria-containerW,
 .galleria-containerGY {
-	background: grey;
+	background: #fafafa;
 	position: relative;
-	height: 180px;
+	height: 220px;
 	overflow: hidden;
+	border-bottom: 1px solid #f0f0f0;
 }
 
 .galleria {
 	display: flex;
-	transition: transform 0.5s ease;
+	transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 	height: 100%;
 }
 
@@ -466,26 +460,28 @@ h1 {
 	min-width: 100%;
 	max-height: 80%;
 	object-fit: contain;
+	transition: transform 0.4s ease;
 }
 
-/* Freccce di navigazione */
+/* Frecce di navigazione */
 .freccia {
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
-	background: rgba(255, 255, 255, 0.7);
-	border: none;
-	width: 30px;
-	height: 30px;
+	background: rgba(255, 255, 255, 0.95);
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	width: 36px;
+	height: 36px;
 	border-radius: 50%;
-	font-size: 18px;
+	font-size: 16px;
 	cursor: pointer;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	transition: all 0.3s ease;
+	transition: all 0.2s ease;
 	z-index: 10;
 	opacity: 0;
+	color: #1a1a1a;
 }
 
 .auto:hover .freccia {
@@ -493,21 +489,23 @@ h1 {
 }
 
 .freccia:hover {
-	background: rgba(255, 255, 255, 0.9);
+	background: white;
+	border-color: #1a1a1a;
+	transform: translateY(-50%) scale(1.08);
 }
 
 .freccia-sinistra {
-	left: 10px;
+	left: 12px;
 }
 
 .freccia-destra {
-	right: 10px;
+	right: 12px;
 }
 
 /* Puntini indicatori */
 .indicatori {
 	position: absolute;
-	bottom: 10px;
+	bottom: 12px;
 	left: 0;
 	right: 0;
 	display: flex;
@@ -517,106 +515,134 @@ h1 {
 }
 
 .puntino {
-	width: 8px;
-	height: 8px;
+	width: 6px;
+	height: 6px;
 	border-radius: 50%;
-	background: rgba(255, 255, 255, 0.5);
+	background: rgba(0, 0, 0, 0.2);
 	cursor: pointer;
-	transition: all 0.3s ease;
+	transition: all 0.2s ease;
+}
+
+.puntino:hover {
+	background: rgba(0, 0, 0, 0.4);
 }
 
 .puntino.attivo {
-	background: rgba(255, 255, 255, 1);
-	transform: scale(1.2);
+	background: rgba(0, 0, 0, 0.7);
+	width: 20px;
+	border-radius: 3px;
 }
 
 .logo-marca {
-	/*marca dell'auto sopra*/
 	position: absolute;
-	top: 15px;
-	left: 15px;
-	font-weight: bold;
-	font-size: 14px;
-	background: rgba(0, 0, 0, 0.6);
-	padding: 5px 10px;
-	border-radius: 20px;
+	top: 16px;
+	left: 16px;
+	font-weight: 500;
+	font-size: 12px;
+	background: rgba(255, 255, 255, 0.95);
+	padding: 6px 12px;
+	border-radius: 2px;
 	z-index: 1;
-	color: white;
+	color: #666;
+	backdrop-filter: blur(8px);
+	border: 1px solid rgba(0, 0, 0, 0.05);
+	letter-spacing: 0.5px;
+	text-transform: uppercase;
 }
 
 .dati {
-	padding: 20px;
+	padding: 24px;
 	flex-grow: 1;
 	display: flex;
 	flex-direction: column;
 }
 
 .dati h2 {
-	margin: 0 0 15px 0;
-	font-size: 1.4rem;
-	color: #2c3e50;
-	border-bottom: 2px solid #f1f1f1;
-	padding-bottom: 10px;
+	margin: 0 0 16px 0;
+	font-size: 1.3rem;
+	font-weight: 600;
+	color: #1a1a1a;
+	border-bottom: 1px solid #f0f0f0;
+	padding-bottom: 12px;
+	letter-spacing: -0.3px;
+	transition: color 0.2s ease;
+}
+
+.auto:hover .dati h2 {
+	color: #000;
 }
 
 .specifiche {
-	margin-bottom: 15px;
+	margin-bottom: 16px;
 	flex-grow: 1;
 }
 
 .specifiche p {
-	margin: 8px 0;
+	margin: 10px 0;
 	display: flex;
 	justify-content: space-between;
+	padding: 6px 0;
+	font-size: 13px;
+	color: #666;
 }
 
 .specifiche span {
-	font-weight: 600;
-	color: #2c3e50;
+	font-weight: 500;
+	color: #1a1a1a;
 }
 
 .prezzo {
-	background: #f8f9fa;
-	padding: 15px;
-	border-radius: 8px;
+	background: #fafafa;
+	padding: 16px;
+	border-radius: 2px;
 	text-align: center;
-	font-weight: bold;
+	font-weight: 600;
 	font-size: 1.4rem;
-	color: #e74c3c;
-	margin-top: 10px;
+	color: #1a1a1a;
+	margin-top: 12px;
+	border: 1px solid #f0f0f0;
+	letter-spacing: -0.5px;
+	transition: all 0.2s ease;
+}
+
+.auto:hover .prezzo {
+	background: #f5f5f5;
+	border-color: #e0e0e0;
 }
 
 .configura-btn {
-	/*bottone configurazione*/
-	background: linear-gradient(45deg, #2c3e50, #3498db);
+	background: #1a1a1a;
 	color: white;
-	border: none;
+	border: 1px solid #1a1a1a;
 	padding: 12px 20px;
-	border-radius: 8px;
+	border-radius: 2px;
 	cursor: pointer;
-	margin-top: 15px;
+	margin-top: 16px;
 	width: 100%;
-	font-weight: 600;
-	font-size: 14px;
-	transition: all 0.3s ease;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	font-weight: 500;
+	font-size: 13px;
+	transition: all 0.2s ease;
+	letter-spacing: 0.5px;
+	text-transform: uppercase;
 }
 
 .configura-btn:hover {
-	background: linear-gradient(45deg, #3498db, #2c3e50);
+	background: #d32f2f;
+	/* Colore distintivo (Rosso FastMotors) */
+	border-color: #d32f2f;
 	transform: translateY(-2px);
-	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 0 15px rgba(211, 47, 47, 0.6);
+	color: #fff;
 }
 
 .configura-btn:active {
 	transform: translateY(0);
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 600px) {
 	.configura-btn {
-		padding: 10px 15px;
-		font-size: 13px;
+		padding: 10px 16px;
+		font-size: 12px;
 	}
 }
 
@@ -624,12 +650,23 @@ h1 {
 @media (max-width: 1200px) {
 	.catalogo {
 		grid-template-columns: repeat(3, 1fr);
+		gap: 20px;
 	}
 }
 
 @media (max-width: 900px) {
 	.catalogo {
 		grid-template-columns: repeat(2, 1fr);
+		gap: 16px;
+	}
+
+	.filters-row {
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.container {
+		padding: 32px;
 	}
 }
 
@@ -639,6 +676,10 @@ h1 {
 	}
 
 	h1 {
-		font-size: 2rem;
+		font-size: 1.8rem;
+	}
+
+	.container {
+		padding: 24px;
 	}
 }

@@ -18,9 +18,7 @@
     <div class="container">
       <header>
         <div class="logo-container">
-          <video class="Fast" autoplay muted>
-            <source src="images/fast_motors1.mp4" type="video/mp4">
-          </video>
+          <img src="images/logo2.png" class="Fast" alt="Fast Motors Logo">
         </div>
         <h1>Auto da Sogno, Realtà da Vivere</h1>
         <p class="subtitle">Viaggio tra i gioielli dell'ingegneria automobilistica</p>

@@ -296,7 +296,7 @@
 
 <body>
 <div class="container">
-    <h1>🛒 I miei Ordini</h1>
+    <h1>I miei Ordini</h1>
 
     <c:if test="${not empty error}">
         <div class="error">${error}</div>
