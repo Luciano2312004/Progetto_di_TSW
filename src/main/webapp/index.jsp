@@ -12,8 +12,7 @@
       <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
 
       <!--=============== REMIXICONS ===============-->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
-
+     
       <!--=============== SWIPER CSS ===============-->
       <link rel="stylesheet" href="swiper-bundle.min.css">
 
