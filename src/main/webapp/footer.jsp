@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<footer class="footer">
+    <link rel="stylesheet" href="footer.css">
+		<footer class="footer">
+  		 
          <div class="footer__container container grid">
          <a href="#" class="footer__logo">FASTMOTORS</a>
          <ul class="footer__links">
