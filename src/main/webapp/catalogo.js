@@ -400,7 +400,7 @@ function creaCardAuto(a) {
           data-modello="${escapeHtml(modello)}"
 		  data-colore="${escapeHtml(coloreDefault)}"
           data-prezzo="${escapeHtml(String(prezzoNum))}">
-          🛠️ Configura questo modello
+          Configura questo modello
         </button>
       </div>
       <div class="prezzo">${formatEuro(prezzoNum)}</div>

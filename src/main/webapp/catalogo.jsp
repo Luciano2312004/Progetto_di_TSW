@@ -18,7 +18,7 @@
     <div class="container">
       <header>
         <div class="logo-container">
-          <img src="images/logo2.png" class="Fast" alt="Fast Motors Logo">
+          <img src="images/logo1.png" class="Fast" alt="Fast Motors Logo">
         </div>
         <h1>Auto da Sogno, Realtà da Vivere</h1>
         <p class="subtitle">Viaggio tra i gioielli dell'ingegneria automobilistica</p>
