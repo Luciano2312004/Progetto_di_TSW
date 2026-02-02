@@ -1,12 +1,11 @@
-/*=============== GOOGLE FONTS ===============*/
+
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap");
 
-/*=============== VARIABLES CSS ===============*/
+
 :root {
   --header-height: 3.5rem;
 
-  /*========== Colors ==========*/
-  /*Color mode HSL(hue, saturation, lightness)*/
+
   --first-color: hsl(43, 90%, 50%);
   --first-color-alt: hsl(43, 88%, 48%);
   --text-color: hsl(0, 0%, 42%);
@@ -17,8 +16,7 @@
   --body-second-color: hsl(0, 0%, 100%);
   --shadow-img: -8px 8px 16px hsla(0, 0%, 0%, .2);
 
-  /*========== Font and typography ==========*/
-  /*.5rem = 8px | 1rem = 16px ...*/
+
   --body-font: "Montserrat", sans-serif;
   --biggest-font-size: 4.5rem;
   --big-font-size: 2.5rem;
@@ -29,18 +27,18 @@
   --small-font-size: .813rem;
   --smaller-font-size: .75rem;
 
-  /*========== Font weight ==========*/
+
   --font-regular: 400;
   --font-semi-bold: 600;
   --font-bold: 700;
   --font-extra-bold: 800;
 
-  /*========== z index ==========*/
+
   --z-tooltip: 10;
   --z-fixed: 100;
 }
 
-/*========== Responsive typography ==========*/
+
 @media screen and (min-width: 1150px) {
   :root {
     --biggest-font-size: 10.5rem;
@@ -54,7 +52,7 @@
   }
 }
 
-/*=============== BASE ===============*/
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -105,7 +103,7 @@ video {
   max-width: 100%;
 }
 
-/*=============== REUSABLE CSS CLASSES ===============*/
+
 .container {
   max-width: 1120px;
   margin-inline: 1.5rem;
@@ -151,7 +149,7 @@ video {
 
 
 
-/*=============== HOME ===============*/
+
 
 .home{
 	position:relative;
@@ -234,14 +232,14 @@ height:730px;
 }
 
 
-/* commento per commit bug */
+
 .home__img{
 	margin-top:100px;
 	width:100px;
 	margin-inline:auto;
 	cursor:pointer;
 }
-/* Swiper class */
+
 
 .swiper{
 	
@@ -275,7 +273,7 @@ height:730px;
 	
 	
 }
-/*=============== BUTTON ===============*/
+
 .button{
 	display:inline-flex;
 	justify-content:center;
@@ -314,7 +312,7 @@ height:730px;
 	
 		}
 
-/*=============== ABOUT ===============*/
+
 
 .about{
 	
@@ -376,7 +374,7 @@ height:730px;
 	justify-self:center;
 }
 
-/*=============== MODELS ===============*/
+
 
 .models__container{
 	grid-template-columns: 250px;
@@ -446,10 +444,7 @@ height:730px;
 		}
 		
 	
-/*=============== INFO ===============*/
 
-
-/*=============== CONTACT ===============*/
 .contact{
 
 	background-color: var(--black-color);
@@ -542,7 +537,7 @@ height:730px;
 					
 
 
-/*=============== SCROLL BAR ===============*/
+
 ::-webkit-scrollbar{
 	width: .6rem;
 	background-color: hsl(0, 0%, 80%);
@@ -565,8 +560,6 @@ height:730px;
 
 
 
-/*=============== BREAKPOINTS ===============*/
-/* For small devices */
  @media screen and (max-width:320px){
 	.container{
 	margin-inline: 1rem;
@@ -601,7 +594,7 @@ height:730px;
 	  }
 	 
 	}
-/* For medium devices */
+
 
 
  @media screen and (min-width:576px){
@@ -632,7 +625,7 @@ height:730px;
  
  
 
-/* For large devices */
+
  @media screen and (min-width:1150px){
  .container{
  margin-inline:auto;
