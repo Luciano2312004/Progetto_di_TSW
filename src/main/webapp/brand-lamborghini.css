@@ -1048,7 +1048,7 @@ padding-block: 2rem;
     color: var(--black-color); /* Cambia colore mentre conta (opzionale, effetto carino) */
 }
 
-/* Adattamento per schermi piccoli */
+
 @media screen and (max-width: 320px) {
     .info__num {
         font-size: 2rem;
