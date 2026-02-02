@@ -668,11 +668,11 @@ h1 {
 }
 
 .configura-btn:hover {
-	background: #d32f2f;
+	background: #F5AD27;
 	/* Colore distintivo (Rosso FastMotors) */
-	border-color: #d32f2f;
+	border-color: #F5AD27;
 	transform: translateY(-2px);
-	box-shadow: 0 0 15px rgba(211, 47, 47, 0.6);
+	box-shadow: 0 0 15px rgba(245, 173, 39);
 	color: #fff;
 }
 

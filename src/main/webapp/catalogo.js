@@ -241,6 +241,9 @@ function initSearch() {
 /* =========================
    Render Catalogo
 ========================= */
+/* =========================
+   Render Catalogo (Aggiornata con Scroll Animation)
+========================= */
 function renderCatalogo(lista) {
   const catalogoEl = document.querySelector('.catalogo');
   if (!catalogoEl) return;
@@ -251,6 +254,7 @@ function renderCatalogo(lista) {
   let skipped = 0;
 
   for (const a of lista) {
+    // Logica di filtro disponibilità
     if (!a || a.disponibile === false || (a.quantitaStock ?? 0) <= 0) {
       skipped++;
       continue;
@@ -262,26 +266,52 @@ function renderCatalogo(lista) {
 
   catalogoEl.appendChild(frag);
 
-  // ✅ Messaggio "Nessun Risultato" (vale sia per filtri che per ricerca)
+  // Gestione messaggio "Nessun Risultato"
   const noResultsMsg = document.getElementById('no-results-message');
   if (noResultsMsg) {
     noResultsMsg.style.display = (created === 0) ? 'block' : 'none';
   }
 
-  // Trigger animazione dopo un breve delay
-  requestAnimationFrame(() => {
-    const cards = catalogoEl.querySelectorAll('.auto');
-    cards.forEach((card) => {
-      card.classList.add('auto-visible');
-    });
-  });
-
   dlog('info', 'Render catalogo', { created, skipped });
 
-  // Re-inizializza componenti dinamici sulle nuove card
+  // Re-inizializza componenti
   initGallerie();
   initHoverAutoscroll();
   initConfiguraButtons();
+
+  // --- NUOVA LOGICA ANIMAZIONE SCROLL ---
+  // Invece di mostrare tutto subito, attiviamo l'Observer
+  setupScrollAnimations(); 
+}
+
+/**
+ * Funzione che osserva le card e le anima quando entrano nello schermo
+ */
+function setupScrollAnimations() {
+  const cards = document.querySelectorAll('.auto:not(.auto-visible)');
+  
+  // Configurazione dell'Observer
+  const observerOptions = {
+    root: null,   // osserva rispetto alla finestra del browser
+    rootMargin: '0px',
+    threshold: 0.1 // scatta quando il 10% della card è visibile
+  };
+
+  const observer = new IntersectionObserver((entries, observerInstance) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // La card è entrata nello schermo: aggiungi la classe per animarla
+        entry.target.classList.add('auto-visible');
+        
+        // Smetti di osservare questa card (l'animazione avviene una volta sola)
+        observerInstance.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  cards.forEach(card => {
+    observer.observe(card);
+  });
 }
 
 /* =========================
