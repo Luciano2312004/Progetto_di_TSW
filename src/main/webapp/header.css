@@ -1,5 +1,21 @@
 
 /* =============== HEADER DEDICATO =============== */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap");
+:root {
+  --header-height: 3.5rem;
+  --first-color: hsl(43, 90%, 50%);
+  --black-color: hsl(0, 0%, 8%);
+  --white-color: hsl(0, 0%, 100%);
+  --body-color: hsl(0, 0%, 98%);
+  --z-fixed: 100;
+  
+  /* Font weights */
+  --font-semi-bold: 600;
+  --font-bold: 700;
+}
+
+
+
 .header {
     background-color: #ffffff; /* MODIFICA: bianco solido */
     position: fixed;
@@ -10,7 +26,14 @@
     transition: background-color .4s, box-shadow .4s;
     height: 3.5rem;
     border-bottom: 1px solid #e5e7eb; /* MODIFICA: bordo inferiore per definire la forma quadrata */
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* MODIFICA: leggera ombra per definire i bordi */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-family: "Montserrat", sans-serif; /* MODIFICA: leggera ombra per definire i bordi */
+}
+
+.header ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 /* MODIFICA: Rimuovi la classe .scrolled se non serve più */
@@ -34,6 +57,13 @@
     color: var(--black-color, #000000);
     font-weight: var(--font-bold, 700);
     font-size: 1.1rem;
+}
+
+.nav__toggle {
+    font-size: 1.25rem;
+    color: var(--black-color);
+    cursor: pointer;
+    display: inline-flex; /* Assicura che sia visibile */
 }
 
 /* Navigation for mobile devices */
