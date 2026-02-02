@@ -406,14 +406,13 @@ body {
 	overflow-x: hidden;
 }
 
-.container {
-	position: relative;
-	max-width: 1400px;
-	margin: 40px auto;
-	background: #ffffff;
-	border-radius: 2px;
-	padding: 48px;
-	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+/* Cambia questo nome */
+.catalogo-container {
+    position: relative;
+    max-width: 1400px;
+    margin: 40px auto;
+    background: #ffffff;
+    /* ... resto del codice ... */
 }
 
 /* Effetto di profondità per i card */
@@ -707,7 +706,7 @@ h1 {
 		gap: 12px;
 	}
 
-	.container {
+	.catalogo-container{
 		padding: 32px;
 	}
 }
@@ -770,7 +769,7 @@ h1 {
 		font-size: 1.8rem;
 	}
 
-	.container {
+	.catalogo-container {
 		padding: 24px;
 	}
 }

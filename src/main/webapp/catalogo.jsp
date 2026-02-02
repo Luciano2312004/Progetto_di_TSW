@@ -9,13 +9,13 @@
 
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="./catalogo.css?v=2">
+    <link rel="stylesheet" href="./catalogo.css?v=3">
   </head>
 
   <body>
     <jsp:include page="WEB-INF/fragments/header.jsp" />
 
-    <div class="container">
+    <div class="catalogo-container">
       <header>
         <div class="logo-container">
           <img src="images/logo1.png" class="Fast" alt="Fast Motors Logo">
@@ -89,6 +89,7 @@
     </div>
 
     <script src="catalogo.js?v=4" defer></script>
+     <jsp:include page="footer.jsp" />
   </body>
 
   </html>
