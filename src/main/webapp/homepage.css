@@ -742,3 +742,79 @@ height:730px;
   }
    }
  
+ /* =========================================
+   FIX IMMAGINI SEZIONE MODELS (Puzzle Fit)
+========================================= */
+
+/* 1. Regole Base per tutte le Card e Immagini */
+
+.models__card {
+    /* È FONDAMENTALE dare un'altezza fissa alle card, 
+       altrimenti si schiacciano sull'immagine.
+       Questo valore è l'altezza "standard" per tutte. */
+    height: 300px; 
+    /* Assicura che le parti ritagliate dell'immagine non sbordino */
+    overflow: hidden; 
+    /* Mantiene le tue regole esistenti (skew, shadow, position) */
+}
+
+.models__img {
+    /* Forza l'immagine a occupare tutto lo spazio della card */
+    width: 100%;
+    height: 100%;
+    /* LA PARTE MAGICA: Ritaglia l'immagine per riempire senza deformare */
+    object-fit: cover; 
+    /* Punto focale di default: centro esatto */
+    object-position: center center; 
+    /* Transizione fluida se cambi la posizione all'hover (opzionale) */
+    transition: transform 0.4s, object-position 0.4s; 
+}
+
+/* =========================================
+   PERSONALIZZAZIONE CARD SPECIFICHE (1, 3, 4, 5)
+   Gioca con i valori 'height' (altezza card) e 
+   'object-position' (inquadratura foto) per il fit perfetto.
+========================================= */
+
+/* --- Card 1: Bugatti (Prima in alto a sinistra) --- */
+.models__card:nth-child(1) {
+    /* Esempio: Se la foto è molto "alta", aumenta questo valore */
+    margin-top: 90px;
+    height: 200px; 
+}
+.models__card:nth-child(1) .models__img {
+    /* object-position: orizzontale verticale;
+       Se l'auto è troppo in basso, prova 'center 30%' o 'center top' */
+    object-position: center center;
+}
+
+/* --- Card 3: McLaren (Prima fila, a destra) --- */
+.models__card:nth-child(3) {
+    /* Esempio: Se la foto è molto "larga", diminuisci l'altezza */
+    height: 280px;
+}
+.models__card:nth-child(3) .models__img {
+    /* Magari questa va inquadrata leggermente più in alto del centro */
+    object-position: center 40%;
+}
+
+/* --- Card 4: La Ferrari (Seconda fila, a sinistra) --- */
+.models__card:nth-child(4) {
+    height: 310px;
+}
+.models__card:nth-child(4) .models__img {
+    object-position: center center;
+}
+
+/* --- Card 5: Koenigsegg (Seconda fila, al centro) --- */
+.models__card:nth-child(5) {
+    height: 240px;
+}
+.models__card:nth-child(5) .models__img {
+    /* Esempio: Spostiamo il punto focale più a destra e in alto */
+    object-position: 60% 30%;
+}
+
+.models__card:hover .models__img {
+    transform: scale(1.05); 
+}
