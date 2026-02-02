@@ -464,6 +464,7 @@
         });
       </script>
       <script src="./configuratore.js"></script>
+     <jsp:include page="footer.jsp" />
     </body>
 
     </html>

@@ -7,174 +7,262 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         /* Reset e base */
-        * { box-sizing: border-box; }
+        * { 
+            box-sizing: border-box; 
+            margin: 0;
+            padding: 0;
+        }
+        
         body { 
-            font-family: Arial, sans-serif; 
-            margin: 0; 
-            padding: 16px;
-            background-color: #f5f5f5; 
-            font-size: 14px;
-            line-height: 1.4;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            color: #2d2d2d;
+            line-height: 1.6;
+            padding: 20px;
         }
         
         .container { 
             max-width: 1200px; 
             margin: 0 auto; 
-            background: white; 
-            padding: 16px;
-            border-radius: 8px; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+            background: #ffffff; 
+            padding: 48px;
+            border-radius: 2px; 
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
         }
         
         h1 { 
-            color: #333; 
-            border-bottom: 2px solid #e74c3c; 
-            padding-bottom: 12px;
-            margin-top: 0;
-            font-size: 1.5rem;
+            color: #1a1a1a;
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #f0f0f0;
         }
         
+        /* Statistiche */
         .stats { 
-            background: #f8f9fa; 
-            padding: 12px; 
-            border-radius: 5px; 
-            margin-bottom: 16px; 
-            display: flex; 
-            flex-direction: column;
-            gap: 12px;
+            display: flex;
+            gap: 16px;
+            margin: 32px 0;
         }
         
         .stat-card { 
-            background: white; 
-            padding: 14px; 
-            border-radius: 5px; 
-            border-left: 4px solid #e74c3c; 
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            text-align: center;
+            flex: 1;
+            background: #fafafa; 
+            padding: 20px; 
+            border-radius: 2px;
+            border: 1px solid #f0f0f0;
+            transition: all 0.2s ease;
+        }
+        
+        .stat-card:hover {
+            background: #f5f5f5;
+            border-color: #e0e0e0;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: 600;
+            color: #1a1a1a;
+            letter-spacing: -0.5px;
         }
         
         /* Tabella responsive */
         .orders-table { 
             width: 100%; 
             border-collapse: collapse; 
-            margin-top: 16px;
-            font-size: 13px;
+            margin-top: 24px;
+            font-size: 14px;
         }
         
         .orders-table th, .orders-table td { 
-            border: 1px solid #ddd; 
-            padding: 8px; 
+            padding: 16px; 
             text-align: left; 
-            vertical-align: top; 
+            vertical-align: top;
+            border-bottom: 1px solid #f0f0f0;
         }
         
         .orders-table th { 
-            background-color: #e74c3c; 
-            color: white; 
+            background: #fafafa;
+            color: #666;
             font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
-        .orders-table tr:nth-child(even) { 
-            background-color: #f9f9f9; 
+        .orders-table tbody tr { 
+            transition: all 0.2s ease;
         }
         
-        .status-confermato { color: #f39c12; font-weight: bold; }
-        .status-spedito { color: #3498db; font-weight: bold; }
-        .status-consegnato { color: #27ae60; font-weight: bold; }
+        .orders-table tbody tr:hover { 
+            background: #fafafa;
+        }
+        
+        .status-confermato { 
+            color: #f39c12; 
+            font-weight: 500;
+            font-size: 13px;
+        }
+        
+        .status-spedito { 
+            color: #3498db; 
+            font-weight: 500;
+            font-size: 13px;
+        }
+        
+        .status-consegnato { 
+            color: #27ae60; 
+            font-weight: 500;
+            font-size: 13px;
+        }
         
         .empty-state { 
             text-align: center; 
-            padding: 30px 16px; 
+            padding: 80px 20px;
             color: #666; 
+        }
+        
+        .empty-state h3 {
+            font-size: 20px;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .empty-state p {
+            color: #666;
+            margin-bottom: 24px;
         }
         
         .error { 
             color: #e74c3c; 
-            padding: 12px; 
-            background: #ffeaea; 
-            border-radius: 4px; 
-            margin-bottom: 16px;
+            padding: 16px; 
+            background: #fafafa;
+            border-radius: 2px;
+            margin-bottom: 24px;
             border: 1px solid #e74c3c;
+            font-size: 14px;
         }
         
         .back-link { 
             display: inline-block; 
-            margin-top: 20px; 
-            color: #e74c3c; 
+            margin-top: 32px; 
+            color: #1a1a1a;
             text-decoration: none; 
-            padding: 10px 16px;
-            border: 1px solid #e74c3c;
-            border-radius: 4px;
-            font-weight: bold;
-            text-align: center;
+            padding: 12px 24px;
+            border: 1px solid #e0e0e0;
+            border-radius: 2px;
+            font-weight: 500;
+            font-size: 14px;
+            letter-spacing: 0.3px;
+            transition: all 0.2s ease;
         }
         
         .back-link:hover { 
-            background: #e74c3c;
+            background: #1a1a1a;
             color: white;
+            border-color: #1a1a1a;
             text-decoration: none;
+            transform: translateY(-1px);
         }
 
         .col-dettagli { 
-            font-size: 0.9rem; 
-            line-height: 1.3; 
+            font-size: 13px;
+            line-height: 1.6;
+            color: #666;
         }
         
         .dettaglio-riga { 
-            padding: 3px 0; 
-            border-bottom: 1px dashed #e5e5e5; 
+            padding: 6px 0; 
+            border-bottom: 1px solid #f5f5f5;
         }
         
         .dettaglio-riga:last-child { 
             border-bottom: none; 
         }
         
-        .d-marca { font-weight: 600; }
-        .d-prezzo { white-space: nowrap; }
-        .row-link { cursor: pointer; }
-        .row-link:hover { background: #fff7f7; }
+        .d-marca { 
+            font-weight: 500;
+            color: #1a1a1a;
+        }
+        
+        .d-prezzo { 
+            white-space: nowrap;
+            font-weight: 500;
+            color: #1a1a1a;
+        }
+        
+        .row-link { 
+            cursor: pointer;
+        }
+
+        .order-id {
+            font-weight: 500;
+            color: #1a1a1a;
+        }
 
         /* Layout per card su mobile */
         .mobile-orders {
             display: none;
             flex-direction: column;
-            gap: 12px;
-            margin-top: 16px;
+            gap: 16px;
+            margin-top: 24px;
         }
 
         .order-card {
             background: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 14px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #f0f0f0;
+            border-radius: 2px;
+            padding: 20px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .order-card:hover {
+            border-color: #e0e0e0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transform: translateY(-2px);
+        }
+
+        .order-card:active {
+            transform: translateY(0);
         }
 
         .order-header {
             display: flex;
-            justify-content: between;
+            justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #eee;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f5f5f5;
         }
 
-        .order-id {
-            font-weight: bold;
-            color: #e74c3c;
-            font-size: 15px;
+        .order-id-mobile {
+            font-weight: 600;
+            color: #1a1a1a;
+            font-size: 16px;
         }
 
         .order-date {
             color: #666;
-            font-size: 12px;
+            font-size: 13px;
         }
 
         .order-info {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 12px;
+            gap: 16px;
+            margin-bottom: 16px;
         }
 
         .info-item {
@@ -185,23 +273,39 @@
         .info-label {
             font-size: 11px;
             color: #666;
-            margin-bottom: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
         }
 
         .info-value {
-            font-weight: bold;
-            font-size: 13px;
+            font-weight: 500;
+            font-size: 15px;
+            color: #1a1a1a;
         }
 
         .order-details {
-            background: #f8f9fa;
-            padding: 10px;
-            border-radius: 4px;
-            margin-top: 8px;
+            background: #fafafa;
+            padding: 16px;
+            border-radius: 2px;
+            margin-top: 12px;
+            border: 1px solid #f5f5f5;
         }
 
         /* Media Queries */
         @media (max-width: 768px) {
+            body {
+                padding: 16px;
+            }
+            
+            .container {
+                padding: 24px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
             .orders-table {
                 display: none;
             }
@@ -211,58 +315,22 @@
             }
             
             .stats {
-                flex-direction: row;
-                flex-wrap: wrap;
+                flex-direction: column;
+                gap: 12px;
             }
             
             .stat-card {
-                flex: 1;
-                min-width: 140px;
+                padding: 16px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
             }
             
             .back-link {
                 display: block;
                 width: 100%;
-                margin-top: 24px;
-            }
-        }
-
-        @media (min-width: 769px) {
-            body {
-                margin: 20px;
-                padding: 0;
-                font-size: 16px;
-            }
-            
-            .container {
-                padding: 24px;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .stats {
-                flex-direction: row;
-                padding: 15px;
-                gap: 20px;
-            }
-            
-            .stat-card {
-                padding: 15px;
-                text-align: left;
-            }
-            
-            .orders-table th, .orders-table td {
-                padding: 12px;
-            }
-            
-            .orders-table th {
-                font-size: 14px;
-            }
-            
-            .col-dettagli {
-                font-size: 0.95rem;
+                text-align: center;
             }
         }
 
@@ -279,17 +347,8 @@
             }
             
             .container {
-                padding: 12px;
+                padding: 20px;
             }
-        }
-
-        /* Miglioramenti touch */
-        .order-card {
-            transition: transform 0.2s ease;
-        }
-
-        .order-card:active {
-            transform: scale(0.98);
         }
     </style>
 </head>
@@ -303,8 +362,14 @@
     </c:if>
 
     <div class="stats">
-        <div class="stat-card"><strong>Totale Ordini:</strong> ${totaleOrdini}</div>
-        <div class="stat-card"><strong>Ordini Attivi:</strong> ${ordiniAttivi}</div>
+        <div class="stat-card">
+            <div class="stat-label">Totale Ordini</div>
+            <div class="stat-value">${totaleOrdini}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Ordini Attivi</div>
+            <div class="stat-value">${ordiniAttivi}</div>
+        </div>
     </div>
 
     <c:choose>
@@ -324,14 +389,14 @@
                 <c:forEach var="ordine" items="${ordini}">
                     <tr class="row-link"
                         data-href="${pageContext.request.contextPath}/fattura?idOrdine=${ordine.id}">
-                        <td>#${ordine.id}</td>
+                        <td class="order-id">#${ordine.id}</td>
                         <td>${ordine.dataOrdine}</td>
-                        <td>€${ordine.totale}</td>
+                        <td><strong>€${ordine.totale}</strong></td>
                         <td>
                             <c:choose>
-                                <c:when test="${ordine.stato == 'CONFERMATO'}"><span class="status-confermato">✅ CONFERMATO</span></c:when>
-                                <c:when test="${ordine.stato == 'SPEDITO'}"><span class="status-spedito">🚚 SPEDITO</span></c:when>
-                                <c:when test="${ordine.stato == 'CONSEGNATO'}"><span class="status-consegnato">📦 CONSEGNATO</span></c:when>
+                                <c:when test="${ordine.stato == 'CONFERMATO'}"><span class="status-confermato">● CONFERMATO</span></c:when>
+                                <c:when test="${ordine.stato == 'SPEDITO'}"><span class="status-spedito">● SPEDITO</span></c:when>
+                                <c:when test="${ordine.stato == 'CONSEGNATO'}"><span class="status-consegnato">● CONSEGNATO</span></c:when>
                             </c:choose>
                         </td>
                         <td class="col-dettagli">
@@ -341,8 +406,8 @@
                                         <div class="dettaglio-riga">
                                             <span class="d-marca"><c:if test="${not empty d.marca}">${d.marca}</c:if></span>
                                             <span class="d-modello">${d.modello}</span>
-                                            <span class="d-anno">${d.anno}</span>
-                                            — x${d.quantita}
+                                            <span class="d-anno">(${d.anno})</span>
+                                            — ${d.quantita}x
                                             <span class="d-prezzo">€${d.prezzo}</span>
                                         </div>
                                     </c:forEach>
@@ -361,7 +426,7 @@
                     <div class="order-card" 
                          onclick="window.location.href='${pageContext.request.contextPath}/fattura?idOrdine=${ordine.id}'">
                         <div class="order-header">
-                            <div class="order-id">#${ordine.id}</div>
+                            <div class="order-id-mobile">#${ordine.id}</div>
                             <div class="order-date">${ordine.dataOrdine}</div>
                         </div>
                         <div class="order-info">
@@ -381,15 +446,15 @@
                             </div>
                         </div>
                         <div class="order-details">
-                            <div class="info-label" style="margin-bottom: 6px;">Dettagli:</div>
+                            <div class="info-label" style="margin-bottom: 8px;">Dettagli:</div>
                             <c:choose>
                                 <c:when test="${not empty ordine.dettagli}">
                                     <c:forEach var="d" items="${ordine.dettagli}" varStatus="st">
                                         <div class="dettaglio-riga">
                                             <span class="d-marca"><c:if test="${not empty d.marca}">${d.marca}</c:if></span>
                                             <span class="d-modello">${d.modello}</span>
-                                            <span class="d-anno">${d.anno}</span>
-                                            — x${d.quantita}
+                                            <span class="d-anno">(${d.anno})</span>
+                                            — ${d.quantita}x
                                             <span class="d-prezzo">€${d.prezzo}</span>
                                         </div>
                                     </c:forEach>
@@ -414,7 +479,7 @@
             <div class="empty-state">
                 <h3>Nessun ordine trovato</h3>
                 <p>Non hai ancora effettuato ordini.</p>
-                <a href="${pageContext.request.contextPath}/index.jsp" class="back-link">Torna allo shopping</a>
+                <a href="${pageContext.request.contextPath}/index.jsp" class="back-link">Inizia a fare shopping</a>
             </div>
         </c:otherwise>
     </c:choose>
