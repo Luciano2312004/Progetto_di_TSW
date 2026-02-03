@@ -192,6 +192,27 @@ document.addEventListener('DOMContentLoaded', async function () {
     // 4) Filtro da URL
     applicaFiltroDaURL();
 
+    // 5) Deep Linking da Search Bar (Scroll to Model)
+    const urlParams = new URLSearchParams(window.location.search);
+    const modelToFind = urlParams.get('model');
+    if (modelToFind) {
+      dlog('info', 'Deep linking requested for model:', modelToFind);
+      // Wait for render to complete (it's sync after await but DOM might need a tick)
+      setTimeout(() => {
+        const el = document.querySelector(`.auto[data-modello="${modelToFind}"]`);
+        if (el) {
+          dlog('info', 'Deep linking element found, scrolling...');
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          // Optional: Highlight effect
+          el.style.transition = 'box-shadow 0.5s';
+          el.style.boxShadow = '0 0 20px rgba(255, 215, 0, 0.7)'; // Gold highlight
+          setTimeout(() => el.style.boxShadow = '', 2000);
+        } else {
+          dlog('warn', 'Deep linking element NOT found for:', modelToFind);
+        }
+      }, 500); // Small delay to ensure cards are in DOM and layout is stable
+    }
+
     // 5) Debug: verifica reale immagini (404 / nome errato)
     if (DEBUG) {
       setupDebugImageChecks();
@@ -281,7 +302,7 @@ function renderCatalogo(lista) {
 
   // --- NUOVA LOGICA ANIMAZIONE SCROLL ---
   // Invece di mostrare tutto subito, attiviamo l'Observer
-  setupScrollAnimations(); 
+  setupScrollAnimations();
 }
 
 /**
@@ -289,7 +310,7 @@ function renderCatalogo(lista) {
  */
 function setupScrollAnimations() {
   const cards = document.querySelectorAll('.auto:not(.auto-visible)');
-  
+
   // Configurazione dell'Observer
   const observerOptions = {
     root: null,   // osserva rispetto alla finestra del browser
@@ -302,7 +323,7 @@ function setupScrollAnimations() {
       if (entry.isIntersecting) {
         // La card è entrata nello schermo: aggiungi la classe per animarla
         entry.target.classList.add('auto-visible');
-        
+
         // Smetti di osservare questa card (l'animazione avviene una volta sola)
         observerInstance.unobserve(entry.target);
       }
@@ -408,6 +429,8 @@ function creaCardAuto(a) {
 
   const wrapper = document.createElement('div');
   wrapper.className = 'auto';
+  // Aggiunto attributo per Deep Linking dalla Search Bar
+  wrapper.setAttribute('data-modello', modello);
 
   wrapper.innerHTML = `
     <div class="galleria-container${coloreKey}">
