@@ -113,7 +113,7 @@
          </main>
          
          
-          <jsp:include page="footer.jsp" />
+          <jsp:include page="WEB-INF/fragments/footer.jsp" />
       <script src="scrollreveal.min.js"></script>
           <script src="brand.js">
       

@@ -88,7 +88,7 @@
     </div>
 
     <script src="catalogo.js?v=4" defer></script> <!-- Chiamata allo script JS -->
-     <jsp:include page="footer.jsp" />
+     <jsp:include page="WEB-INF/fragments/footer.jsp" />
   </body>
 
   </html>

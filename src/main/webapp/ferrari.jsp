@@ -118,7 +118,7 @@ VISITA FASTMOTORS E SCOPRI COME LA PASSIONE, LA STORIA E LA LEGGENDA DI FERRARI 
          </main>
          
          
-           <jsp:include page="footer.jsp" />
+           <jsp:include page="WEB-INF/fragments/footer.jsp" />
       <script src="scrollreveal.min.js"></script>
           <script src="brand.js">
       
