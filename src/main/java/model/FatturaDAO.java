@@ -28,8 +28,7 @@ public class FatturaDAO {
             if (conn != null) {
                 try {
                     conn.rollback();
-                } catch (SQLException ex) {
-                    // Ignore rollback errors
+                } catch (SQLException ex) { 
                 }
             }
             throw e;
@@ -37,13 +36,13 @@ public class FatturaDAO {
             if (ps != null)
                 try {
                     ps.close();
-                } catch (SQLException e) {
-                    /* ignore */ }
+                } catch (SQLException e) {        	
+                }
             if (conn != null) {
                 try {
-                    conn.setAutoCommit(true); // Ripristina auto-commit
-                } catch (SQLException e) {
-                    /* ignore */ }
+                    conn.setAutoCommit(true);
+                } catch (SQLException e) {	
+                }
                 DBConnection.releaseConnection(conn);
             }
         }

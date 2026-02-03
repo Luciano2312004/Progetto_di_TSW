@@ -18,11 +18,11 @@ public class FatturaServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         Utente utente = (session != null) ? (Utente) session.getAttribute("utente") : null;
         if (utente == null) {
-            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            response.sendRedirect(request.getContextPath() + "/login.jsp"); //redirect se l'utente non è loggato
             return;
         }
 
-        String idParam = request.getParameter("idOrdine");
+        String idParam = request.getParameter("idOrdine");//lettura dell'id ordine su cui è stato fatto il click
         if (idParam == null) {
             request.setAttribute("error", "Parametro mancante: idOrdine");
             request.getRequestDispatcher("/Cliente/fattura.jsp").forward(request, response);
@@ -32,15 +32,15 @@ public class FatturaServlet extends HttpServlet {
         try {
             int ordineId = Integer.parseInt(idParam);
             FatturaDAO dao = new FatturaDAO();
-            Fattura fattura = dao.getByOrdineId(ordineId);
+            Fattura fattura = dao.getByOrdineId(ordineId);//recupera la fattura in base all'id (fattura e ordine hanno lo stesso id)
 
             if (fattura == null) {
                 request.setAttribute("error", "Nessuna fattura trovata per l'ordine #" + ordineId);
             } else {
                 request.setAttribute("fattura", fattura);
             }
-            request.getRequestDispatcher("/Cliente/fattura.jsp").forward(request, response);
-
+            request.getRequestDispatcher("/Cliente/fattura.jsp").forward(request, response); //fa foward delle informazioni dlla fattura
+            //errori generici
         } catch (NumberFormatException e) {
             request.setAttribute("error", "idOrdine non valido.");
             request.getRequestDispatcher("/Cliente/fattura.jsp").forward(request, response);
