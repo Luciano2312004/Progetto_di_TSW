@@ -6,10 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrdineDAO {
+     //Restituisce tutti gli ordini di un utente specifico
 
-    /**
-     * Restituisce tutti gli ordini di un utente specifico
-     */
     public List<Ordine> getOrdiniByUtente(String emailUtente) throws SQLException {
         List<Ordine> ordini = new ArrayList<>();
 
@@ -24,12 +22,12 @@ public class OrdineDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Ordine o = new Ordine();
-                    o.setId(rs.getInt("id")); // IMPORTANTE
+                    o.setId(rs.getInt("id"));
                     o.setTotale(rs.getDouble("totale"));
                     o.setStato(rs.getString("stato"));
                     o.setDataOrdine(rs.getDate("data_ordine"));
-                    o.setUtenteEmail(rs.getString("utente")); // è l'email
-                    o.setDettagli(getDettagliOrdine(o.getId(), conn)); // carica i dettagli veri
+                    o.setUtenteEmail(rs.getString("utente"));
+                    o.setDettagli(getDettagliOrdine(o.getId(), conn));
                     ordini.add(o);
                 }
             }
@@ -39,10 +37,7 @@ public class OrdineDAO {
         return ordini;
     }
 
-    /**
-     * Restituisce la lista di ordini filtrata per utente e/o intervallo di date.
-     * Se i parametri sono null o vuoti, il filtro viene ignorato.
-     */
+    //Restituisce la lista di ordini filtrata per utente e/o intervallo di date.
     public List<Ordine> getOrdini(String utente, java.util.Date dataInizio, java.util.Date dataFine)
             throws SQLException {
         List<Ordine> ordini = new ArrayList<>();
@@ -95,18 +90,16 @@ public class OrdineDAO {
         return ordini;
     }
 
-    /** Recupera i dettagli di un ordine */
+    //Recupera i dettagli di un ordine
     private List<DettaglioOrdine> getDettagliOrdine(int ordineId, Connection conn) throws SQLException {
         List<DettaglioOrdine> dettagli = new ArrayList<>();
 
-        // Aggiungi la colonna "marca" alla SELECT
         String sql = "SELECT modello, anno, quantita, prezzo, marca FROM dettagli_ordine WHERE ordine = ?";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, ordineId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    // Usa il nuovo costruttore con marca
                     DettaglioOrdine d = new DettaglioOrdine(
                             rs.getString("modello"),
                             rs.getInt("anno"),

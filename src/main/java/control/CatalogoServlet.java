@@ -12,10 +12,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
 
-/**
- * Servlet Controller per la gestione del catalogo prodotti.
- * Fornisce dati sia per la visualizzazione tramite JSP che tramite API JSON.
- */
+ //Servlet Controller per la gestione del catalogo prodotti.
+
 @WebServlet(name = "CatalogoServlet", urlPatterns = { "/api/catalogo", "/home", "/catalogo" })
 public class CatalogoServlet extends HttpServlet {
 
@@ -32,39 +30,30 @@ public class CatalogoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String action = request.getParameter("action");
+        String action = request.getParameter("action"); //azione sulla quale la servlet decide che operazione fare
         if (action == null || action.isBlank()) {
-            action = "viewCatalogo";
+            action = "viewCatalogo"; //se l'azione è nulla visualizza solo il catalogo
         }
 
         try {
             switch (action) {
-                case "ping": {
+                case "ping": { //azione di test per verificare che la servelt risponda
                     response.setContentType("text/plain;charset=UTF-8");
                     response.getWriter().print("pong");
                     return;
                 }
 
-                /**
-                 * ✅ Nuovo JSON completo per generare le card
-                 * - JSON puro: /api/catalogo?action=getCatalogo
-                 * - Debug HTML: /api/catalogo?action=getCatalogo&debug=1
-                 */
-                case "getCatalogo": {
+                case "getCatalogo": { //azione che restituisce il catalogo in formato JSON
                     getCatalogoJSON(request, response);
                     return;
                 }
 
-                /*
-                 * Restituisce un mapping semplificato delle auto disponibili.
-                 * Utile per controlli rapidi di disponibilità lato client.
-                 */
-                case "getAutoDisponibili": {
+                case "getAutoDisponibili": { //azione che restituisce una risposta in formato JSON dove è visibile anche la disponibilità delle varie auto
                     getAutoDisponibiliJSON(request, response);
                     return;
                 }
 
-                case "checkDisponibilita": {
+                case "checkDisponibilita": { //Controllo per la disponibilità delle singole auto
                     checkDisponibilita(request, response);
                     return;
                 }
@@ -75,7 +64,7 @@ public class CatalogoServlet extends HttpServlet {
                     return;
                 }
 
-                case "dbcheck": {
+                case "dbcheck": { //check del DB per debug
                     response.setContentType("text/plain;charset=UTF-8");
                     try {
                         var list = autoDAO.getAutoDisponibili();
@@ -95,10 +84,8 @@ public class CatalogoServlet extends HttpServlet {
             response.getWriter().println("Errore server: " + ex.getClass().getSimpleName() + " - " + ex.getMessage());
         }
     }
-
-    /**
-     * Visualizza il catalogo con tutte le auto disponibili
-     */
+    
+     //Visualizza il catalogo con tutte le auto disponibili
     private void viewCatalogo(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -106,16 +93,14 @@ public class CatalogoServlet extends HttpServlet {
             // Carica la lista delle auto disponibili dallo stock
             List<Auto> autoDisponibili = autoDAO.getAutoDisponibili();
 
-            // Crea una mappa per un accesso rapido alla disponibilità tramite chiave
-            // composta "modello_anno"
+            // Crea una mappa per un accesso rapido alla disponibilità tramite chiave composta "modello_anno"
             Map<String, Auto> mappaDisponibilita = new HashMap<>();
             for (Auto auto : autoDisponibili) {
                 String chiave = auto.getModello() + "_" + auto.getAnno();
                 mappaDisponibilita.put(chiave, auto);
             }
 
-            // Raggruppa i prodotti per marca per facilitare il filtraggio nella
-            // visualizzazione
+            // Raggruppa i prodotti per marca per facilitare il filtraggio nella visualizzazione
             Map<String, List<Auto>> autoPerMarca = autoDAO.getAutoPerMarca();
 
             // Imposta gli attributi necessari per il rendering della pagina JSP
@@ -124,7 +109,7 @@ public class CatalogoServlet extends HttpServlet {
             request.setAttribute("autoPerMarca", autoPerMarca);
             request.setAttribute("listaAuto", autoDisponibili);
 
-            // Inoltra la richiesta alla vista del catalogo
+            // Inoltra la richiesta alla view
             request.getRequestDispatcher("/catalogo.jsp").forward(request, response);
 
         } catch (Exception e) {
@@ -134,11 +119,8 @@ public class CatalogoServlet extends HttpServlet {
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
-
-    /**
-     * Genera e invia una risposta JSON contenente i dettagli completi del catalogo.
-     * Supporta una modalità di debug per visualizzare il JSON in formato HTML.
-     */
+    //Genera e invia una risposta JSON contenente i dettagli completi del catalogo.
+    //può anche essere visualizzata in HTMl per Debug
     private void getCatalogoJSON(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
@@ -148,7 +130,7 @@ public class CatalogoServlet extends HttpServlet {
 
             List<Auto> tutte = autoDAO.getAll();
 
-            // FILTRAGGIO SERVER-SIDE PER RICERCA AJAX
+            // FILTRAGGIO SERVER-SIDE PER LA RICERCA AJAX
             String query = request.getParameter("q");
             if (query != null && !query.trim().isEmpty()) {
                 String q = query.toLowerCase().trim();
@@ -173,7 +155,7 @@ public class CatalogoServlet extends HttpServlet {
                 String motore = mp[0];
                 String potenza = mp[1];
 
-                boolean disponibile = a.getQuantitaStock() > 0;
+                boolean disponibile = a.getQuantitaStock() > 0; //l'auto è disponibile se la sua quantità stock è superiore a 0
                 String coloreDefault = coloreDefaultPerModello(a.getModello());
 
                 json.append("{")
@@ -194,7 +176,7 @@ public class CatalogoServlet extends HttpServlet {
 
             json.append("]");
             String jsonOut = json.toString();
-
+            //lato visualizzazione per Debug
             boolean debug = "1".equals(request.getParameter("debug"))
                     || "true".equalsIgnoreCase(request.getParameter("debug"));
 
@@ -220,7 +202,7 @@ public class CatalogoServlet extends HttpServlet {
                 return;
             }
 
-            // Invia la risposta JSON pura con il relativo MIME type
+            // Invia la risposta JSON pura
             response.setContentType("application/json;charset=UTF-8");
             out.print(jsonOut);
 
@@ -231,12 +213,7 @@ public class CatalogoServlet extends HttpServlet {
         }
     }
 
-    /**
-     * Restituisce lo stato di disponibilità delle auto in un formato JSON
-     * contratto.
-     * La chiave è composta dal modello (senza spazi) e dall'anno (es.
-     * Modello_2023).
-     */
+    //Restituisce lo stato di disponibilità delle singole auto in un formato JSON
     private void getAutoDisponibiliJSON(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
@@ -264,9 +241,7 @@ public class CatalogoServlet extends HttpServlet {
         }
     }
 
-    /**
-     * Verifica la disponibilità di un'auto specifica
-     */
+    //Verifica la disponibilità di un'auto specifica
     private void checkDisponibilita(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
@@ -309,10 +284,7 @@ public class CatalogoServlet extends HttpServlet {
         }
     }
 
-    /**
-     * Split "specifiche" usando la virgola come separatore.
-     * Ritorna sempre un array di 2 elementi: [motore, potenza]
-     */
+    //Split per recuperare il Tipo di motore e la Potenza che nel DB sono un unico elemento "Specifiche"
     private String[] splitMotorePotenza(String specifiche) {
         if (specifiche == null)
             return new String[] { "", "" };
@@ -322,9 +294,7 @@ public class CatalogoServlet extends HttpServlet {
         return new String[] { motore, potenza };
     }
 
-    /**
-     * Escape dei caratteri speciali per JSON
-     */
+    //Escape dei caratteri speciali per JSON
     private String escapeJson(String str) {
         if (str == null)
             return "";
@@ -335,12 +305,8 @@ public class CatalogoServlet extends HttpServlet {
                 .replace("\t", "\\t");
     }
 
-    /**
-     * Escape HTML (per mostrare il JSON dentro
-     * 
-     * <pre>
-     * quando debug=1)
-     */
+    //Escape HTML (per mostrare il JSON nella fase di Debug
+	
     private String escapeHtml(String s) {
         if (s == null)
             return "";
@@ -351,11 +317,7 @@ public class CatalogoServlet extends HttpServlet {
                 .replace("'", "&#39;");
     }
 
-    /**
-     * Determina il colore predefinito per un dato modello.
-     * Questa informazione viene utilizzata come punto di partenza nel
-     * configuratore.
-     */
+    //Mappatura di base per determinare il colore predefinito dei singoli modelli di Auto (Fondamentale nel passaggio tra catalogo e configuratore)
     private String coloreDefaultPerModello(String modello) {
         if (modello == null)
             return "Nero";

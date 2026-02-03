@@ -24,31 +24,30 @@ public class OrdiniUtenteServlet extends HttpServlet {
         Utente utente = (session != null) ? (Utente) session.getAttribute("utente") : null;
 
         if (utente == null) {
-            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            response.sendRedirect(request.getContextPath() + "/login.jsp"); //redirect al login se l'utente non è loggato
             return;
         }
 
-        String email = utente.getEmail(); // <-- è questo che salvi su ordine.indirizzo_email
+        String email = utente.getEmail(); //legge l'email dell'utente
         System.out.println("[OrdiniUtenteServlet] email sessione = " + email);
-
         List<String> debugMsgs = new ArrayList<>();
         debugMsgs.add("👤 Email utente: " + email);
 
         try {
-            OrdineDAO ordineDAO = new OrdineDAO();
-            List<Ordine> ordini = ordineDAO.getOrdiniByUtente(email);
+            OrdineDAO ordineDAO = new OrdineDAO(); //accesso al database 
+            List<Ordine> ordini = ordineDAO.getOrdiniByUtente(email);//legge gli ordini per quella specifica mail
 
-            long attivi = ordini.stream()
+            long attivi = ordini.stream()//calcolo degli ordini attivi
                     .filter(o -> o.getStato() != null && !"CONSEGNATO".equalsIgnoreCase(o.getStato()))
                     .count();
-
+            //mesaggi di debug
             debugMsgs.add("📦 Ordini trovati: " + ordini.size());
             debugMsgs.add("🟠 Ordini attivi: " + attivi);
-
+            //pasaggio dei dati alla view
             request.setAttribute("ordini", ordini);
             request.setAttribute("ordiniAttivi", attivi);
             request.setAttribute("totaleOrdini", ordini.size());
-
+            //mesaggi di errore
         } catch (Exception e) {
             e.printStackTrace();
             debugMsgs.add("❌ Errore: " + e.getMessage());
@@ -58,10 +57,9 @@ public class OrdiniUtenteServlet extends HttpServlet {
             request.setAttribute("totaleOrdini", 0);
         }
 
-        // passa i messaggi di debug alla JSP per popup/box
+        // passaggio dei mesaggi di debug
         request.setAttribute("debugMsgs", debugMsgs);
 
-        // ⚠️ PATH del JSP: assicurati che sia davvero questo (altrimenti metti "/ordini.jsp")
         request.getRequestDispatcher("/Cliente/ordini.jsp").forward(request, response);
     }
 
