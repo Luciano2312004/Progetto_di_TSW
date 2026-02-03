@@ -113,4 +113,12 @@
 <welcome-file>default.htm</welcome-file>
 <welcome-file>default.xhtml</welcome-file>
 </welcome-file-list>
+    <servlet>
+        <servlet-name>SearchServlet</servlet-name>
+        <servlet-class>control.SearchServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SearchServlet</servlet-name>
+        <url-pattern>/search</url-pattern>
+    </servlet-mapping>
 </web-app>

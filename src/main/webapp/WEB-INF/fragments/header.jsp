@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
         <script src="https://cdn.tailwindcss.com"></script>
 
         <link rel="stylesheet" href="header.css">
@@ -22,6 +22,13 @@
                 </div>
 
                 <div class="nav__actions">
+                    <!-- SEARCH BAR -->
+                    <div class="nav__search">
+                        <input type="text" id="headerSearch" class="search-input" placeholder="Cerca modello..."
+                            autocomplete="off">
+                        <div id="headerSearchResults" class="search-results"></div>
+                    </div>
+
                     <div class="nav__icons">
                         <!-- Gestione Utente -->
                         <c:if test="${not empty sessionScope.utente}">
@@ -88,8 +95,8 @@
         </aside>
 
         <script>
-          
-           
+
+
 
             // Funzioni per il carrello - ORIGINALI
             function openCart() {
@@ -192,19 +199,19 @@
             });
             /*=============== SHOW MENU ===============*/
             const navMenu = document.getElementById('nav-menu'),
-                  navToggle = document.getElementById('nav-toggle'),
-                  navClose = document.getElementById('nav-close')
+                navToggle = document.getElementById('nav-toggle'),
+                navClose = document.getElementById('nav-close')
 
             /* Menu show */
-            if(navToggle){
-                navToggle.addEventListener('click', () =>{
+            if (navToggle) {
+                navToggle.addEventListener('click', () => {
                     navMenu.classList.add('show-menu')
                 })
             }
 
             /* Menu hidden */
-            if(navClose){
-                navClose.addEventListener('click', () =>{
+            if (navClose) {
+                navClose.addEventListener('click', () => {
                     navMenu.classList.remove('show-menu')
                 })
             }
@@ -223,11 +230,78 @@
                     }
                 });
             }
-            const bgHeader = () =>{
+            const bgHeader = () => {
                 const header = document.getElementById('header')
                 // Add a class if the bottom offset is greater than 50 of the viewport
-                this.scrollY >= 50 ? header.classList.add('bg-header') 
-                                   : header.classList.remove('bg-header')
+                this.scrollY >= 50 ? header.classList.add('bg-header')
+                    : header.classList.remove('bg-header')
             }
             window.addEventListener('scroll', bgHeader)
+
+            /* === AJAX SEARCH BAR LOGIC === */
+            document.addEventListener('DOMContentLoaded', () => {
+                const searchInput = document.getElementById('headerSearch');
+                const resultsContainer = document.getElementById('headerSearchResults');
+                const ctx = '${pageContext.request.contextPath}';
+                let debounceTimer;
+
+                if (!searchInput || !resultsContainer) return;
+
+                // Close results when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!searchInput.contains(e.target) && !resultsContainer.contains(e.target)) {
+                        resultsContainer.style.display = 'none';
+                    }
+                });
+
+                searchInput.addEventListener('input', (e) => {
+                    const query = e.target.value.trim();
+
+                    clearTimeout(debounceTimer);
+
+                    if (query.length < 2) {
+                        resultsContainer.style.display = 'none';
+                        resultsContainer.innerHTML = '';
+                        return;
+                    }
+
+                    debounceTimer = setTimeout(async () => {
+                        try {
+                            const response = await fetch(ctx + '/search?q=' + encodeURIComponent(query));
+                            if (!response.ok) throw new Error('Search failed');
+                            const results = await response.json();
+
+                            resultsContainer.innerHTML = '';
+                            if (results.length > 0) {
+                                resultsContainer.style.display = 'block';
+                                results.forEach(item => {
+                                    const div = document.createElement('div');
+                                    div.className = 'search-result-item';
+
+                                    const formattedPrice = new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(item.prezzo);
+
+                                    div.innerHTML = `
+                                        <div class="search-result-info">
+                                            <span class="search-result-name">${'$'}{item.marca} ${'$'}{item.modello}</span>
+                                            <span class="search-result-year">${'$'}{item.anno}</span>
+                                        </div>
+                                        <div class="search-result-price">${'$'}{formattedPrice}</div>
+                                    `;
+
+                                    div.addEventListener('click', () => {
+                                        // Redirect to catalogo with model param for Deep Linking
+                                        window.location.href = ctx + '/catalogo.jsp?model=' + encodeURIComponent(item.modello);
+                                    });
+
+                                    resultsContainer.appendChild(div);
+                                });
+                            } else {
+                                resultsContainer.style.display = 'none'; // Or show "No results"
+                            }
+                        } catch (error) {
+                            console.error('Search error:', error);
+                        }
+                    }, 300); // 300ms debounce
+                });
+            });
         </script>

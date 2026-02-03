@@ -1,23 +1,24 @@
-
 /* =============== HEADER DEDICATO =============== */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap");
+
 :root {
-  --header-height: 3.5rem;
-  --first-color: hsl(43, 90%, 50%);
-  --black-color: hsl(0, 0%, 8%);
-  --white-color: hsl(0, 0%, 100%);
-  --body-color: hsl(0, 0%, 98%);
-  --z-fixed: 100;
-  
-  /* Font weights */
-  --font-semi-bold: 600;
-  --font-bold: 700;
+    --header-height: 3.5rem;
+    --first-color: hsl(43, 90%, 50%);
+    --black-color: hsl(0, 0%, 8%);
+    --white-color: hsl(0, 0%, 100%);
+    --body-color: hsl(0, 0%, 98%);
+    --z-fixed: 100;
+
+    /* Font weights */
+    --font-semi-bold: 600;
+    --font-bold: 700;
 }
 
 
 
 .header {
-    background-color: #ffffff; /* MODIFICA: bianco solido */
+    background-color: #ffffff;
+    /* MODIFICA: bianco solido */
     position: fixed;
     width: 100%;
     top: 0;
@@ -25,9 +26,11 @@
     z-index: var(--z-fixed, 100);
     transition: background-color .4s, box-shadow .4s;
     height: 3.5rem;
-    border-bottom: 1px solid #e5e7eb; /* MODIFICA: bordo inferiore per definire la forma quadrata */
+    border-bottom: 1px solid #e5e7eb;
+    /* MODIFICA: bordo inferiore per definire la forma quadrata */
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    font-family: "Montserrat", sans-serif; /* MODIFICA: leggera ombra per definire i bordi */
+    font-family: "Montserrat", sans-serif;
+    /* MODIFICA: leggera ombra per definire i bordi */
 }
 
 .header ul {
@@ -38,7 +41,8 @@
 
 /* MODIFICA: Rimuovi la classe .scrolled se non serve più */
 .header.scrolled {
-    background-color: #ffffff; /* Mantieni bianco */
+    background-color: #ffffff;
+    /* Mantieni bianco */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -63,7 +67,8 @@
     font-size: 1.25rem;
     color: var(--black-color);
     cursor: pointer;
-    display: inline-flex; /* Assicura che sia visibile */
+    display: inline-flex;
+    /* Assicura che sia visibile */
 }
 
 /* Navigation for mobile devices */
@@ -72,12 +77,14 @@
         position: fixed;
         top: -120%;
         left: 0;
-        background-color: #ffffff; /* MODIFICA: bianco solido */
+        background-color: #ffffff;
+        /* MODIFICA: bianco solido */
         width: 100%;
         padding-block: 4rem;
         box-shadow: 0 4px 16px hsla(0, 0%, 0%, .1);
         transition: top .4s;
-        border-top: 1px solid #e5e7eb; /* MODIFICA: bordo superiore */
+        border-top: 1px solid #e5e7eb;
+        /* MODIFICA: bordo superiore */
     }
 }
 
@@ -167,10 +174,12 @@
     right: 0;
     background-color: white;
     min-width: 200px;
-    border: 1px solid #ccc; /* MODIFICA: bordo definito */
-    border-radius: 0; /* MODIFICA: angoli quadrati */
+    border: 1px solid #ccc;
+    /* MODIFICA: bordo definito */
+    border-radius: 0;
+    /* MODIFICA: angoli quadrati */
     padding: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
 }
 
@@ -193,16 +202,17 @@
 
 /* Per dispositivi grandi */
 @media screen and (min-width: 1150px) {
+
     .nav__toggle,
     .nav__close {
         display: none;
     }
-    
+
     .nav__list {
         flex-direction: row;
         column-gap: 4rem;
     }
-    
+
     .nav__menu {
         position: static;
         background-color: transparent;
@@ -225,7 +235,8 @@
     color: var(--black-color, #000000);
     font-size: 0.75rem;
     font-weight: bold;
-    border-radius: 0; /* MODIFICA: quadrato invece che rotondo */
+    border-radius: 0;
+    /* MODIFICA: quadrato invece che rotondo */
     min-width: 18px;
     height: 18px;
     display: flex;
@@ -237,4 +248,89 @@
 /* Nascondi elementi */
 .hidden {
     display: none !important;
+}
+
+
+/* --- Search Bar & Suggestions --- */
+.nav__search {
+    position: relative;
+    margin-right: 1.5rem;
+}
+
+.search-input {
+    background-color: transparent;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    color: #000;
+    font-size: 0.9rem;
+    transition: 0.3s;
+    width: 200px;
+}
+
+.search-input:focus {
+    width: 250px;
+    background-color: #f0f0f0;
+    outline: none;
+    border-color: #333;
+}
+
+.search-input::placeholder {
+    color: #666;
+}
+
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: auto;
+    display: none;
+    /* Hidden by default */
+}
+
+.search-result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background 0.2s;
+    color: #333;
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item:hover {
+    background-color: #f9f9f9;
+}
+
+.search-result-info span {
+    display: block;
+}
+
+.search-result-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.search-result-year {
+    font-size: 0.75rem;
+    color: #888;
+}
+
+.search-result-price {
+    font-size: 0.85rem;
+    color: #bf1e2e;
+    /* Red accent */
+    font-weight: 600;
 }
