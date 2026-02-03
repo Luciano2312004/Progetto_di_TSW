@@ -14,7 +14,7 @@
          </li>
          
           <li>
-         <a href="#about" class="footer__link">Chi siamo</a>
+         <a href="index.jsp#about" class="footer__link">Chi siamo</a>
          
          </li>
          
