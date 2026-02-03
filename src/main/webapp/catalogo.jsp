@@ -7,15 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Catalogo Fast Motors</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="./catalogo.css?v=3">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet"> <!-- Chiamata remixicon per le icone -->
+    <script src="https://cdn.tailwindcss.com"></script> <!-- Chiamata a Tailwind per gestire gli allineamenti  -->
+    <link rel="stylesheet" href="./catalogo.css?v=3"> <!-- Chiamata al CSS -->
   </head>
 
   <body>
-    <jsp:include page="WEB-INF/fragments/header.jsp" />
+    <jsp:include page="WEB-INF/fragments/header.jsp" /> <!-- Header -->
 
-    <div class="catalogo-container">
+    <div class="catalogo-container"> <!-- Parte alta del catalogo con l'immagine e il logo -->
       <header>
         <div class="logo-container">
           <img src="images/logo1.png" class="Fast" alt="Fast Motors Logo">
@@ -24,7 +24,7 @@
         <p class="subtitle">Viaggio tra i gioielli dell'ingegneria automobilistica</p>
       </header>
 
-      <div class="filters-row">
+      <div class="filters-row"> <!-- Menù a tendina per l'ordinamento -->
         <div class="ordinamento-container">
           <button class="ordina-btn">Ordina &#9660;</button>
           <div class="ordina-contenuto">
@@ -37,12 +37,11 @@
           </div>
         </div>
 
-        <!-- Search Bar -->
-        <div class="search-container">
+        <div class="search-container"> <!-- Barra di ricerca AJAX -->
           <input type="text" id="catalogo-search" placeholder="Cerca il tuo modello..." autocomplete="off">
         </div>
 
-        <div class="filtro-tendina">
+        <div class="filtro-tendina"> <!-- Menù a tendina per il filtro sulla basse della marca -->
           <button class="filtro-btn">Filtra per Marca &#9660;</button>
           <div class="filtro-contenuto">
             <div data-marca="tutte">Tutte le auto</div>
@@ -56,15 +55,15 @@
         </div>
       </div>
 
-      <!-- Container descrizione brand (Inizialmente nascosto) -->
-      <div id="scritta-catalogo"
+		<!-- Container per la descrizione dei brand -->
+      <div id="scritta-catalogo" 
         style="display: none; background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 5px solid #d32f2f; position: relative;">
         <button id="chiudi-scritta"
           style="position: absolute; top: 10px; right: 15px; border: none; background: transparent; font-size: 20px; cursor: pointer;">&times;</button>
         <p id="testo-brand" style="margin: 0; font-size: 1.1em; line-height: 1.6; color: #333;"></p>
       </div>
 
-      <div class="filtro-prezzo-separato">
+      <div class="filtro-prezzo-separato"> <!-- Menù per il filtraggio sulla base del prezzo -->
         <button class="filtro-prezzo-btn">Filtra per Prezzo</button>
         <div class="filtro-prezzo-box">
           <input type="number" id="prezzo-min" placeholder="Prezzo min (€)" min="0">
@@ -85,10 +84,10 @@
           tutte le auto</button>
       </div>
 
-      <div class="catalogo"><!-- popolato dal database --></div>
+      <div class="catalogo"><!-- Catalogo popolato sulla base del database --></div>
     </div>
 
-    <script src="catalogo.js?v=4" defer></script>
+    <script src="catalogo.js?v=4" defer></script> <!-- Chiamata allo script JS -->
      <jsp:include page="footer.jsp" />
   </body>
 

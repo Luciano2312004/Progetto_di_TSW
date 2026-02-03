@@ -1,12 +1,9 @@
-/* =========================
-   DEBUG (attiva con ?debug=1)
-========================= */
-
+// DEBUG (attiva con ?Debug=1)
 const DEBUG = new URLSearchParams(window.location.search).get('Debug') === '1';
 const __debugLog = [];
 let __debugPanelEl = null;
 
-function dlog(type, message, data) {
+function dlog(type, message, data) { //Salva gli elementi di Denug nel log
   const entry = {
     t: new Date().toISOString(),
     type,
@@ -22,7 +19,7 @@ function dlog(type, message, data) {
   }
 }
 
-function ensureDebugPanel() {
+function ensureDebugPanel() { //Gestiche il Log in alto a destra con le informazioni di Debug nel momento in cui il catalogo viene avviato
   if (__debugPanelEl || !DEBUG) return;
   const panel = document.createElement('div');
   panel.id = 'catalogo-debug-panel';
@@ -80,7 +77,7 @@ function ensureDebugPanel() {
   });
 }
 
-function appendDebugPanel(entry) {
+function appendDebugPanel(entry) { //Appende le varie informazioni nel log e le mostra con un colore di verso in base al tipo
   if (!__debugPanelEl) return;
   const body = __debugPanelEl.querySelector('#dbg-body');
   const color = entry.type === 'error' ? '#ff6b6b' : (entry.type === 'warn' ? '#ffd166' : '#9be7ff');
@@ -102,7 +99,7 @@ function appendDebugPanel(entry) {
   body.appendChild(wrap);
 }
 
-function showConfigPopup(payload) {
+function showConfigPopup(payload) { //Mostra un pop up prima di spostarsi al configuratore mostrando quali informazioni gli stanno venendo passate
   // chiudi eventuale popup già aperto
   document.getElementById('config-debug-modal')?.remove();
 
@@ -168,30 +165,28 @@ function showConfigPopup(payload) {
     });
   });
 }
+//Fine funzioni di Debug
 
-/* =========================
-   Init principale
-========================= */
 document.addEventListener('DOMContentLoaded', async function () {
   try {
     dlog('info', 'Init catalogo.js avviato', { path: location.pathname, search: location.search });
 
-    // 1) Genera tutte le card dal JSON
+    // 1) Attesa che tutte le auto siano caricate dal file JSON creato sulla base del DB
     await caricaCatalogoDaJSON();
 
-    // 2) Init componenti che dipendono dal DOM
+    // 2) Inizializzazione delle immaggini e funzioni e asse legate
     initGallerie();
     initHoverAutoscroll();
     initConfiguraButtons();
 
-    // 3) Filtri e ordinamenti
+    // 3) Inizializzazzione dei sistemi di filtraggio ordinamento e ricerca
     initFiltri();
     initOrdinamenti();
-    initSearch(); // Init Search Bar
-
-    // 4) Filtro da URL
+    initSearch();
+    // 4) Applica il sistema di filtraggio automatico in base all'url
     applicaFiltroDaURL();
 
+<<<<<<< Updated upstream
     // 5) Deep Linking da Search Bar (Scroll to Model)
     const urlParams = new URLSearchParams(window.location.search);
     const modelToFind = urlParams.get('model');
@@ -214,6 +209,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     // 5) Debug: verifica reale immagini (404 / nome errato)
+=======
+    // 5) Debug: verifica reale immagini
+>>>>>>> Stashed changes
     if (DEBUG) {
       setupDebugImageChecks();
       dlog('info', 'Debug immagini attivo (intercetto onerror su <img>)');
@@ -223,12 +221,9 @@ document.addEventListener('DOMContentLoaded', async function () {
   }
 });
 
-let fullCatalogData = [];
+let fullCatalogData = []; //Cache client-side che contiene l'intero catalogo
 
-/* =========================
-   Ricerca (Search Bar)
-========================= */
-function initSearch() {
+function initSearch() { //Implementazione della barra di ricerca
   const searchInput = document.getElementById('catalogo-search');
   if (!searchInput) return;
 
@@ -240,22 +235,22 @@ function initSearch() {
     // Cancella il timer precedente
     clearTimeout(debounceTimer);
 
-    // Debounce 300ms
+    // Timer effettivo della ricerca (300ms in cui l'utente non sta scrivendo)
     debounceTimer = setTimeout(async () => {
       try {
-        const base = window.location.pathname.split('/')[1] || '';
-        const param = term ? `&q=${encodeURIComponent(term)}` : '';
-        const url = `/${base}/api/catalogo?action=getCatalogo${param}`;
-
+        const base = window.location.pathname.split('/')[1] || ''; //Identifica il contesto del progetto
+        const param = term ? `&q=${encodeURIComponent(term)}` : ''; //Salva quanto scritto dall'utente
+        const url = `/${base}/api/catalogo?action=getCatalogo${param}`; // Richiesta AJAX al backend per ricevere quali auto matchano
+		//Mesaggi di errore
         const res = await fetch(url);
         if (!res.ok) throw new Error('Network response was not ok');
 
         const lista = await res.json();
-        renderCatalogo(lista); // ✅ qui ora aggiorna anche "no results"
+        renderCatalogo(lista); //Aggiornamento dinamico del catalogo senza ricaricamento
       } catch (err) {
         dlog('error', 'Errore ricerca AJAX', { err });
       }
-    }, 300);
+    }, 300); //Tempo di attesa
   });
 }
 
@@ -266,26 +261,26 @@ function initSearch() {
    Render Catalogo (Aggiornata con Scroll Animation)
 ========================= */
 function renderCatalogo(lista) {
-  const catalogoEl = document.querySelector('.catalogo');
+  const catalogoEl = document.querySelector('.catalogo'); //recupera il contesto
   if (!catalogoEl) return;
 
-  catalogoEl.innerHTML = '';
-  const frag = document.createDocumentFragment();
-  let created = 0;
+  catalogoEl.innerHTML = ''; //Svuota il catalogo (Serve nel caso in cui ci sono i filtri)
+  const frag = document.createDocumentFragment(); //Crea prima le card e poi le inserisce
+  let created = 0; //Variabili per il  Debug
   let skipped = 0;
 
   for (const a of lista) {
-    // Logica di filtro disponibilità
+    // Logica per il filtro disponibilità maggiore di 0
     if (!a || a.disponibile === false || (a.quantitaStock ?? 0) <= 0) {
       skipped++;
       continue;
     }
-    const card = creaCardAuto(a);
-    frag.appendChild(card);
+    const card = creaCardAuto(a); //Creazione delle singole card
+    frag.appendChild(card); 
     created++;
   }
 
-  catalogoEl.appendChild(frag);
+  catalogoEl.appendChild(frag);//inserimento delle card nel DOM
 
   // Gestione messaggio "Nessun Risultato"
   const noResultsMsg = document.getElementById('no-results-message');
@@ -293,22 +288,22 @@ function renderCatalogo(lista) {
     noResultsMsg.style.display = (created === 0) ? 'block' : 'none';
   }
 
-  dlog('info', 'Render catalogo', { created, skipped });
+  dlog('info', 'Render catalogo', { created, skipped }); //render per il Debug
 
-  // Re-inizializza componenti
+  // Re-inizializza componenti e chiamata all'animazione per lo scroll
   initGallerie();
   initHoverAutoscroll();
   initConfiguraButtons();
+<<<<<<< Updated upstream
 
   // --- NUOVA LOGICA ANIMAZIONE SCROLL ---
   // Invece di mostrare tutto subito, attiviamo l'Observer
+=======
+>>>>>>> Stashed changes
   setupScrollAnimations();
 }
 
-/**
- * Funzione che osserva le card e le anima quando entrano nello schermo
- */
-function setupScrollAnimations() {
+function setupScrollAnimations() { //Funzione per le animazioni che fanno apparire le card con lo scroll
   const cards = document.querySelectorAll('.auto:not(.auto-visible)');
 
   // Configurazione dell'Observer
@@ -335,26 +330,24 @@ function setupScrollAnimations() {
   });
 }
 
-/* =========================
-   Gallerie
-========================= */
-function initGallerie() {
+
+function initGallerie() { //Funzione per le gallerie delle varie car
   const containers = document.querySelectorAll('[class*="galleria-container"]');
   dlog('info', 'initGallerie: containers trovati', { count: containers.length });
 
-  containers.forEach(container => {
-    const galleria = container.querySelector('.galleria');
-    const immagini = Array.from(container.querySelectorAll('.auto-immagine'));
-    const btnPrev = container.querySelector('.freccia-sinistra');
+  containers.forEach(container => { //Iterazione su ogni galleria
+    const galleria = container.querySelector('.galleria'); //recupera lo slider
+    const immagini = Array.from(container.querySelectorAll('.auto-immagine'));//Recupera tutte le immaggini legate alla singola auto
+    const btnPrev = container.querySelector('.freccia-sinistra'); //Gestione delle freccie destra, sinistra e del puntino sottostante
     const btnNext = container.querySelector('.freccia-destra');
     const puntini = Array.from(container.querySelectorAll('.puntino'));
     if (!galleria || immagini.length === 0) return;
-
+	//Gestione dinamica dello stile 
     let index = 0;
     galleria.style.display = 'flex';
     galleria.style.transition = 'transform 0.35s ease';
     immagini.forEach(img => { img.style.flex = '0 0 100%'; });
-
+	//funzioni per lo spostamento all'immaggine precedente e sucessiva
     function aggiornaUI() {
       galleria.style.transform = `translateX(-${index * 100}%)`;
       if (puntini.length) puntini.forEach((p, i) => p.classList.toggle('attivo', i === index));
@@ -373,33 +366,30 @@ function initGallerie() {
   });
 }
 
-/* =========================
-   Caricamento catalogo (JSON)
-========================= */
-async function caricaCatalogoDaJSON() {
+async function caricaCatalogoDaJSON() { //Funzione che carica il catalogo in formato JSON
   const catalogoEl = document.querySelector('.catalogo');
   if (!catalogoEl) {
-    dlog('error', 'Elemento .catalogo non trovato nel DOM');
+    dlog('error', 'Elemento .catalogo non trovato nel DOM'); //log per l'errore se il catalogo non è stato caricato correttamente
     return;
   }
 
-  const base = window.location.pathname.split('/')[1] || '';
-  const url = `/${base}/api/catalogo?action=getCatalogo`;
+  const base = window.location.pathname.split('/')[1] || ''; //recupera il contesto 
+  const url = `/${base}/api/catalogo?action=getCatalogo`; //Chiamata per recuperare il catalogo dal backend
   dlog('info', 'Fetch catalogo', { url });
 
   const res = await fetch(url);
   dlog('info', 'Risposta fetch catalogo', { ok: res.ok, status: res.status, contentType: res.headers.get('content-type') });
   if (!res.ok) throw new Error(`HTTP ${res.status} su ${url}`);
 
-  const lista = await res.json();
+  const lista = await res.json();  //Converte il catalogo ricevuto in un file JSON
   dlog('info', 'Catalogo JSON ricevuto', { items: Array.isArray(lista) ? lista.length : 'NON-ARRAY' });
 
   fullCatalogData = lista; // Salva dati globalmente
-  renderCatalogo(fullCatalogData); // Renderizza (✅ gestisce anche "no results")
+  renderCatalogo(fullCatalogData); // Renderizza
 }
 
-function creaCardAuto(a) {
-  const marcaLabel = (a.marca || '').trim();
+function creaCardAuto(a) { //Creazione delle singole card
+  const marcaLabel = (a.marca || '').trim(); //elementi presenti nella card
   const marcaData = marcaLabel.toLowerCase();
   const modello = (a.modello || '').trim();
   const anno = a.anno;
@@ -408,7 +398,7 @@ function creaCardAuto(a) {
   const prezzoNum = Number(a.prezzo ?? 0);
   const coloreDefault = (a.coloreDefault || '').trim();
 
-  const coloreToClass = {
+  const coloreToClass = { //Colore per il background (non piu utilizzato)
     'rosso': 'R',
     'blu': 'B',
     'giallo': 'Y',
@@ -471,11 +461,11 @@ function creaCardAuto(a) {
     </div>
   `;
 
-  wrapper.querySelectorAll('img.auto-immagine').forEach(img => {
+  wrapper.querySelectorAll('img.auto-immagine').forEach(img => { //fallback 1
     const s = img.getAttribute('data-src');
     if (s) attachImgCaseFallback(img, s);
   });
-  wrapper.querySelectorAll('img.logo-img').forEach(img => {
+  wrapper.querySelectorAll('img.logo-img').forEach(img => { //fallback 2
     const s = img.getAttribute('data-src');
     if (s) attachImgCaseFallback(img, s);
   });
@@ -483,18 +473,19 @@ function creaCardAuto(a) {
   return wrapper;
 }
 
-function modelloToFilenameBase(modello) {
+function modelloToFilenameBase(modello) { //converte il modello nel nome del file immagine
   return modello;
 }
 
-function normalizzaModelloPerConfiguratore(modello) {
+//Gestione elementi di normalizazione ed eccezzioni
+function normalizzaModelloPerConfiguratore(modello) { //normalizzazione del nome del modello (rimozzione marca)
   if (!modello) return modello;
   const parts = modello.trim().split(/\s+/);
   if (parts.length > 1) return parts.slice(1).join(' ');
   return modello;
 }
 
-function normalizeForAsset(marca, modello) {
+function normalizeForAsset(marca, modello) { //normalizzazione del modello per la marca per i path delle immagini del configuratore (rimozzione marca, spazi e caratteri non alfa-numerici)
   const m = String(marca || '').trim().toLowerCase();
   let x = String(modello || '').trim().toLowerCase();
   if (m && x.startsWith(m + ' ')) x = x.slice(m.length + 1);
@@ -503,7 +494,7 @@ function normalizeForAsset(marca, modello) {
   return x;
 }
 
-function normalizzaModelloPerConfiguratoreConEccezioni(modelloRaw) {
+function normalizzaModelloPerConfiguratoreConEccezioni(modelloRaw) { //eccezzioni di normalizazione per evitare di rinominare le immaggini
   const raw = String(modelloRaw || '').trim();
   const k = raw.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9]/g, '');
   const EX = {
@@ -516,7 +507,7 @@ function normalizzaModelloPerConfiguratoreConEccezioni(modelloRaw) {
   return normalizzaModelloPerConfiguratore(raw);
 }
 
-function applyAssetExceptions(assetKey) {
+function applyAssetExceptions(assetKey) { //eccezzioni per casi specifici con nomi non alineati
   const EX = {
     LaFerrari: 'laferrari',
     SF90: 'sf',
@@ -526,7 +517,7 @@ function applyAssetExceptions(assetKey) {
   return EX[assetKey] ?? assetKey;
 }
 
-function formatEuro(n) {
+function formatEuro(n) { //formato prezzo in euro
   const it = Math.round(n).toLocaleString('it-IT');
   return `€${it}`;
 }
@@ -571,7 +562,7 @@ function buildCaseFallbackCandidates(pathWithName) {
   return out;
 }
 
-function attachImgCaseFallback(imgEl, initialSrc) {
+function attachImgCaseFallback(imgEl, initialSrc) { //fallback per le immaggini
   const candidates = buildCaseFallbackCandidates(initialSrc);
   let idx = 0;
   imgEl.src = candidates[idx];
@@ -590,10 +581,8 @@ function attachImgCaseFallback(imgEl, initialSrc) {
   imgEl.addEventListener('error', onErr);
 }
 
-/* =========================
-   Debug immagini: intercetta errori reali
-========================= */
-function setupDebugImageChecks() {
+
+function setupDebugImageChecks() { // Debug delle immagini immagini
   const imgs = Array.from(document.querySelectorAll('img.auto-immagine'));
   dlog('info', 'Immagini in pagina', { count: imgs.length });
   const failed = [];
@@ -617,29 +606,24 @@ function setupDebugImageChecks() {
   }, 1200);
 }
 
-/* =========================
-   Filtro automatico da URL
-========================= */
-function applicaFiltroDaURL() {
+function applicaFiltroDaURL() { // gestione del Filtro automatico da URL
   const hash = window.location.hash.substring(1);
   if (hash && hash !== 'tutte') {
-    const marcheValide = ['ferrari', 'lamborghini', 'porsche', 'mclaren', 'bugatti', 'koenigsegg'];
+    const marcheValide = ['ferrari', 'lamborghini', 'porsche', 'mclaren', 'bugatti', 'koenigsegg']; //se riconosce nell'url uno di questi elementi
     if (marcheValide.includes(hash)) {
       setTimeout(() => {
         const filtroElement = document.querySelector(`.filtro-contenuto div[data-marca="${hash}"]`);
         if (filtroElement && !filtroElement.classList.contains('active')) {
           dlog('info', 'Applico filtro da URL', { hash });
-          filtroElement.click();
+          filtroElement.click(); //simula il click sul filtro con quel nome
         }
       }, 300);
     }
   }
 }
 
-/* =========================
-   Disponibilità (se la usi ancora)
-========================= */
-async function nascondiAutoNonDisponibili() {
+
+async function nascondiAutoNonDisponibili() { //funzione che nasconde le card delle auto non disponibili (non piu utilizzata)
   try {
     const base = window.location.pathname.split('/')[1] || '';
     const url = `/${base}/api/catalogo?action=getAutoDisponibili`;
@@ -707,10 +691,8 @@ async function nascondiAutoNonDisponibili() {
   }
 }
 
-/* =========================
-   Filtri
-========================= */
-function initFiltri() {
+
+function initFiltri() { //gestione del sistema di filtraggio per marca
   const opzioniFiltro = document.querySelectorAll('.filtro-contenuto div[data-marca]');
   const scrittaCatalogo = document.getElementById('scritta-catalogo');
   const testoBrand = document.getElementById('testo-brand');
@@ -722,7 +704,7 @@ function initFiltri() {
 
   if (!opzioniFiltro.length) return;
 
-  const testiBrand = {
+  const testiBrand = { //Testi specifici legati ai singoli brand
     'ferrari': 'Ferrari rappresenta il connubio perfetto tra passione, eleganza e performance assoluta. Fondata nel 1947 da Enzo Ferrari, la casa di Maranello ha trasformato il concetto stesso di automobile in un simbolo universale di eccellenza italiana. Ogni modello nasce dal DNA delle corse, con linee scolpite dall\'aerodinamica e motori che vibrano come strumenti musicali, capaci di trasmettere emozioni uniche già al primo avviamento. Ferrari non è soltanto un costruttore di auto, ma un\'icona culturale che incarna sogno e desiderio. Entrare a bordo significa vivere un\'esperienza che va oltre la guida: è appartenere a una leggenda, fatta di innovazione continua, artigianato raffinato e trionfi senza tempo nel motorsport.',
     'lamborghini': 'Lamborghini è sinonimo di audacia, potenza e design fuori dagli schemi. Fondata nel 1963 da Ferruccio Lamborghini, la casa di Sant\'Agata Bolognese ha rivoluzionato l\'idea di supercar, puntando su un linguaggio stilistico aggressivo e inconfondibile. Le sue linee taglienti, ispirate al mondo dell\'aeronautica e agli artigli dei tori da combattimento, incarnano la pura espressione della velocità. Sotto il cofano, i motori V10 e V12 erogano una sinfonia meccanica capace di far battere il cuore di chiunque ami l\'adrenalina. Lamborghini non costruisce semplici automobili: realizza opere d\'arte su ruote che sfidano i limiti della tecnologia e celebrano la libertà di spingersi sempre oltre.',
     'porsche': 'Porsche unisce tradizione e innovazione come nessun altro marchio. Nata nel 1948 con la leggendaria 356, la casa di Stoccarda ha scritto la storia della sportività su strada e in pista. Ogni Porsche rappresenta il perfetto equilibrio tra ingegneria tedesca e piacere di guida, con una filosofia che punta alla precisione assoluta e a un design intramontabile. L\'inconfondibile silhouette della 911 è diventata un\'icona mondiale, simbolo di prestazioni e raffinatezza senza compromessi. Ma Porsche non è solo passato glorioso: oggi è anche avanguardia, con soluzioni ibride ed elettriche che mantengono intatta l\'anima sportiva. Guidare una Porsche significa vivere la passione per la velocità con classe e autenticità.',
@@ -738,10 +720,10 @@ function initFiltri() {
   async function applicaFiltroMarca(marcaSelezionata) {
     await nascondiAutoNonDisponibili();
     marcaCorrente = marcaSelezionata;
-    applicaFiltri();
+    applicaFiltri(); 
   }
 
-  async function resettaFiltri() {
+  async function resettaFiltri() { //reset dei filtri
     await nascondiAutoNonDisponibili();
     marcaCorrente = 'tutte';
     opzioniFiltro.forEach(op => op.classList.remove('active'));
@@ -754,23 +736,23 @@ function initFiltri() {
     if (scrittaCatalogo) scrittaCatalogo.style.display = 'none';
   }
 
-  function applicaFiltri() {
-    const autoCards = document.querySelectorAll('.auto');
+  function applicaFiltri() { //funzione che mostra nel DOM solo le auto che rispettano il filtro
+    const autoCards = document.querySelectorAll('.auto'); //Scorrimento di tutte le card
     let autoVisibili = 0;
 
-    autoCards.forEach(auto => {
+    autoCards.forEach(auto => { //lavora solo sulle card visibili
       if (auto.style.display === 'none') return;
-
+		//estrazione dei dati
       const autoMarca = (auto.querySelector('.logo-marca')?.textContent || '').toLowerCase().trim();
       const prezzoAuto = parseInt(auto.querySelector('.prezzo')?.textContent.replace(/[^\d]/g, '') || '0', 10);
-
+		//calcolo del match
       const matchMarca = (marcaCorrente === 'tutte' || autoMarca === marcaCorrente);
       const matchPrezzo = (prezzoAuto >= prezzoMinCorrente && prezzoAuto <= prezzoMaxCorrente);
-
+		//applica visibilità
       auto.style.display = (matchMarca && matchPrezzo) ? 'flex' : 'none';
       if (matchMarca && matchPrezzo) autoVisibili++;
     });
-
+		//gestione della scritta
     if (scrittaCatalogo && testoBrand) {
       if (marcaCorrente !== 'tutte' && testiBrand[marcaCorrente] && autoVisibili > 0) {
         testoBrand.textContent = testiBrand[marcaCorrente];
@@ -826,10 +808,7 @@ function initFiltri() {
   document.querySelector('.filtro-contenuto div[data-marca="tutte"]')?.classList.add('active');
 }
 
-/* =========================
-   Ordinamenti
-========================= */
-function initOrdinamenti() {
+function initOrdinamenti() {// gesione dell'ordinamento del catalogo
   const opzioniOrdine = document.querySelectorAll('.ordina-contenuto div');
   const catalogo = document.querySelector('.catalogo');
   if (!opzioniOrdine.length || !catalogo) return;
@@ -837,9 +816,9 @@ function initOrdinamenti() {
   opzioniOrdine.forEach(opzione => {
     opzione.addEventListener('click', function () {
       const ordine = this.getAttribute('data-ordine');
-      let autoCards = Array.from(document.querySelectorAll('.auto'));
+      let autoCards = Array.from(document.querySelectorAll('.auto')); //array con tutte le auto visibili
 
-      if (ordine === 'prezzo-crescente') {
+      if (ordine === 'prezzo-crescente') { //ordinamento in base ai dati recuperati dalle card visibili
         autoCards.sort((a, b) => prezzoDaCard(a) - prezzoDaCard(b));
       } else if (ordine === 'prezzo-decrescente') {
         autoCards.sort((a, b) => prezzoDaCard(b) - prezzoDaCard(a));
@@ -873,10 +852,8 @@ function initOrdinamenti() {
   }
 }
 
-/* =========================
-   Hover autoscroll
-========================= */
-function initHoverAutoscroll() {
+
+function initHoverAutoscroll() { //scroll automatico a destra per hover sulla galleria
   const gallerie = document.querySelectorAll('[class*="galleria-container"]');
   gallerie.forEach(container => {
     let timeoutId;
@@ -892,10 +869,8 @@ function initHoverAutoscroll() {
   });
 }
 
-/* =========================
-   Configura buttons
-========================= */
-function initConfiguraButtons() {
+
+function initConfiguraButtons() { //gestione del passaggio delle informazioni al configuratore
   const configuraButtons = document.querySelectorAll('.configura-btn');
   configuraButtons.forEach(button => {
     button.addEventListener('click', function () {

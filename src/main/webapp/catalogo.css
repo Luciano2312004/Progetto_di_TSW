@@ -1,13 +1,15 @@
+/* RESET GENERALE
+   - Uniforma box-model e azzera margini/padding di default del browser */
 * {
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
 }
 
-/* Scritta del brand sopra il catalogo */
+/* BLOCCO TESTO BRAND (sopra il catalogo) */
 #scritta-catalogo {
 	margin-bottom: 20px;
-	animation: apparizioneScritta 0.6s ease;
+	animation: apparizioneScritta 0.6s ease; /* animazione quando compare */
 }
 
 .scritta-brand-catalogo {
@@ -29,6 +31,7 @@
 	text-transform: uppercase;
 }
 
+/* animazione del blocco descrizione brand */
 @keyframes apparizioneScritta {
 	from {
 		opacity: 0;
@@ -41,13 +44,13 @@
 	}
 }
 
+/* LOGO PRINCIPALE*/
 .Fast {
 	display: block;
 	margin: 0 auto;
 	width: 500px;
 	height: 200px;
-	object-fit: contain;
-	/* Mantiene le proporzioni originali */
+	object-fit: contain; /* mantiene proporzioni del logo senza deformarlo */
 	filter: grayscale(0.2);
 	transition: filter 0.3s ease;
 }
@@ -56,7 +59,7 @@
 	filter: grayscale(0);
 }
 
-/*posizione dei loghi*/
+/* LOGHI BRAND PICCOLI (nelle card e nei menu) */
 .dati h2 .logo-img {
 	transition: all 0.3s ease;
 	margin-left: 12px;
@@ -71,7 +74,7 @@
 	transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Container flex per i filtri */
+/* RIGA DILTRI */
 .filters-row {
 	display: flex;
 	justify-content: space-between;
@@ -82,7 +85,7 @@
 	z-index: 100;
 }
 
-/*ordinamento per prezzo*/
+/*DROPDOWN ORDINAMENTO*/
 .ordinamento-container {
 	position: relative;
 	display: inline-block;
@@ -108,7 +111,7 @@
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Search Bar */
+/*SEARCH BAR (input centrale)*/
 .search-container {
 	flex-grow: 1;
 	display: flex;
@@ -134,6 +137,7 @@
 	box-shadow: 0 0 0 1px rgba(26, 26, 26, 0.1);
 }
 
+/*RIGA FILTRI */
 .filters-row {
 	display: flex;
 	justify-content: space-between;
@@ -143,9 +147,9 @@
 	position: relative;
 	z-index: 10;
 	gap: 20px;
-	/* Aggiunge spazio tra gli elementi */
 }
 
+/* menu opzioni ordinamento (dropdown) */
 .ordina-contenuto {
 	display: none;
 	position: absolute;
@@ -179,11 +183,13 @@
 	color: #1a1a1a;
 }
 
+/* apertura dropdown ordinamento al passaggio mouse */
 .ordinamento-container:hover .ordina-contenuto {
 	display: block;
-	animation: fadeInDown 0.2s ease;
+	animation: fadeInDown 0.2s ease; /* micro-animazione comparsa */
 }
 
+/* animazione comune dropdown */
 @keyframes fadeInDown {
 	from {
 		opacity: 0;
@@ -196,7 +202,7 @@
 	}
 }
 
-/*filtro per marca*/
+/* DROPDOWN FILTRO MARCA*/
 .filtro-contenuto .logo-img {
 	width: 18px;
 	height: 18px;
@@ -266,12 +272,14 @@
 	color: #1a1a1a;
 }
 
+/* apertura dropdown filtro marca al passaggio mouse */
 .filtro-tendina:hover .filtro-contenuto {
 	display: block;
 	animation: fadeInDown 0.2s ease;
 }
 
-/* Filtro prezzo separato */
+/* ==========================================================================
+   FILTRO PREZZO con box che si espande */
 .filtro-prezzo-separato {
 	text-align: center;
 	margin: 32px 0;
@@ -298,7 +306,7 @@
 }
 
 .filtro-prezzo-box {
-	display: none;
+	display: none; /* reso visibile dal JS quando l’utente apre il filtro prezzo */
 	margin-top: 16px;
 	padding: 24px;
 	background: #fafafa;
@@ -356,8 +364,7 @@
 	transform: translateY(-1px);
 }
 
-/* scheletro del codice*/
-
+ /*Struttura pagina principale */
 .logo-container {
 	background: url('images/Backgroundcatalog.png') center/cover no-repeat;
 	display: block;
@@ -366,7 +373,6 @@
 	height: 600px;
 	margin: 0 auto 30px auto;
 	padding-top: 10px;
-	/* Logo in alto */
 	border-radius: 12px;
 	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 	overflow: hidden;
@@ -392,8 +398,7 @@ header .subtitle {
 	text-shadow: none;
 }
 
-
-
+/*BODY*/
 body {
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 	background: #f5f5f5;
@@ -405,17 +410,14 @@ body {
 	position: relative;
 	overflow-x: hidden;
 }
-
-/* Cambia questo nome */
 .catalogo-container {
-    position: relative;
-    max-width: 1400px;
-    margin: 40px auto;
-    background: #ffffff;
-    /* ... resto del codice ... */
+	position: relative;
+	max-width: 1400px;
+	margin: 40px auto;
+	background: #ffffff;
 }
 
-/* Effetto di profondità per i card */
+/* CARD vecchia versione statica */
 .card {
 	background: white;
 	border-radius: 2px;
@@ -444,6 +446,7 @@ h1 {
 	font-weight: 400;
 }
 
+/*GRIGLIA CATALOGO */
 .catalogo {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
@@ -473,8 +476,8 @@ h1 {
 	transform: scale(1.03);
 }
 
-/* Galleria scorrevole - colori minimal */
-.galleria-containerB,
+/* GALLERIA IMMAGINI DENTRO LA CARD */
+.galleria-containerB, /*colori precedenti usati nella versione statica */
 .galleria-containerS,
 .galleria-containerO,
 .galleria-containerP,
@@ -485,7 +488,7 @@ h1 {
 .galleria-containerW,
 .galleria-containerGY {
 	background: #fafafa;
-	position: relative;
+	position: relative; /* ancoraggio per frecce/indicatori e badge marca */
 	height: 220px;
 	overflow: hidden;
 	border-bottom: 1px solid #f0f0f0;
@@ -504,7 +507,7 @@ h1 {
 	transition: transform 0.4s ease;
 }
 
-/* Frecce di navigazione */
+/* NAVIGAZIONE GALLERIA: FRECCE + INDICATORI*/
 .freccia {
 	position: absolute;
 	top: 50%;
@@ -543,7 +546,6 @@ h1 {
 	right: 12px;
 }
 
-/* Puntini indicatori */
 .indicatori {
 	position: absolute;
 	bottom: 12px;
@@ -574,6 +576,7 @@ h1 {
 	border-radius: 3px;
 }
 
+/* badge marca dentro la galleria (testo preso da .logo-marca creato dal JS) */
 .logo-marca {
 	position: absolute;
 	top: 16px;
@@ -591,6 +594,7 @@ h1 {
 	text-transform: uppercase;
 }
 
+/* DATI CARD (titolo, specifiche, prezzo, bottone) */
 .dati {
 	padding: 24px;
 	flex-grow: 1;
@@ -651,6 +655,7 @@ h1 {
 	border-color: #e0e0e0;
 }
 
+/* bottone che porta al configuratore */
 .configura-btn {
 	background: #1a1a1a;
 	color: white;
@@ -669,7 +674,6 @@ h1 {
 
 .configura-btn:hover {
 	background: #F5AD27;
-	/* Colore distintivo (Rosso FastMotors) */
 	border-color: #F5AD27;
 	transform: translateY(-2px);
 	box-shadow: 0 0 15px rgba(245, 173, 39);
@@ -680,6 +684,7 @@ h1 {
 	transform: translateY(0);
 }
 
+/* RESPONSIVE: adattamenti layout su schermi più piccoli */
 @media (max-width: 600px) {
 	.configura-btn {
 		padding: 10px 16px;
@@ -687,7 +692,6 @@ h1 {
 	}
 }
 
-/* impostazioni design dispositivi mobili */
 @media (max-width: 1200px) {
 	.catalogo {
 		grid-template-columns: repeat(3, 1fr);
@@ -702,50 +706,49 @@ h1 {
 	}
 
 	.filters-row {
-		flex-direction: column;
+		flex-direction: column; /* impila i controlli uno sotto l’altro su mobile/tablet */
 		gap: 12px;
 	}
 
-	.catalogo-container{
+	.catalogo-container {
 		padding: 32px;
 	}
 }
 
-
-/* Animazione fade-in per le card */
+/*ANIMAZIONE FADE-IN CARD */
 @keyframes fadeInCard {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
+/* Duplicato di .auto: questa sezione modifica lo stato iniziale per l’animazione */
 .auto {
-  background: white;
-  border-radius: 2px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  border: 1px solid #f0f0f0;
-  
-  /* Stato iniziale nascosto */
-  opacity: 0;
-  transform: translateY(20px);
+	background: white;
+	border-radius: 2px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+	overflow: hidden;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	border: 1px solid #f0f0f0;
+
+	opacity: 0;
+	transform: translateY(20px);
 }
 
-/* Classe che triggera l'animazione */
+/* stato visibile: animazione in avanti */
 .auto.auto-visible {
-  animation: fadeInCard 0.5s ease forwards;
+	animation: fadeInCard 0.5s ease forwards;
 }
 
-/* Ritardo progressivo per effetto a cascata */
+/* ritardi progressivi */
 .auto.auto-visible:nth-child(1) { animation-delay: 0.1s; }
 .auto.auto-visible:nth-child(2) { animation-delay: 0.16s; }
 .auto.auto-visible:nth-child(3) { animation-delay: 0.22s; }
@@ -773,9 +776,8 @@ h1 {
 		padding: 24px;
 	}
 }
-
-/* FIX FOOTER */
-.footer {
+/* Footer */
+.footer { 
 	margin-left: -20px;
 	margin-right: -20px;
 	margin-bottom: -20px;
