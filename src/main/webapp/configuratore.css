@@ -1,4 +1,4 @@
-/* === CSS ORIGINALE MANTENUTO === */
+
 .btn-selected {
   border: 2px solid #ccc;
   border-radius: 50%;
@@ -49,7 +49,7 @@
   transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
-/* === MIGLIORAMENTI BOTTONI COLORE === */
+/* === BOTTONI COLORE === */
 #exterior-buttons button, #interior-buttons button {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
@@ -86,7 +86,7 @@
   height: 100%;
 }
 
-/* Miglioramento btn-selected */
+/* btn-selected */
 .btn-selected {
   border: 3px solid #3B82F6 !important;
   box-shadow: 0 8px 50px rgba(59, 130, 246, 0.3);
@@ -100,7 +100,7 @@
 
 
 
-/* === FRECCE MIGLIORATE === */
+/* === FRECCE === */
 #prev-image, #next-image {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   background: rgba(255, 255, 255, 0.9);
@@ -118,7 +118,7 @@
   background: rgba(255, 255, 255, 1);
 }
 
-/* === MINIATURE MIGLIORATE === */
+/* === MINIATURE === */
 .thumbnail {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 8px;
@@ -157,7 +157,7 @@
   opacity: 1;
 }
 
-/* === BOTTONI GENERICI MIGLIORATI === */
+/* === BOTTONI GENERICI === */
 button {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -173,7 +173,7 @@ button {
 
 
 
-/* Applica SOLO i tuoi stili personalizzati per le immagini ruota */
+/* BOTTONI RUOTE */
 #wheel-buttons .wheel-option img {
   width: 70px;
   height: 70px;
@@ -188,25 +188,22 @@ button {
   animation: wheel-hover-rotate 0.4s forwards;
 }
 
-/* Quando il mouse esce -> torna indietro */
 #wheel-buttons .wheel-option:not(:hover) img {
   animation: wheel-hover-reset 0.4s forwards;
 }
 
-/* Override specifico per wheel buttons - RIMUOVI BORDO BLU */
+
 #wheel-buttons .wheel-option.btn-selected {
-  /* Annulla il bordo blu dei bottoni normali */
+ 
   border: none !important;
   box-shadow: none !important;
-  
-  /* Mantieni solo le tue animazioni personalizzate */
+
   transform: scale(1.05);
   outline: none !important;
   outline-style: none !important;
   outline-width: 0 !important;
 }
 
-/* Focus states senza bordo */
 #wheel-buttons .wheel-option.btn-selected:focus,
 #wheel-buttons .wheel-option.btn-selected:hover {
   border: none !important;
@@ -218,20 +215,20 @@ button {
 #wheel-buttons .wheel-option.btn-selected img {
   outline: none !important;
   
-  /* Doppio bordo elegante */
+  
   border: 3px solid #ffffff !important;
   box-shadow: 
-    0 0 0 2px #3B82F6,              /* Bordo blu esterno */
-    0 0 20px rgba(59, 130, 246, 0.6), /* Glow blu */
-    0 4px 15px rgba(0, 0, 0, 0.2)  /* Ombra sotto */
+    0 0 0 2px #3B82F6,              
+    0 0 20px rgba(59, 130, 246, 0.6), 
+    0 4px 15px rgba(0, 0, 0, 0.2)  
     !important;
   
-  /* SOLO animazione, NO transform fisso */
+  
   animation: wheel-spin-with-border 0.6s ease !important;
   transition: box-shadow 0.3s ease !important;
 }
 
-/* Nuova animazione che mantiene il bordo */
+/* Animazione ruota che gira alla selezione */
 @keyframes wheel-spin-with-border {
   from {
     transform: rotate(0deg) scale(1);
@@ -245,9 +242,9 @@ button {
 }
 
 
-/* Rimuovi qualsiasi eredità di stile dai bottoni generali */
+
 #wheel-buttons .wheel-option {
-  /* Annulla completamente gli stili btn-selected generali */
+  
   border: none !important;
   border-radius: 0 !important;
   padding: 6px !important;
@@ -264,7 +261,7 @@ button {
   margin: 0 6px;
   transform: scale(1.05);
   
-  /* Anti-outline aggressivo */
+ 
   -webkit-tap-highlight-color: transparent !important;
   -webkit-focus-ring-color: transparent !important;
   -moz-outline: none !important;
@@ -272,7 +269,7 @@ button {
   -moz-appearance: none !important;
 }
 
-/* Stati focus/active senza outline per wheel buttons */
+
 #wheel-buttons .wheel-option:focus,
 #wheel-buttons .wheel-option:active,
 #wheel-buttons .wheel-option:focus-visible,
@@ -337,7 +334,7 @@ button {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden; /* Importante per contenere l'espansione */
+  overflow: hidden; 
 }
 
 .package-option:hover {
@@ -353,43 +350,43 @@ button {
   transform: translateY(-1px);
 }
 
-/* Immagine con animazione espansione verticale */
+
 .package-option img {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 8px;
-  height: 5rem; /* h-20 = 5rem, altezza base */
+  height: 5rem; 
   width: 100%;
   object-fit: cover;
 }
 
-/* Hover: espandi immagine verso il basso */
+
 .package-option:hover img {
-  height: 7rem; /* espande di 1.5rem */
+  height: 7rem; 
   filter: brightness(1.1);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Selezione: espansione permanente + effetti */
+
 .package-option.selected img {
-  height: 8rem; /* espande di 1rem */
+  height: 8rem; 
   box-shadow: 0 3px 15px rgba(59, 130, 246, 0.3);
   filter: brightness(1.05);
 }
 
-/* Doppio effetto: selezionato + hover */
+
 .package-option.selected:hover img {
-  height: 8rem; /* espansione massima */
+  height: 8rem; 
   filter: brightness(1.15);
   box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
 }
 
-/* Contenitore testo non si muove durante animazione */
+
 .package-option h4,
 .package-option p {
   transition: all 0.2s ease;
 }
 
-/* Leggero fade del testo durante hover per focus sull'immagine */
+
 .package-option:hover h4,
 .package-option:hover p {
   opacity: 0.9;
@@ -554,22 +551,21 @@ button {
   opacity: 1;
 }
 
-/* === FIX OVERFLOW AUTOPILOT === */
-/* Disabilita l'effetto hover quando l'opzione è già selezionata */
+
 
 .advanced-option.selected:hover,
 .advanced-option.btn-selected:hover {
-  transform: none !important; /* Blocca lo spostamento verso l'alto */
+  transform: none !important; 
   box-shadow: 0 4px 20px rgba(59, 130, 246, 0.25) !important; /* Mantiene l'ombra fissa blu */
   border-color: #3B82F6 !important;
-   /* Cambia il cursore per far capire che è già attivo */
+   
 }
 
-/* Blocca specificamente lo zoom della GIF interna quando selezionato */
+
 .advanced-option.selected:hover .advanced-gif,
 .advanced-option.btn-selected:hover .advanced-gif {
-  transform: scale(1) !important; /* Forza la scala a 1 (normale), annullando l'1.05 */
-  box-shadow: 0 3px 12px rgba(59, 130, 246, 0.3) !important; /* Mantiene l'ombra standard */
+  transform: scale(1) !important;
+  box-shadow: 0 3px 12px rgba(59, 130, 246, 0.3) !important;
 }
 
 /* === ANIMAZIONI PERFORMANCE === */
@@ -661,7 +657,7 @@ button {
   position: relative;
   z-index: 2;
 }
-/* dai */
+
 /* Immagine che si espande */
 .accessory-item img {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -675,15 +671,15 @@ button {
 
 /* Hover: espansione laterale dell'immagine */
 .accessory-item:hover img {
-  width: 200px; /* Espande verso destra */
-  height: 60px; /* Leggero aumento altezza */
+  width: 200px; 
+  height: 60px; 
   border-color: #3B82F6;
   box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
-  transform: translateX(16px); /* Spinge leggermente a destra */
+  transform: translateX(16px); 
   margin-left: -24px;
 }
 
-/* Testo che si sposta durante l'hover */
+
 .accessory-item:hover .flex.items-center.space-x-4 > div:last-child {
   transform: translateX(20px);
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -696,7 +692,7 @@ button {
 
 
 
-/* Checkbox personalizzato */
+
 .accessory-form-checkbox {
   transition: all 0.3s ease;
   z-index: 4;
@@ -709,7 +705,7 @@ button {
   transform: scale(1.1);
 }
 
-/* Overlay sottile durante hover */
+
 .accessory-item::before {
   content: '';
   position: absolute;
@@ -728,7 +724,7 @@ button {
   opacity: 1;
 }
 
-/* Effetto glow sui testi durante hover */
+
 .accessory-item:hover span.font-medium {
   color: #1f2937;
   font-weight: 600;
@@ -740,14 +736,14 @@ button {
   transition: all 0.3s ease;
 }
 
-/* Animazione prezzo durante hover */
+
 .accessory-item:hover .font-semibold.text-blue-600 {
   color: #2563eb;
   transform: scale(1.05);
   font-weight: 700;
 }
 
-/* Animazione apertura dropdown */
+
 .accessory-item {
   opacity: 0;
   transform: translateY(-10px);
@@ -798,7 +794,7 @@ button {
   }
 }
 
-/* Responsive: ridimensiona su mobile */
+
 @media (max-width: 768px) {
   .accessory-item:hover img {
     width: 100px;
@@ -830,7 +826,7 @@ button {
     margin-top: 0 !important;
   }
 }
-/* Responsive migliorato */
+
 @media (max-width: 1024px) {
   #exterior-buttons button, #interior-buttons button {
     transform: none;

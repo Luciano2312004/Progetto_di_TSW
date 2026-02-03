@@ -206,7 +206,7 @@ const updateGalleryForCar = (autoData) => {
     views.forEach((view, index) => {
         const img = document.createElement('img');
         let imagePath = getImagePath(autoData.marca, autoData.modello, view, currentExtColorCode, currentIntColorCode);
-        img.src = imagePath; // Ora è un percorso assoluto
+        img.src = imagePath; 
         img.alt = angleLabels[index];
         img.className = 'thumbnail w-24 h-24 object-cover cursor-pointer border-2 border-transparent hover:border-gray-400';
         img.dataset.src = imagePath;
@@ -217,7 +217,7 @@ const updateGalleryForCar = (autoData) => {
             img.id = 'frontimg';
         }
 
-        img.onerror = () => { img.src = `${contextPath}/images/placeholder.jpg`; }; // Usa contextPath anche per il fallback
+        img.onerror = () => { img.src = `${contextPath}/images/placeholder.jpg`; }; 
         img.addEventListener('click', () => showGalleryImage(index));
         gallery.appendChild(img);
     });

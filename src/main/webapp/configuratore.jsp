@@ -15,17 +15,17 @@
     </head>
 
     <body>
-      <!-- Header con carrello incluso -->
+      <!-- Header -->
       <jsp:include page="/WEB-INF/fragments/header.jsp" />
       <script>
         const contextPath = '<%= request.getContextPath() %>';
       </script>
       <p><br><br><br></p>
       <main class="flex flex-col md:flex-row justify-between px-4 md:px-10 py-6">
-        <!-- Image Section -->
+        <!-- Sezione IMMAGINI -->
         <section class="w-full md:w-3/4">
           <div class="sticky top-24" style="height: calc(100vh - 6rem);">
-            <!-- Exterior Image -->
+            <!-- Exterior image (IMMAGINE PRINCIPALE) -->
             <div class="bg-gray-200 flex items-center justify-center overflow-hidden mb-4 relative">
               <img src="./images/Ferrari/ferrarifg.png" alt="Auto selezionata"
                 class="max-w-full h-auto transform scale-125" id="exterior-image" />
@@ -39,7 +39,7 @@
                 &#10095;
               </button>
             </div>
-            <!-- Galleria immagini esterni -->
+            <!-- Galleria immagini esterni (IMMAGINI Angolazioni varie) -->
             <div id="exterior-gallery" class="flex space-x-4 justify-right mt-4">
               <img src="./images/Ferrari/ferrarifg.png" alt="Vista Frontale"
                 class="thumbnail w-24 h-24 object-cover cursor-pointer border-2 border-transparent hover:border-gray-400"
@@ -139,11 +139,11 @@
               </button>
             </div>
           </div>
-          <!-- Packages Section  -->
+          <!-- Sezione PACCHETTI  -->
           <div class="mb-8" id="packages-section">
             <h3 class="font-semibold mb-4">Packages</h3>
             <div class="grid grid-cols-2 gap-3">
-              <!-- Performance Package -->
+              <!-- Pacchetto Performance -->
               <div class="package-option" data-package="performance" data-price="5000">
                 <img src="./images/package-performance.jpg" alt="Performance Package"
                   class="w-full h-20 object-cover rounded-lg mb-2">
@@ -151,7 +151,7 @@
                 <p class="text-xs text-gray-600">Dinamiche potenziate FastMotors™</p>
                 <p class="text-sm font-bold text-blue-600">+$5,000</p>
               </div>
-              <!-- Comfort Package -->
+              <!-- Pacchetto Comfort -->
               <div class="package-option" data-package="comfort" data-price="3000">
                 <img src="./images/package-lights.jpg" alt="Lights Package"
                   class="w-full h-20 object-cover rounded-lg mb-2">
@@ -159,7 +159,7 @@
                 <p class="text-xs text-gray-600">Interni Premium</p>
                 <p class="text-sm font-bold text-blue-600">+$800</p>
               </div>
-              <!-- Sport Package -->
+              <!-- Pacchetto Sport -->
               <div class="package-option" data-package="sport" data-price="4500">
                 <img src="./images/package-sport.jpg" alt="Sport Package"
                   class="w-full h-20 object-cover rounded-lg mb-2">
@@ -167,7 +167,7 @@
                 <p class="text-xs text-gray-600">Kit Aerodinamica</p>
                 <p class="text-sm font-bold text-blue-600">+$4,500</p>
               </div>
-              <!-- Tech Package -->
+              <!-- Pacchetto Tech -->
               <div class="package-option" data-package="tech" data-price="3500">
                 <img src="./images/package-tech.jpg" alt="Tech Package"
                   class="w-full h-20 object-cover rounded-lg mb-2">
@@ -177,7 +177,7 @@
               </div>
             </div>
           </div>
-          <!-- Advanced Options Dropdown -->
+          <!-- Opzioni Autopilotaggio -->
           <div class="mb-8" id="advanced-options-section">
             <button id="advanced-toggle"
               class="flex items-center justify-between w-full py-3 px-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors duration-300">
@@ -186,7 +186,7 @@
             </button>
             <div id="advanced-content" class="advanced-dropdown">
               <div class="grid grid-cols-1 gap-6 pt-4">
-                <!-- Option 1 -->
+                <!-- Opzione 1 -->
                 <div class="advanced-option" data-option="Autopilot-base" data-price="2500">
                   <img src="./images/autopilot-base.gif" alt="Autopilot-base"
                     class="w-full h-20 object-cover rounded-lg mb-2 advanced-gif" id="autopilot1">
@@ -195,7 +195,7 @@
                     adattivo, oltre al controllo dei semafori e degli stop.</p>
                   <p class="text-sm font-bold text-blue-600">+$4,800</p>
                 </div>
-                <!-- Option 2 -->
+                <!-- Opzione 2 -->
                 <div class="advanced-option" data-option="Autopilot-advanced" data-price="1800">
                   <img src="./images/autopilot-advanced.gif" alt="Autopilot avanzato"
                     class="w-full h-20 object-cover rounded-lg mb-2 advanced-gif" id="autopilot2">
@@ -205,7 +205,7 @@
                     conducente.</p>
                   <p class="text-sm font-bold text-blue-600">+$6,750</p>
                 </div>
-                <!-- Option 3 -->
+                <!-- Opzione 3 -->
                 <div class="advanced-option disabled" data-option="Autopark" data-price="3200">
                   <img src="./images/autopilot-parking.gif" alt="Autopark"
                     class="w-full h-20 object-cover rounded-lg mb-2 advanced-gif" id="autopilot3">
@@ -215,7 +215,7 @@
                     orizzontale.</p>
                   <p class="text-sm font-bold text-blue-600">+$1,800</p>
                 </div>
-                <!-- Option 4 -->
+                <!-- Opzione 4 -->
                 <div class="advanced-option disabled" data-option="Smart-summon" data-price="2800">
                   <img src="./images/autopilot-smart-summon.gif" alt="Smart summon"
                     class="w-full h-20 object-cover rounded-lg mb-2 advanced-gif" id="autopilot4">
@@ -227,10 +227,10 @@
               </div>
             </div>
           </div>
-          <!-- Enhanced Accessories Section -->
+          <!-- Sezione ACCESSORI -->
           <div class="my-8" id="accessories-section">
             <h3 class="font-semibold mb-4">Accessori</h3>
-            <!-- External Accessories -->
+            <!-- ACCESSORI ESTERNI -->
             <div class="mb-6">
               <button
                 class="accessory-category-toggle flex items-center justify-between w-full py-3 px-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors duration-300">
@@ -239,7 +239,7 @@
               </button>
               <div class="accessory-dropdown">
                 <div class="space-y-3 pt-4">
-                  <!-- Roof Rack -->
+                  <!-- Luci di Cortesia -->
                   <label
                     class="accessory-item flex items-center justify-between py-3 px-4 border rounded-lg shadow hover:shadow-md transition-shadow">
                     <div class="flex items-center space-x-4">
@@ -256,7 +256,7 @@
                       <span class="font-semibold text-blue-600">$183</span>
                     </div>
                   </label>
-                  <!-- Mudguards -->
+                  <!-- Vetri Oscurati -->
                   <label
                     class="accessory-item flex items-center justify-between py-3 px-4 border rounded-lg shadow hover:shadow-md transition-shadow">
                     <div class="flex items-center space-x-4">
@@ -273,7 +273,7 @@
                       <span class="font-semibold text-blue-600">$250</span>
                     </div>
                   </label>
-                  <!-- Tow Hitch -->
+                  <!-- Fari principali a LED -->
                   <label
                     class="accessory-item flex items-center justify-between py-3 px-4 border rounded-lg shadow hover:shadow-md transition-shadow">
                     <div class="flex items-center space-x-4">
@@ -293,7 +293,7 @@
                 </div>
               </div>
             </div>
-            <!-- Internal Accessories -->
+            <!-- ACCESSORI INTERNI -->
             <div class="mb-6">
               <button
                 class="accessory-category-toggle flex items-center justify-between w-full py-3 px-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors duration-300">
@@ -302,7 +302,7 @@
               </button>
               <div class="accessory-dropdown">
                 <div class="space-y-3 pt-4">
-                  <!-- Center Console Trays -->
+                  <!-- Apple Car Play -->
                   <label
                     class="accessory-item flex items-center justify-between py-3 px-4 border rounded-lg shadow hover:shadow-md transition-shadow">
                     <div class="flex items-center space-x-4">
@@ -319,7 +319,7 @@
                       <span class="font-semibold text-blue-600">$350</span>
                     </div>
                   </label>
-                  <!-- Floor Mats -->
+                  <!-- Impianto audio surround -->
                   <label
                     class="accessory-item flex items-center justify-between py-3 px-4 border rounded-lg shadow hover:shadow-md transition-shadow">
                     <div class="flex items-center space-x-4">
@@ -336,7 +336,7 @@
                       <span class="font-semibold text-blue-600">$160</span>
                     </div>
                   </label>
-                  <!-- Sunshade -->
+                  <!-- Sedili massaggianti -->
                   <label
                     class="accessory-item flex items-center justify-between py-3 px-4 border rounded-lg shadow hover:shadow-md transition-shadow">
                     <div class="flex items-center space-x-4" id="Scroll">
@@ -357,11 +357,11 @@
               </div>
             </div>
           </div>
-          <!-- Total Price Section (INTEGRATA) -->
+          <!-- Total Price Section -->
           <div class="pt-4">
             <h3 class="font-semibold text-lg">Prezzo Finale</h3>
             <p id="total-price" class="text-2xl font-bold">$52,490</p>
-            <!-- BOTTONE AGGIUNGI AL CARRELLO (id compatibile con main.js) -->
+            <!-- BOTTONE AGGIUNGI AL CARRELLO -->
             <button id="add-to-cart-btn"
               class="w-full mt-4 bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-300">
               Aggiungi al carrello
