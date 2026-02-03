@@ -6,7 +6,7 @@
 		<footer class="footer">
   		 
          <div class="footer__container container grid">
-         <a href="#" class="footer__logo">FASTMOTORS</a>
+         <a href="index.jsp" class="footer__logo">FASTMOTORS</a>
          <ul class="footer__links">
          <li>
          <a href="catalogo.jsp" class="footer__link">Le Nostre Auto</a>
