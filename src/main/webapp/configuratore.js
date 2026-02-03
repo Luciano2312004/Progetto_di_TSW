@@ -1,4 +1,3 @@
-/* === DATABASE AUTO (dal tuo amico) === */
 const autoColorsDatabase = {
   'la ferrari': { buttons: [{ name: 'Red', code: 'rosso', image: './images/button-red.png' }, { name: 'blue', code: 'blu', image: './images/button-deep-blue-metallic.png' }, { name: 'grey', code: 'grigio', image: './images/button-quicksilver.png' }, { name: 'yellow', code: 'giallo', image: './images/button-thunder-yellow.png' }, { name: 'Pearl White', code: 'bianco', image: './images/button-pearl-white.png' }] },
   'sf': { buttons: [{ name: 'Red', code: 'rosso', image: './images/button-red.png' }, { name: 'Solid Black', code: 'nero', image: './images/button-solid-black.png' }, { name: 'Stealth Grey', code: 'grigio', image: './images/button-quicksilver.png' }, { name: 'ultra-red', code: 'rosso-scuro', image: './images/button-ultra-red.png' }, { name: 'Pearl White', code: 'bianco', image: './images/button-pearl-white.png' }] },
@@ -149,9 +148,9 @@ const loadInteriorColorButtons = (autoData) => {
   });
 };
 
-// *** MODIFICA 1: USA 'contextPath' PER CREARE PERCORSI ASSOLUTI ***
+// *** 'contextPath' PER CREARE PERCORSI ASSOLUTI ***
 const getImagePath = (marca, modello, view, colore = null, interiorColor = null) => {
-  // 'contextPath' è definito in configuratore.jsp prima di questo script
+  
   const baseCtx = typeof contextPath !== 'undefined' ? contextPath : '';
 
   const brandNormalized = marca.toLowerCase().replace(/\s+/g, '');
@@ -213,7 +212,7 @@ const updateGalleryForCar = (autoData) => {
         img.dataset.src = imagePath;
 		img.dataset.view = view; 
 
-        // Il codice originale per ri-assegnare l'ID 'frontimg' è corretto
+       
         if (view === 'front') {
             img.id = 'frontimg';
         }
@@ -231,9 +230,7 @@ const updateGalleryForCar = (autoData) => {
     const firstImagePath = getImagePath(autoData.marca, autoData.modello, 'front', currentExtColorCode);
     exteriorImage.src = firstImagePath;
 	
-	// *** MODIFICA 2: Rimuoviamo la riga ridondante che c'era qui ***
-	// const frontImgThumb = document.getElementById('frontimg');
-	// if(frontImgThumb) frontImgThumb.src = firstImagePath; // Rimosso, 'frontimg' ha già l'src impostato nel loop
+
 	
     currentGalleryIndex = 0;
 };
@@ -274,7 +271,7 @@ const updateStatsForCar = (autoData) => {
     currentStats = { power: potenza, speed: velocita, acceleration: parseFloat(accelerazione) };
 };
 
-/* === LOGICA VECCHIA (Calcolo Prezzi, Galleria, Contatori) === */
+/* ===  (Calcolo Prezzi, Galleria, Contatori) === */
 
 function animateCounter(element, target, duration = 1000, suffix = '') {
   let startValue = parseFloat(element.textContent.replace(/[^\d.-]/g, '')) || 0;
@@ -318,9 +315,6 @@ function formatCurrency(amount) {
     return new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(amount);
 }
 
-//*** 1. FUNZIONE HELPER (NUOVA) ***
-//Funzione per aggiornare il prezzo degli accessori
-//La useremo sia per i click sugli accessori, sia per il pacchetto Tech
 function updateAccessoryPrice() {
     let price = 0;
     document.querySelectorAll('#accessories-section .accessory-form-checkbox:checked').forEach(checkbox => {
@@ -381,7 +375,7 @@ function updateGallery(view, colorCode, intColorCode) {
         }
     });
     
-    // *** MODIFICA 3: Aggiorna l'SRC della thumbnail 'frontimg' così il carrello la trova ***
+    // *** Aggiorna l'SRC della thumbnail 'frontimg' così il carrello la trova ***
     const frontThumb = document.getElementById('frontimg');
     if (frontThumb) {
     	frontThumb.src = getImagePath(window.autoCorrente.marca, window.autoCorrente.modello, 'front', colorCode, intColorCode);
@@ -427,28 +421,27 @@ document.addEventListener("DOMContentLoaded", () => {
         accessories: document.getElementById('accessories-section')
     };
 
-    // Handler per bottoni a selezione singola (colori, ruote, autopilot)
-    // Handler per bottoni a selezione singola (colori, ruote)
+   
 // Handler per bottoni a selezione singola (colori, ruote)
 const handleButtonSelection = (container, selector, priceType) => {
     if (!container) return;
     container.addEventListener('click', (e) => {
         const selectedButton = e.target.closest(selector);
         
-        // Se non è un bottone valido, o è già selezionato, o è disabilitato -> esci
+       
         if (!selectedButton || selectedButton.classList.contains('btn-selected') || selectedButton.classList.contains('disabled')) {
             return;
         }
 
-        // 1. Deseleziono tutti gli altri (Rimuovo classe E aggiorno aria-pressed)
+        // 1. Deseleziono tutti gli altri
         container.querySelectorAll(selector).forEach(btn => {
             btn.classList.remove('btn-selected');
-            btn.setAttribute('aria-pressed', 'false'); // <--- FIX: Aggiorna l'HTML per il carrello
+            btn.setAttribute('aria-pressed', 'false'); 
         });
 
-        // 2. Seleziono questo (Aggiungo classe E aggiorno aria-pressed)
+        // 2. Seleziono questo 
         selectedButton.classList.add('btn-selected');
-        selectedButton.setAttribute('aria-pressed', 'true'); // <--- FIX: Aggiorna l'HTML per il carrello
+        selectedButton.setAttribute('aria-pressed', 'true'); 
         
         // 3. Calcolo il prezzo
         let price = parseFloat(selectedButton.dataset.price) || 0;
@@ -457,7 +450,7 @@ const handleButtonSelection = (container, selector, priceType) => {
              const wheelName = selectedButton.dataset.wheel; // es. "Performance"
              selectedWheelType = wheelName;
              
-             // FIX PREZZO: Se nell'HTML manca data-price="2500", lo recuperiamo dalla variabile globale pricing
+             
              if (price === 0 && pricing[wheelName]) {
                  price = pricing[wheelName];
              }
@@ -484,10 +477,8 @@ const handleButtonSelection = (container, selector, priceType) => {
     });
 };
 
-    // Handler per pacchetti (selezione multipla)
-    // Handler per pacchetti (selezione multipla)
-//*** 2. FUNZIONE SOSTITUITA (Pacchetti) ***
-//Handler per pacchetti (selezione multipla) con logica STATS, SCROLL e CARPLAY
+
+//Handler per pacchetti (selezione multipla)
 const handlePackageSelection = (container, selector, priceType) => {
     if (!container) return;
     container.addEventListener('click', (e) => {
@@ -532,8 +523,8 @@ const handlePackageSelection = (container, selector, priceType) => {
       	 // 3. Avvia l'animazione dei contatori
       	 animateCounters();
 
-      	 // 4. Scrolla SOLO se il pacchetto APPENA CLICCATO è 'performance' o 'sport'
-      	 //    e se è stato SELEZIONATO (non deselezionato)
+      	 // 4. Scrolla se il pacchetto cliccato è 'performance' o 'sport'
+      	 
       	 const clickedPackageName = target.dataset.package;
       	 const affectsStats = (clickedPackageName === 'performance' || clickedPackageName === 'sport');
       	 const isSelected = target.classList.contains('selected');
@@ -560,7 +551,7 @@ const handlePackageSelection = (container, selector, priceType) => {
     });
 };
 	
-	// *** FUNZIONE NUOVA: Handler dedicato per l'Autopilota ***
+	// Handler dedicato per l'Autopilota
 	const handleAutopilotSelection = (container, selector) => {
 	    if (!container) return;
 	    
@@ -611,7 +602,7 @@ const handlePackageSelection = (container, selector, priceType) => {
 	    				summon.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 	  	 	 		}
 	  	 	 	} else if (isChildOption) {
-	  	 	 		// È un'opzione figlia, faccio solo il toggle
+	  	 	 		
 	  	 	 		selectedButton.classList.toggle('btn-selected');
 	  	 	 		if (selectedButton.classList.contains('btn-selected')) {
 	    				selectedAdvancedOptions.add(optionName);
@@ -651,9 +642,10 @@ const handlePackageSelection = (container, selector, priceType) => {
     handleButtonSelection(optionsContainers.colors, 'button', 'color');
     handleButtonSelection(optionsContainers.intColors, 'button', 'intColor');
     handleButtonSelection(optionsContainers.wheel, '.wheel-option', 'wheel');
-  	 handlePackageSelection(optionsContainers.packages, '.package-option', 'packages'); // Chiama la nuova funzione pacchetti
-  	 handleAutopilotSelection(optionsContainers.autopilot, '.advanced-option'); // Chiama la nuova funzione autopilota
-    // Logica Galleria
+  	handlePackageSelection(optionsContainers.packages, '.package-option', 'packages');
+  	handleAutopilotSelection(optionsContainers.autopilot, '.advanced-option'); 
+    
+	// Logica Galleria
     const prevBtn = document.getElementById('prev-image');
     const nextBtn = document.getElementById('next-image');
     const gallery = document.getElementById('exterior-gallery');
@@ -684,7 +676,7 @@ const handlePackageSelection = (container, selector, priceType) => {
 		});
 	}
 
-	// Logica Dropdown daidai
+	// Logica Dropdown
 	const advancedToggle = document.getElementById('advanced-toggle');
 	const advancedContent = document.getElementById('advanced-content');
 	const advancedChevron = document.getElementById('advanced-chevron');
