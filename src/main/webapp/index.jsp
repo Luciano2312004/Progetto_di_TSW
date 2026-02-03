@@ -8,25 +8,23 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-      <!--=============== FAVICON ===============-->
+    
       <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
 
-      <!--=============== REMIXICONS ===============-->
-     
-      <!--=============== SWIPER CSS ===============-->
+
       <link rel="stylesheet" href="swiper-bundle.min.css">
 
-      <!--=============== CSS ===============-->
+
       <link rel="stylesheet" href="homepage.css">
 
       <title>Fastmotors</title>
    </head>
    <body>
-      <!--==================== HEADER ====================-->
+
     <jsp:include page="WEB-INF/fragments/header.jsp" />
-      <!--==================== MAIN ====================-->
+
       <main class="main">
-         <!--==================== HOME ====================-->
+
          <section class="home grid section" id="home">
 				<video src="videos/5309381-hd_1920_1080_25fps.mp4" muted loop autoplay class="home__bg"></video>
 				<div class="home__gradient"> </div>
@@ -73,7 +71,7 @@
 				
 				  <div class="swiper-pagination"></div>
 				
-				<a href="#about" class="home__button">
+				<a href="catalogo.jsp" class="home__button">
 				<span> START</span>
 				<i class="ri-arrow-down-s-line"></i></a>
          </section>
@@ -186,18 +184,18 @@
 
       </main>
 
-      <!--==================== FOOTER ====================-->
+
        <jsp:include page="footer.jsp" />
-      <!--========== SCROLL UP ==========-->
+
     
 
-      <!--=============== SCROLLREVEAL ===============-->
+
       <script src="scrollreveal.min.js"></script>
 
-      <!--=============== SWIPER JS ===============-->
+
       <script src="swiper-bundle.min.js"></script>
 
-      <!--=============== MAIN JS ===============-->
+
       <script src="homepage.js"></script>
    </body>
 </html>
