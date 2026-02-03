@@ -40,14 +40,9 @@ public class CheckoutServlet extends HttpServlet {
         if (user != null) {
             userEmail = user.getEmail();
         } else {
-            // Se l'utente non è loggato, per questo progetto scolastico usiamo un fallback
-            // o redirect
-            // Ma dato che il professore vuole vedere l'ordine, usiamo l'email di test SOLO
-            // se proprio necessario
-            // O meglio, reindirizziamo al login se è null.
-            // Per continuità con la logica precedente:
+            
             userEmail = "test.user@email.com";
-            // opzionale: response.sendRedirect("login.jsp"); return;
+           
         }
 
         // 3. Recupera i dati del form
@@ -104,8 +99,7 @@ public class CheckoutServlet extends HttpServlet {
                 fatturaDAO.createFattura(fattura);
 
             } catch (Exception e) {
-                // Logghiamo l'errore ma non blocchiamo la conferma ordine,
-                // altrimenti l'utente vede un errore anche se l'ordine è andato a buon fine.
+               
                 e.printStackTrace();
             }
             // --- FINE CREAZIONE FATTURA AUTOMATICA ---
