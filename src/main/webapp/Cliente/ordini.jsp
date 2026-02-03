@@ -6,13 +6,14 @@
     <title>I miei Ordini - FastMotors</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        /* Reset e base */
+        /* RESET BASE (normalizza padding/margini di default su tutta la pagina) */
         * { 
             box-sizing: border-box; 
             margin: 0;
             padding: 0;
         }
         
+        /* STILE GENERALE PAGINA (sfondo grigio + font + spaziatura esterna) */
         body { 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             background: #f5f5f5;
@@ -21,6 +22,7 @@
             padding: 20px;
         }
         
+        /* CONTENITORE PRINCIPALE (box bianco centrato che contiene tutta la pagina) */
         .container { 
             max-width: 1200px; 
             margin: 0 auto; 
@@ -30,6 +32,7 @@
             box-shadow: 0 1px 4px rgba(0,0,0,0.04);
         }
         
+        /* TITOLO PAGINA "I miei Ordini" (con linea divisoria sotto) */
         h1 { 
             color: #1a1a1a;
             font-size: 2rem;
@@ -40,13 +43,14 @@
             border-bottom: 1px solid #f0f0f0;
         }
         
-        /* Statistiche */
+        /* BLOCCO STATISTICHE (le 2 card "Totale ordini" / "Ordini attivi") */
         .stats { 
             display: flex;
             gap: 16px;
             margin: 32px 0;
         }
         
+        /* CARD STATISTICHE (aspetto delle singole card) */
         .stat-card { 
             flex: 1;
             background: #fafafa; 
@@ -56,11 +60,13 @@
             transition: all 0.2s ease;
         }
         
+        /* EFFETTO HOVER CARD STATISTICHE */
         .stat-card:hover {
             background: #f5f5f5;
             border-color: #e0e0e0;
         }
         
+        /* TESTO ETICHETTA STATISTICA (es. "Totale Ordini") */
         .stat-label {
             font-size: 12px;
             color: #666;
@@ -69,6 +75,7 @@
             margin-bottom: 6px;
         }
         
+        /* NUMERO STATISTICA (es. 3, 10...) */
         .stat-value {
             font-size: 28px;
             font-weight: 600;
@@ -76,7 +83,7 @@
             letter-spacing: -0.5px;
         }
         
-        /* Tabella responsive */
+        /* TABELLA ORDINI (vista desktop) */
         .orders-table { 
             width: 100%; 
             border-collapse: collapse; 
@@ -84,6 +91,7 @@
             font-size: 14px;
         }
         
+        /* CELLE TABELLA (spaziature + separatori riga) */
         .orders-table th, .orders-table td { 
             padding: 16px; 
             text-align: left; 
@@ -91,6 +99,7 @@
             border-bottom: 1px solid #f0f0f0;
         }
         
+        /* INTESTAZIONE TABELLA (riga con "ID Ordine, Data, Totale...") */
         .orders-table th { 
             background: #fafafa;
             color: #666;
@@ -100,6 +109,7 @@
             letter-spacing: 0.5px;
         }
         
+        /* HOVER RIGHE TABELLA (evidenzia riga ordine al passaggio del mouse) */
         .orders-table tbody tr { 
             transition: all 0.2s ease;
         }
@@ -108,6 +118,7 @@
             background: #fafafa;
         }
         
+        /* COLORI STATO ORDINE (span in colonna "Stato") */
         .status-confermato { 
             color: #f39c12; 
             font-weight: 500;
@@ -126,6 +137,7 @@
             font-size: 13px;
         }
         
+        /* MESSAGGIO "Nessun ordine trovato" (vista quando ordini è vuoto) */
         .empty-state { 
             text-align: center; 
             padding: 80px 20px;
@@ -144,6 +156,7 @@
             margin-bottom: 24px;
         }
         
+        /* BLOCCO ERRORE (se ${error} è presente) */
         .error { 
             color: #e74c3c; 
             padding: 16px; 
@@ -154,6 +167,7 @@
             font-size: 14px;
         }
         
+        /* LINK "Torna alla Home" / "Inizia a fare shopping" (stile bottone) */
         .back-link { 
             display: inline-block; 
             margin-top: 32px; 
@@ -176,6 +190,7 @@
             transform: translateY(-1px);
         }
 
+        /* COLONNA DETTAGLI (stile testo e righe nella cella "Dettagli") */
         .col-dettagli { 
             font-size: 13px;
             line-height: 1.6;
@@ -196,22 +211,25 @@
             color: #1a1a1a;
         }
         
+        /* PREZZO NEI DETTAGLI (evita che vada a capo) */
         .d-prezzo { 
             white-space: nowrap;
             font-weight: 500;
             color: #1a1a1a;
         }
         
+        /* RIGA CLICCABILE IN TABELLA (cambia cursore per suggerire click) */
         .row-link { 
             cursor: pointer;
         }
 
+        /* STILE ID ORDINE (colonna #123) */
         .order-id {
             font-weight: 500;
             color: #1a1a1a;
         }
 
-        /* Layout per card su mobile */
+        /* LISTA ORDINI MOBILE (card: nascosta su desktop, visibile su mobile via media query) */
         .mobile-orders {
             display: none;
             flex-direction: column;
@@ -219,6 +237,7 @@
             margin-top: 24px;
         }
 
+        /* CARD ORDINE (vista mobile) */
         .order-card {
             background: white;
             border: 1px solid #f0f0f0;
@@ -228,16 +247,19 @@
             cursor: pointer;
         }
 
+        /* Hover card: effetto “alzata” */
         .order-card:hover {
             border-color: #e0e0e0;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
             transform: translateY(-2px);
         }
 
+        /* Pressione su mobile (tap) */
         .order-card:active {
             transform: translateY(0);
         }
 
+        /* Intestazione card: ID a sinistra, data a destra */
         .order-header {
             display: flex;
             justify-content: space-between;
@@ -258,6 +280,7 @@
             font-size: 13px;
         }
 
+        /* Griglia info card (Totale / Stato, ecc.) */
         .order-info {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -265,11 +288,13 @@
             margin-bottom: 16px;
         }
 
+        /* Blocco singola info dentro la griglia */
         .info-item {
             display: flex;
             flex-direction: column;
         }
 
+        /* Label piccola (Totale/Stato) */
         .info-label {
             font-size: 11px;
             color: #666;
@@ -278,12 +303,14 @@
             margin-bottom: 4px;
         }
 
+        /* Valore (prezzo/stato) */
         .info-value {
             font-weight: 500;
             font-size: 15px;
             color: #1a1a1a;
         }
 
+        /* Box dettagli dentro la card (sfondo grigio chiaro) */
         .order-details {
             background: #fafafa;
             padding: 16px;
@@ -292,8 +319,9 @@
             border: 1px solid #f5f5f5;
         }
 
-        /* Media Queries */
+        /* RESPONSIVE (MOBILE / DESKTOP) */
         @media (max-width: 768px) {
+            /* Adatta padding e spaziature su schermi piccoli */
             body {
                 padding: 16px;
             }
@@ -306,6 +334,7 @@
                 font-size: 1.5rem;
             }
             
+            /* Su mobile: nasconde la tabella e mostra le card */
             .orders-table {
                 display: none;
             }
@@ -314,6 +343,7 @@
                 display: flex;
             }
             
+            /* Statistiche in colonna su mobile */
             .stats {
                 flex-direction: column;
                 gap: 12px;
@@ -327,6 +357,7 @@
                 font-size: 24px;
             }
             
+            /* Link “bottone” a larghezza piena su mobile */
             .back-link {
                 display: block;
                 width: 100%;
@@ -335,12 +366,13 @@
         }
 
         @media (min-width: 1024px) {
+            /* Su schermi larghi: più colonne nella griglia info card */
             .order-info {
                 grid-template-columns: 1fr 1fr 1fr 1fr;
             }
         }
 
-        /* Supporto per orientamento landscape su mobile */
+        /* Landscape su mobile: più colonne, padding leggermente ridotto */
         @media (max-width: 768px) and (orientation: landscape) {
             .order-info {
                 grid-template-columns: 1fr 1fr 1fr;

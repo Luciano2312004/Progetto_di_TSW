@@ -6,13 +6,14 @@
     <title>Fattura - FastMotors</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        /* Reset e base */
+        /* RESET BASE (rimuove margini/padding di default e uniforma box model) */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
+        /* STILE GENERALE PAGINA (sfondo grigio + font + padding esterno) */
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             background: #f5f5f5;
@@ -21,6 +22,7 @@
             padding: 20px;
         }
 
+        /* CONTENITORE PRINCIPALE (box bianco centrato) */
         .container {
             max-width: 900px;
             margin: 0 auto;
@@ -30,7 +32,7 @@
             box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
         }
 
-        /* Header con navigazione */
+        /* HEADER PAGINA (riga con "Torna agli ordini" + bottone stampa) */
         .page-header {
             display: flex;
             justify-content: space-between;
@@ -40,6 +42,7 @@
             border-bottom: 1px solid #f0f0f0;
         }
 
+        /* LINK NAVIGAZIONE (← Torna agli ordini) */
         .nav-link {
             color: #1a1a1a;
             text-decoration: none;
@@ -54,6 +57,7 @@
             color: #666;
         }
 
+        /* BOTTONE STAMPA */
         .print-btn {
             background: #1a1a1a;
             color: white;
@@ -72,6 +76,7 @@
             transform: translateY(-1px);
         }
 
+        /* TITOLO "Fattura" */
         h1 {
             color: #1a1a1a;
             font-size: 2rem;
@@ -80,6 +85,7 @@
             margin-bottom: 32px;
         }
 
+        /* BLOCCO ERRORE (se ${error} è presente) */
         .error {
             color: #e74c3c;
             padding: 16px;
@@ -90,7 +96,7 @@
             font-size: 14px;
         }
 
-        /* Layout responsive per la griglia */
+        /* GRIGLIA INFO FATTURA (ID, Ordine, Data, Totale) */
         .meta {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -98,6 +104,7 @@
             margin-top: 24px;
         }
 
+        /* CARD INFO (singola casella nella griglia .meta) */
         .card {
             background: #fafafa;
             border: 1px solid #f0f0f0;
@@ -111,6 +118,7 @@
             border-color: #e0e0e0;
         }
 
+        /* ETICHETTA CARD (es. "ID Fattura", "Totale") */
         .label {
             color: #666;
             font-size: 11px;
@@ -119,6 +127,7 @@
             margin-bottom: 6px;
         }
 
+        /* VALORE CARD (es. #12, €12000) */
         .val {
             font-weight: 600;
             font-size: 20px;
@@ -126,6 +135,7 @@
             letter-spacing: -0.3px;
         }
 
+        /* SEZIONE DETTAGLI (titolo + blocco pre) */
         .box {
             margin-top: 32px;
         }
@@ -138,20 +148,22 @@
             margin-bottom: 12px;
         }
 
+        /* BLOCCO TESTO DETTAGLI (pre class="dettagli") */
         pre.dettagli {
             background: #1a1a1a;
             color: #e2e8f0;
             padding: 24px;
             border-radius: 2px;
-            white-space: pre-wrap;
+            white-space: pre-wrap; /* manda a capo automaticamente mantenendo formattazione */
             font-size: 14px;
             line-height: 1.7;
-            overflow-x: auto;
+            overflow-x: auto; /* scroll orizzontale se stringhe lunghe */
             -webkit-overflow-scrolling: touch;
             font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
             border: 1px solid #0a0a0a;
         }
 
+        /* LINK DI RITORNO (se mai lo riusi come bottone) */
         .back-link {
             display: inline-block;
             margin-top: 32px;
@@ -174,13 +186,14 @@
             transform: translateY(-1px);
         }
 
+        /* STATO VUOTO (quando non c'è fattura) */
         .empty-card {
             text-align: center;
             padding: 60px 20px;
             color: #666;
         }
 
-        /* Media Queries per dispositivi più grandi */
+        /* RESPONSIVE: su tablet/desktop fissa il numero colonne della griglia .meta */
         @media (min-width: 768px) {
             .meta {
                 grid-template-columns: repeat(2, 1fr);
@@ -193,7 +206,7 @@
             }
         }
 
-        /* Miglioramenti touch */
+        /* RESPONSIVE MOBILE: riduce spazi e rende header a colonna */
         @media (max-width: 767px) {
             body {
                 padding: 16px;
@@ -225,6 +238,7 @@
                 font-size: 18px;
             }
 
+            /* Se usato: bottone/link a larghezza piena */
             .back-link {
                 display: block;
                 width: 100%;
@@ -241,7 +255,7 @@
             }
         }
 
-        /* Supporto per orientamento landscape su mobile */
+        /* LANDSCAPE MOBILE: griglia un po' più larga e padding ridotto */
         @media (max-width: 767px) and (orientation: landscape) {
             .meta {
                 grid-template-columns: repeat(2, 1fr);
@@ -252,8 +266,9 @@
             }
         }
 
-        /* Nascondi elementi durante la stampa */
+        /* STAMPA: nasconde header e ottimizza colori/sfondo */
         @media print {
+            /* Nasconde elementi con class="no-print" (header con stampa + ritorno) */
             .no-print {
                 display: none !important;
             }
@@ -270,10 +285,12 @@
                 padding: 20px;
             }
 
+            /* Evita che le card vengano spezzate tra pagine */
             .card {
                 break-inside: avoid;
             }
 
+            /* In stampa i dettagli diventano leggibili (niente sfondo nero) */
             pre.dettagli {
                 background: white;
                 color: black;

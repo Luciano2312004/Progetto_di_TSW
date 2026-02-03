@@ -188,6 +188,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     // 5) Deep Linking da Search Bar (Scroll to Model)
     const urlParams = new URLSearchParams(window.location.search);
     const modelToFind = urlParams.get('model');
@@ -210,6 +211,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     // 5) Debug: verifica reale immagini (404 / nome errato)
+=======
+    // 5) Debug: verifica reale immagini
+>>>>>>> Stashed changes
 =======
     // 5) Debug: verifica reale immagini
 >>>>>>> Stashed changes
@@ -300,9 +304,12 @@ function renderCatalogo(lista) {
   initConfiguraButtons();
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
   // --- NUOVA LOGICA ANIMAZIONE SCROLL ---
   // Invece di mostrare tutto subito, attiviamo l'Observer
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
