@@ -3,7 +3,7 @@ const DEBUG = new URLSearchParams(window.location.search).get('Debug') === '1';
 const __debugLog = [];
 let __debugPanelEl = null;
 
-function dlog(type, message, data) { //Salva gli elementi di Denug nel log
+function dlog(type, message, data) { //Salva gli elementi di Debug nel log
   const entry = {
     t: new Date().toISOString(),
     type,
@@ -183,43 +183,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     initFiltri();
     initOrdinamenti();
     initSearch();
-    // 4) Applica il sistema di filtraggio automatico in base all'url
+    //Applica il sistema di filtraggio automatico in base all'url
     applicaFiltroDaURL();
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    // 5) Deep Linking da Search Bar (Scroll to Model)
-    const urlParams = new URLSearchParams(window.location.search);
-    const modelToFind = urlParams.get('model');
-    if (modelToFind) {
-      dlog('info', 'Deep linking requested for model:', modelToFind);
-      // Wait for render to complete (it's sync after await but DOM might need a tick)
-      setTimeout(() => {
-        const el = document.querySelector(`.auto[data-modello="${modelToFind}"]`);
-        if (el) {
-          dlog('info', 'Deep linking element found, scrolling...');
-          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          // Optional: Highlight effect
-          el.style.transition = 'box-shadow 0.5s';
-          el.style.boxShadow = '0 0 20px rgba(255, 215, 0, 0.7)'; // Gold highlight
-          setTimeout(() => el.style.boxShadow = '', 2000);
-        } else {
-          dlog('warn', 'Deep linking element NOT found for:', modelToFind);
-        }
-      }, 500); // Small delay to ensure cards are in DOM and layout is stable
-    }
-
     // 5) Debug: verifica reale immagini (404 / nome errato)
-=======
-    // 5) Debug: verifica reale immagini
->>>>>>> Stashed changes
-=======
-    // 5) Debug: verifica reale immagini
->>>>>>> Stashed changes
-=======
-    // 5) Debug: verifica reale immagini
->>>>>>> Stashed changes
     if (DEBUG) {
       setupDebugImageChecks();
       dlog('info', 'Debug immagini attivo (intercetto onerror su <img>)');
@@ -231,7 +198,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 let fullCatalogData = []; //Cache client-side che contiene l'intero catalogo
 
-function initSearch() { //Implementazione della barra di ricerca
+function initSearch() {//Implementazione della barra di ricerca nel catalogo
   const searchInput = document.getElementById('catalogo-search');
   if (!searchInput) return;
 
@@ -243,7 +210,7 @@ function initSearch() { //Implementazione della barra di ricerca
     // Cancella il timer precedente
     clearTimeout(debounceTimer);
 
-    // Timer effettivo della ricerca (300ms in cui l'utente non sta scrivendo)
+   // Timer effettivo della ricerca (300ms in cui l'utente non sta scrivendo)
     debounceTimer = setTimeout(async () => {
       try {
         const base = window.location.pathname.split('/')[1] || ''; //Identifica il contesto del progetto
@@ -262,19 +229,14 @@ function initSearch() { //Implementazione della barra di ricerca
   });
 }
 
-/* =========================
-   Render Catalogo
-========================= */
-/* =========================
-   Render Catalogo (Aggiornata con Scroll Animation)
-========================= */
+
 function renderCatalogo(lista) {
-  const catalogoEl = document.querySelector('.catalogo'); //recupera il contesto
+  const catalogoEl = document.querySelector('.catalogo');
   if (!catalogoEl) return;
 
   catalogoEl.innerHTML = ''; //Svuota il catalogo (Serve nel caso in cui ci sono i filtri)
   const frag = document.createDocumentFragment(); //Crea prima le card e poi le inserisce
-  let created = 0; //Variabili per il  Debug
+  let created = 0;//Variabili per il  Debug
   let skipped = 0;
 
   for (const a of lista) {
@@ -283,12 +245,12 @@ function renderCatalogo(lista) {
       skipped++;
       continue;
     }
-    const card = creaCardAuto(a); //Creazione delle singole card
-    frag.appendChild(card); 
+    const card = creaCardAuto(a);
+    frag.appendChild(card);
     created++;
   }
 
-  catalogoEl.appendChild(frag);//inserimento delle card nel DOM
+  catalogoEl.appendChild(frag); //inserimento delle card nel DOM
 
   // Gestione messaggio "Nessun Risultato"
   const noResultsMsg = document.getElementById('no-results-message');
@@ -302,24 +264,15 @@ function renderCatalogo(lista) {
   initGallerie();
   initHoverAutoscroll();
   initConfiguraButtons();
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 
   // --- NUOVA LOGICA ANIMAZIONE SCROLL ---
   // Invece di mostrare tutto subito, attiviamo l'Observer
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-  setupScrollAnimations();
+  setupScrollAnimations(); 
 }
 
-function setupScrollAnimations() { //Funzione per le animazioni che fanno apparire le card con lo scroll
+function setupScrollAnimations() {//Funzione per le animazioni che fanno apparire le card con lo scroll
   const cards = document.querySelectorAll('.auto:not(.auto-visible)');
-
+  
   // Configurazione dell'Observer
   const observerOptions = {
     root: null,   // osserva rispetto alla finestra del browser
@@ -332,7 +285,7 @@ function setupScrollAnimations() { //Funzione per le animazioni che fanno appari
       if (entry.isIntersecting) {
         // La card è entrata nello schermo: aggiungi la classe per animarla
         entry.target.classList.add('auto-visible');
-
+        
         // Smetti di osservare questa card (l'animazione avviene una volta sola)
         observerInstance.unobserve(entry.target);
       }
@@ -345,14 +298,14 @@ function setupScrollAnimations() { //Funzione per le animazioni che fanno appari
 }
 
 
-function initGallerie() { //Funzione per le gallerie delle varie car
+function initGallerie() {//Funzione per le gallerie delle varie car
   const containers = document.querySelectorAll('[class*="galleria-container"]');
   dlog('info', 'initGallerie: containers trovati', { count: containers.length });
 
-  containers.forEach(container => { //Iterazione su ogni galleria
+  containers.forEach(container => {//Iterazione su ogni galleria
     const galleria = container.querySelector('.galleria'); //recupera lo slider
-    const immagini = Array.from(container.querySelectorAll('.auto-immagine'));//Recupera tutte le immaggini legate alla singola auto
-    const btnPrev = container.querySelector('.freccia-sinistra'); //Gestione delle freccie destra, sinistra e del puntino sottostante
+    const immagini = Array.from(container.querySelectorAll('.auto-immagine')); //Recupera tutte le immaggini legate alla singola auto
+    const btnPrev = container.querySelector('.freccia-sinistra');//Gestione delle freccie destra, sinistra e del puntino sottostante
     const btnNext = container.querySelector('.freccia-destra');
     const puntini = Array.from(container.querySelectorAll('.puntino'));
     if (!galleria || immagini.length === 0) return;
@@ -380,30 +333,31 @@ function initGallerie() { //Funzione per le gallerie delle varie car
   });
 }
 
-async function caricaCatalogoDaJSON() { //Funzione che carica il catalogo in formato JSON
+
+async function caricaCatalogoDaJSON() {//Funzione che carica il catalogo in formato JSON
   const catalogoEl = document.querySelector('.catalogo');
   if (!catalogoEl) {
     dlog('error', 'Elemento .catalogo non trovato nel DOM'); //log per l'errore se il catalogo non è stato caricato correttamente
     return;
   }
 
-  const base = window.location.pathname.split('/')[1] || ''; //recupera il contesto 
-  const url = `/${base}/api/catalogo?action=getCatalogo`; //Chiamata per recuperare il catalogo dal backend
+  const base = window.location.pathname.split('/')[1] || '';//recupera il contesto 
+  const url = `/${base}/api/catalogo?action=getCatalogo`;//Chiamata per recuperare il catalogo dal backend
   dlog('info', 'Fetch catalogo', { url });
 
   const res = await fetch(url);
   dlog('info', 'Risposta fetch catalogo', { ok: res.ok, status: res.status, contentType: res.headers.get('content-type') });
   if (!res.ok) throw new Error(`HTTP ${res.status} su ${url}`);
 
-  const lista = await res.json();  //Converte il catalogo ricevuto in un file JSON
+  const lista = await res.json(); //Converte il catalogo ricevuto in un file JSON
   dlog('info', 'Catalogo JSON ricevuto', { items: Array.isArray(lista) ? lista.length : 'NON-ARRAY' });
 
   fullCatalogData = lista; // Salva dati globalmente
-  renderCatalogo(fullCatalogData); // Renderizza
+  renderCatalogo(fullCatalogData);
 }
 
-function creaCardAuto(a) { //Creazione delle singole card
-  const marcaLabel = (a.marca || '').trim(); //elementi presenti nella card
+function creaCardAuto(a) {
+  const marcaLabel = (a.marca || '').trim();
   const marcaData = marcaLabel.toLowerCase();
   const modello = (a.modello || '').trim();
   const anno = a.anno;
@@ -412,7 +366,7 @@ function creaCardAuto(a) { //Creazione delle singole card
   const prezzoNum = Number(a.prezzo ?? 0);
   const coloreDefault = (a.coloreDefault || '').trim();
 
-  const coloreToClass = { //Colore per il background (non piu utilizzato)
+  const coloreToClass = {
     'rosso': 'R',
     'blu': 'B',
     'giallo': 'Y',
@@ -433,10 +387,9 @@ function creaCardAuto(a) { //Creazione delle singole card
 
   const wrapper = document.createElement('div');
   wrapper.className = 'auto';
-  // Aggiunto attributo per Deep Linking dalla Search Bar
-  wrapper.setAttribute('data-modello', modello);
 
-  wrapper.innerHTML = `
+  
+  /*Inizializazione delle gallerie */wrapper.innerHTML = `
     <div class="galleria-container${coloreKey}">
       <div class="galleria">
         <img data-src="images/${escapeHtml(baseImg)} (1).png" class="auto-immagine">
@@ -475,11 +428,11 @@ function creaCardAuto(a) { //Creazione delle singole card
     </div>
   `;
 
-  wrapper.querySelectorAll('img.auto-immagine').forEach(img => { //fallback 1
+  wrapper.querySelectorAll('img.auto-immagine').forEach(img => {//fallback1
     const s = img.getAttribute('data-src');
     if (s) attachImgCaseFallback(img, s);
   });
-  wrapper.querySelectorAll('img.logo-img').forEach(img => { //fallback 2
+  wrapper.querySelectorAll('img.logo-img').forEach(img => {//fallback2
     const s = img.getAttribute('data-src');
     if (s) attachImgCaseFallback(img, s);
   });
@@ -487,19 +440,18 @@ function creaCardAuto(a) { //Creazione delle singole card
   return wrapper;
 }
 
-function modelloToFilenameBase(modello) { //converte il modello nel nome del file immagine
+function modelloToFilenameBase(modello) {//converte il modello nel nome del file immagine
   return modello;
 }
 
-//Gestione elementi di normalizazione ed eccezzioni
-function normalizzaModelloPerConfiguratore(modello) { //normalizzazione del nome del modello (rimozzione marca)
+function normalizzaModelloPerConfiguratore(modello) {//normalizzazione del nome del modello (rimozzione marca)
   if (!modello) return modello;
   const parts = modello.trim().split(/\s+/);
   if (parts.length > 1) return parts.slice(1).join(' ');
   return modello;
 }
 
-function normalizeForAsset(marca, modello) { //normalizzazione del modello per la marca per i path delle immagini del configuratore (rimozzione marca, spazi e caratteri non alfa-numerici)
+function normalizeForAsset(marca, modello) {//normalizzazione del modello per la marca per i path delle immagini del configuratore (rimozzione marca, spazi e caratteri non alfa-numerici)
   const m = String(marca || '').trim().toLowerCase();
   let x = String(modello || '').trim().toLowerCase();
   if (m && x.startsWith(m + ' ')) x = x.slice(m.length + 1);
@@ -521,7 +473,7 @@ function normalizzaModelloPerConfiguratoreConEccezioni(modelloRaw) { //eccezzion
   return normalizzaModelloPerConfiguratore(raw);
 }
 
-function applyAssetExceptions(assetKey) { //eccezzioni per casi specifici con nomi non alineati
+function applyAssetExceptions(assetKey) {//eccezzioni per casi specifici con nomi non alineati
   const EX = {
     LaFerrari: 'laferrari',
     SF90: 'sf',
@@ -531,7 +483,7 @@ function applyAssetExceptions(assetKey) { //eccezzioni per casi specifici con no
   return EX[assetKey] ?? assetKey;
 }
 
-function formatEuro(n) { //formato prezzo in euro
+function formatEuro(n) {//formato prezzo in euro
   const it = Math.round(n).toLocaleString('it-IT');
   return `€${it}`;
 }
@@ -596,7 +548,7 @@ function attachImgCaseFallback(imgEl, initialSrc) { //fallback per le immaggini
 }
 
 
-function setupDebugImageChecks() { // Debug delle immagini immagini
+function setupDebugImageChecks() { //debug per le immagini
   const imgs = Array.from(document.querySelectorAll('img.auto-immagine'));
   dlog('info', 'Immagini in pagina', { count: imgs.length });
   const failed = [];
@@ -619,6 +571,7 @@ function setupDebugImageChecks() { // Debug delle immagini immagini
     dlog('info', 'Riepilogo immagini', { ok: ok.length, failed: failed.length, sampleFailed: failed.slice(0, 20) });
   }, 1200);
 }
+
 
 function applicaFiltroDaURL() { // gestione del Filtro automatico da URL
   const hash = window.location.hash.substring(1);
@@ -718,7 +671,7 @@ function initFiltri() { //gestione del sistema di filtraggio per marca
 
   if (!opzioniFiltro.length) return;
 
-  const testiBrand = { //Testi specifici legati ai singoli brand
+  const testiBrand = {//Testi specifici legati ai singoli brand
     'ferrari': 'Ferrari rappresenta il connubio perfetto tra passione, eleganza e performance assoluta. Fondata nel 1947 da Enzo Ferrari, la casa di Maranello ha trasformato il concetto stesso di automobile in un simbolo universale di eccellenza italiana. Ogni modello nasce dal DNA delle corse, con linee scolpite dall\'aerodinamica e motori che vibrano come strumenti musicali, capaci di trasmettere emozioni uniche già al primo avviamento. Ferrari non è soltanto un costruttore di auto, ma un\'icona culturale che incarna sogno e desiderio. Entrare a bordo significa vivere un\'esperienza che va oltre la guida: è appartenere a una leggenda, fatta di innovazione continua, artigianato raffinato e trionfi senza tempo nel motorsport.',
     'lamborghini': 'Lamborghini è sinonimo di audacia, potenza e design fuori dagli schemi. Fondata nel 1963 da Ferruccio Lamborghini, la casa di Sant\'Agata Bolognese ha rivoluzionato l\'idea di supercar, puntando su un linguaggio stilistico aggressivo e inconfondibile. Le sue linee taglienti, ispirate al mondo dell\'aeronautica e agli artigli dei tori da combattimento, incarnano la pura espressione della velocità. Sotto il cofano, i motori V10 e V12 erogano una sinfonia meccanica capace di far battere il cuore di chiunque ami l\'adrenalina. Lamborghini non costruisce semplici automobili: realizza opere d\'arte su ruote che sfidano i limiti della tecnologia e celebrano la libertà di spingersi sempre oltre.',
     'porsche': 'Porsche unisce tradizione e innovazione come nessun altro marchio. Nata nel 1948 con la leggendaria 356, la casa di Stoccarda ha scritto la storia della sportività su strada e in pista. Ogni Porsche rappresenta il perfetto equilibrio tra ingegneria tedesca e piacere di guida, con una filosofia che punta alla precisione assoluta e a un design intramontabile. L\'inconfondibile silhouette della 911 è diventata un\'icona mondiale, simbolo di prestazioni e raffinatezza senza compromessi. Ma Porsche non è solo passato glorioso: oggi è anche avanguardia, con soluzioni ibride ed elettriche che mantengono intatta l\'anima sportiva. Guidare una Porsche significa vivere la passione per la velocità con classe e autenticità.',
@@ -734,10 +687,10 @@ function initFiltri() { //gestione del sistema di filtraggio per marca
   async function applicaFiltroMarca(marcaSelezionata) {
     await nascondiAutoNonDisponibili();
     marcaCorrente = marcaSelezionata;
-    applicaFiltri(); 
+    applicaFiltri();
   }
 
-  async function resettaFiltri() { //reset dei filtri
+  async function resettaFiltri() {//reset dei filtri
     await nascondiAutoNonDisponibili();
     marcaCorrente = 'tutte';
     opzioniFiltro.forEach(op => op.classList.remove('active'));
@@ -750,23 +703,23 @@ function initFiltri() { //gestione del sistema di filtraggio per marca
     if (scrittaCatalogo) scrittaCatalogo.style.display = 'none';
   }
 
-  function applicaFiltri() { //funzione che mostra nel DOM solo le auto che rispettano il filtro
-    const autoCards = document.querySelectorAll('.auto'); //Scorrimento di tutte le card
+  function applicaFiltri() {//funzione che mostra nel DOM solo le auto che rispettano il filtro
+    const autoCards = document.querySelectorAll('.auto');//Scorrimento di tutte le card
     let autoVisibili = 0;
 
-    autoCards.forEach(auto => { //lavora solo sulle card visibili
+    autoCards.forEach(auto => {//lavora solo sulle card visibili
       if (auto.style.display === 'none') return;
-		//estrazione dei dati
+	  //estrazione dei dati
       const autoMarca = (auto.querySelector('.logo-marca')?.textContent || '').toLowerCase().trim();
       const prezzoAuto = parseInt(auto.querySelector('.prezzo')?.textContent.replace(/[^\d]/g, '') || '0', 10);
-		//calcolo del match
+	  //verifica del match
       const matchMarca = (marcaCorrente === 'tutte' || autoMarca === marcaCorrente);
       const matchPrezzo = (prezzoAuto >= prezzoMinCorrente && prezzoAuto <= prezzoMaxCorrente);
-		//applica visibilità
+	  //applica visibilità
       auto.style.display = (matchMarca && matchPrezzo) ? 'flex' : 'none';
       if (matchMarca && matchPrezzo) autoVisibili++;
     });
-		//gestione della scritta
+	//gestione della scritta
     if (scrittaCatalogo && testoBrand) {
       if (marcaCorrente !== 'tutte' && testiBrand[marcaCorrente] && autoVisibili > 0) {
         testoBrand.textContent = testiBrand[marcaCorrente];
@@ -822,7 +775,7 @@ function initFiltri() { //gestione del sistema di filtraggio per marca
   document.querySelector('.filtro-contenuto div[data-marca="tutte"]')?.classList.add('active');
 }
 
-function initOrdinamenti() {// gesione dell'ordinamento del catalogo
+function initOrdinamenti() { // gesione dell'ordinamento del catalogo
   const opzioniOrdine = document.querySelectorAll('.ordina-contenuto div');
   const catalogo = document.querySelector('.catalogo');
   if (!opzioniOrdine.length || !catalogo) return;
@@ -830,9 +783,10 @@ function initOrdinamenti() {// gesione dell'ordinamento del catalogo
   opzioniOrdine.forEach(opzione => {
     opzione.addEventListener('click', function () {
       const ordine = this.getAttribute('data-ordine');
-      let autoCards = Array.from(document.querySelectorAll('.auto')); //array con tutte le auto visibili
+      let autoCards = Array.from(document.querySelectorAll('.auto')); 	  //array con tutte le auto visibili
 
-      if (ordine === 'prezzo-crescente') { //ordinamento in base ai dati recuperati dalle card visibili
+	  //ordinamento in base ai dati recuperati dalle card visibili
+      if (ordine === 'prezzo-crescente') { 
         autoCards.sort((a, b) => prezzoDaCard(a) - prezzoDaCard(b));
       } else if (ordine === 'prezzo-decrescente') {
         autoCards.sort((a, b) => prezzoDaCard(b) - prezzoDaCard(a));
@@ -866,7 +820,7 @@ function initOrdinamenti() {// gesione dell'ordinamento del catalogo
   }
 }
 
-
+ 
 function initHoverAutoscroll() { //scroll automatico a destra per hover sulla galleria
   const gallerie = document.querySelectorAll('[class*="galleria-container"]');
   gallerie.forEach(container => {
