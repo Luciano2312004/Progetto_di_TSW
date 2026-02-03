@@ -73,7 +73,7 @@
                             <div id="formError" class="message message--error"></div>
                         </div>
                         
-                        <a href="password-dimenticata.jsp" class="login__forgot">Hai dimenticato la password?</a>
+                        
                         
                         <button type="submit" class="button" id="loginBtn">
                             <span id="loginText">ACCEDI</span>
