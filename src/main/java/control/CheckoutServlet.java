@@ -62,7 +62,7 @@ public class CheckoutServlet extends HttpServlet {
         }
 
         try {
-            // 4. Salva l'ordine nel database
+            // 4. Salva l'ordine nel database.
             int orderId = orderDAO.saveOrder(cart, userEmail);
 
             // 5. Prepara i dati per la pagina di conferma
