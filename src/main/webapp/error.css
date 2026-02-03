@@ -1,0 +1,155 @@
+@charset "UTF-8";
+ @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap");
+
+        :root {
+            --first-color: hsl(43, 90%, 50%);
+            --first-color-alt: hsl(43, 88%, 48%);
+            --text-color: hsl(0, 0%, 42%);
+            --black-color: hsl(0, 0%, 8%);
+            --white-color: hsl(0, 0%, 100%);
+            --body-color: hsl(0, 0%, 98%);
+            --body-font: "Montserrat", sans-serif;
+            --biggest-font-size: 10rem;
+            --big-font-size: 2.5rem;
+            --h2-font-size: 1.25rem;
+            --normal-font-size: .938rem;
+            --small-font-size: .813rem;
+            --font-semi-bold: 600;
+            --font-bold: 700;
+            --font-extra-bold: 800;
+            --shadow-img: -8px 8px 16px hsla(0, 0%, 0%, .2);
+        }
+
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background-color: var(--body-color);
+            color: var(--black-color);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .error__bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--black-color) 0%, var(--black-color) 50%, var(--first-color) 100%);
+            z-index: -2;
+        }
+
+        .error__pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 25%, hsla(43, 90%, 50%, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, hsla(43, 90%, 50%, 0.05) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .error__container {
+            max-width: 600px;
+            margin: 2rem;
+        }
+
+        .error__content {
+            background-color: var(--white-color);
+            padding: 4rem 3rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-img);
+            transform: skew(-2deg);
+            text-align: center;
+        }
+
+        .error__inner {
+            transform: skew(2deg);
+        }
+
+        .error__code {
+            font-size: var(--biggest-font-size);
+            font-weight: var(--font-extra-bold);
+            color: var(--first-color);
+            line-height: 1;
+            margin-bottom: 1rem;
+            letter-spacing: 4px;
+        }
+
+        .error__title {
+            font-size: var(--big-font-size);
+            font-weight: var(--font-bold);
+            color: var(--black-color);
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .error__description {
+            color: var(--text-color);
+            font-size: var(--normal-font-size);
+            margin-bottom: 2.5rem;
+            font-weight: var(--font-semi-bold);
+        }
+
+        .error__button {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            background-color: var(--first-color);
+            color: var(--black-color);
+            padding: .75rem 2rem;
+            font-weight: var(--font-semi-bold);
+            box-shadow: 0 4px 12px hsla(43, 88%, 32%, .4);
+            border-radius: .5rem;
+            text-decoration: none;
+            transition: transform .4s, box-shadow .4s;
+        }
+
+        .error__button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px hsla(43, 88%, 32%, .6);
+        }
+
+        .error__button i {
+            font-size: 1.2rem;
+            transition: transform .4s;
+        }
+
+        .error__button:hover i {
+            transform: translateX(-.5rem);
+        }
+
+        @media screen and (max-width: 576px) {
+            .error__code {
+                font-size: 6rem;
+            }
+            
+            .error__title {
+                font-size: 1.5rem;
+            }
+            
+            .error__content {
+                padding: 3rem 2rem;
+            }
+        }
+
+        @media screen and (min-width: 1150px) {
+            .error__code {
+                font-size: 12rem;
+            }
+            
+            .error__title {
+                font-size: 3rem;
+            }
+        }
