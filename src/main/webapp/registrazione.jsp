@@ -102,8 +102,8 @@
                                 <input type="checkbox" id="terms" name="terms" required>
                                 <span class="register__checkmark"></span>
                                 <span class="register__terms-text">
-                                    Accetto i <a href="terms.jsp" target="_blank" class="register__terms-link">Termini e Condizioni</a>
-                                    e la <a href="privacy.jsp" target="_blank" class="register__terms-link">Privacy Policy</a>
+                                    Accetto i Termini e Condizioni
+                                    e la Privacy Policy
                                 </span>
                             </label>
                              <div id="termsError" class="form-error"></div>
