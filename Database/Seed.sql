@@ -124,14 +124,14 @@ NULL
 );
 SELECT * FROM utente WHERE indirizzo_email = 'test.user@email.com';
 INSERT INTO ordine (totale, stato, data_ordine, utente) 
-VALUES (465000.00, 'CONFERMATO', CURDATE(), 'test.user@email.com');
+VALUES (665000.00, 'CONFERMATO', CURDATE(), 'test.user@email.com');
 INSERT INTO ordine (totale, stato, data_ordine, utente) 
-VALUES (475000.00, 'SPEDITO', CURDATE(), 'test.user@email.com');
+VALUES (3900000.00, 'SPEDITO', CURDATE(), 'test.user@email.com');
 SELECT * FROM ordine WHERE totale = 475000.00;
 INSERT INTO fattura (data_emissione, totale, dettagli, ordine)
-VALUES (CURRENT_DATE, 465000.00, 'test', 1);
+VALUES (CURRENT_DATE, 665000.00, 'test', 1);
 INSERT INTO fattura (data_emissione, totale, dettagli, ordine)
-VALUES (CURRENT_DATE, 475000.00, 'test', 2);
+VALUES (CURRENT_DATE, 3900000.00, 'test', 2);
 SELECT * FROM fattura WHERE totale = 465000.00;
 INSERT INTO dettagli_ordine (id, quantita, prezzo, marca, modello, anno, ordine)
 VALUES (1, 1, 665000.00, 'ferrari', 'Ferrari Enzo', 2003, 1);
