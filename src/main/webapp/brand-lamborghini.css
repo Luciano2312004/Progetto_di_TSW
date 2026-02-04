@@ -783,6 +783,17 @@ height:730px;
   
   }
    }
+   
+    @media screen and (max-width:1150px){
+ 	 .about__video{
+	 	margin-right:370px;
+	 
+	 }
+ 
+ 
+ 
+ 
+ }
  
 /*=============== STILE NUMERI ANIMATI ===============*/
 

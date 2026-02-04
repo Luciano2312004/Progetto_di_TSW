@@ -768,6 +768,17 @@ s
   
   }
    }
+   
+    @media screen and (max-width:1150px){
+ 	 .about__video{
+	 	margin-right:370px;
+	 
+	 }
+ 
+ 
+ 
+ 
+ }
  
 
 .info__num {

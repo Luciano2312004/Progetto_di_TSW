@@ -770,6 +770,18 @@ height:730px;
  
  }
  
+  @media screen and (max-width:1150px){
+ 	 .about__video{
+	 	margin-right:370px;
+	 
+	 }
+ 
+ 
+ 
+ 
+ }
+ 
+ 
   @media screen and (min-width: 2048px){
   body{
   zoom: 1.4;
